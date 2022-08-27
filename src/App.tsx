@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  Kovan,
+  Config,
+  DAppProvider,
+} from '@usedapp/core'
+import { Header } from './components/header/headerComponent';
+import { Container } from '@material-ui/core';
+import { Main } from './components/main/mainComponent';
+import { getDefaultProvider } from 'ethers'
+
+const config: Config = {
+  readOnlyChainId: Kovan.chainId,
+  readOnlyUrls: {
+    [Kovan.chainId]: getDefaultProvider('kovan'),
+  },
+  notifications: {
+    expirationPeriod: 1000,
+    checkInterval: 1000,
+  }
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DAppProvider
+      config={config}
+    >
+      <Header />
+      <Container maxWidth="md">
+        <Main></Main>
+      </Container>
+    </DAppProvider>
   );
 }
 
