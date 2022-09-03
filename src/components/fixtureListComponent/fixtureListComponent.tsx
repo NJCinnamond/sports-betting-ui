@@ -1,13 +1,23 @@
 import { Fixture } from "../../types/Fixture";
 import { FixtureComponent } from "../fixtureComponent/fixtureComponent";
-export type FixtureListComponentProps = {
-    fixtures: Fixture[] | undefined,
-};
+import FixtureStore from '../../stores/fixtureStore';
+import { useState, useEffect } from "react";
+import { fetchFixtures } from "../../services/SportsOracleService";
 
-export const FixtureListComponent = (props: FixtureListComponentProps) => {
+export const FixtureListComponent = () => {
+    const [fixtures, setFixtures] = useState<Fixture[]>();
+    const [fixtureStore] = useState<FixtureStore>(FixtureStore.getInstance());
+
+    // Call oracle service to fetch fixtures and store in FixtureStore
+    useEffect(() => {
+        fetchFixtures().then(() => {
+            setFixtures(fixtureStore.getFixtures());
+        });
+    }, []);
+
     return (
-        <div>
-            {props.fixtures && props.fixtures.map(fixture => <FixtureComponent fixture={fixture}></FixtureComponent>)}
-        </div>
+        <ul>
+            {fixtures && fixtures.map(fixture => <FixtureComponent key={fixture.fixture_id} fixture={fixture}></FixtureComponent>)}
+        </ul>
     )
 }
