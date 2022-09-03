@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Tab } from '@material-ui/core';
 import { TabContext, TabList, TabPanel } from '@material-ui/lab';
 import { makeStyles } from "@material-ui/core";
+import { FixtureListComponent } from '../fixtureListComponent/fixtureListComponent';
+import { fetchFixturesJSON } from '../../services/SportsOracleService';
+import { Fixture } from '../../types/Fixture';
 
 export type BettingTab = {
     name: string
@@ -33,17 +36,27 @@ const bettingTabs: Array<BettingTab> = [
         name: "Fixtures"
     },
     {
-        name: "My Stakes"
+        name: "History"
     },
 ]
 
 export const Body = () => {
+    const [fixtures, setFixtures] = useState<Fixture[] | undefined>();
     const classes = useStyles();
     const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 
     const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
         setSelectedTabIndex(parseInt(newValue));
     };
+
+    useEffect(() => {
+        const fetchFixtures = async () => {
+            const fixtures: Fixture[] | undefined = await fetchFixturesJSON();
+            setFixtures(fixtures);
+            console.log("fixtures", fixtures);
+        }
+        fetchFixtures();
+    }, [])
 
     return (
         <Box>
@@ -63,9 +76,8 @@ export const Body = () => {
                     {bettingTabs.map((tab, index) => {
                         return (
                             <TabPanel value={index.toString()} key={index}>
-                                <div className={classes.tabContent}>
-                                    {tab.name} will appear here.
-                                </div>
+                                {tab.name == "Fixtures" && (<FixtureListComponent fixtures={fixtures}></FixtureListComponent>)}
+                                {tab.name == "History" && (<>Hi!</>)}
                             </TabPanel>
                         );
                     })}
