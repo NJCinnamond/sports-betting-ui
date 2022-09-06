@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Tab } from '@material-ui/core';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import { Box } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core";
-import { FixtureListComponent } from '../fixtureListComponent/fixtureListComponent';
-import { fetchFixtures } from '../../services/SportsOracleService';
+import { DatedFixtureListComponent } from '../datedFixtureListComponent/datedFixtureListComponent';
 
 export type BettingTab = {
     name: string
@@ -22,10 +19,13 @@ const useStyles = makeStyles((theme) => ({
 export const Body = () => {
     const classes = useStyles();
 
+    const startDate = new Date(2022, 8, 12);
+    const endDate = new Date(2022, 8, 14);
+
     return (
         <Box>
             <Box className={classes.box}>
-                <FixtureListComponent></FixtureListComponent>)
+                <DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>
             </Box>
         </Box>
     )

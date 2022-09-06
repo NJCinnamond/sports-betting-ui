@@ -1,18 +1,20 @@
-import moment from "moment";
 import { Fixture } from "../../types/Fixture";
+import { Team } from "../../types/Team";
+import { FixtureInfoComponent } from "../fixtureInfoComponent/fixtureInfoComponent";
 
 export interface FixtureComponentProps {
-    fixture: Fixture,
+    fixture: Fixture | undefined,
+    teams: Team[] | undefined,
 };
 
 export const FixtureComponent = (props: FixtureComponentProps) => {
-    const formatKickoffTime = (ko: Date) => moment(ko).format('hh:mm');
+
 
     return (
-        <li key={props.fixture.fixture_id}>
+        <div key={props.fixture?.fixture_id}>
             <>
-                {props.fixture.home_team_id} {formatKickoffTime(props.fixture.ko_time)} {props.fixture.away_team_id}
+                <FixtureInfoComponent fixture={props.fixture} teams={props.teams}></FixtureInfoComponent>
             </>
-        </li>
+        </div>
     )
 }

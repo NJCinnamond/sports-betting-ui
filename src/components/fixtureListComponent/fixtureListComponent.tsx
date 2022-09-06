@@ -1,23 +1,25 @@
+import { useEffect, useState } from "react";
 import { Fixture } from "../../types/Fixture";
+import { Team } from "../../types/Team";
 import { FixtureComponent } from "../fixtureComponent/fixtureComponent";
-import FixtureStore from '../../stores/fixtureStore';
-import { useState, useEffect } from "react";
-import { fetchFixtures } from "../../services/SportsOracleService";
 
-export const FixtureListComponent = () => {
-    const [fixtures, setFixtures] = useState<Fixture[]>();
-    const [fixtureStore] = useState<FixtureStore>(FixtureStore.getInstance());
+export type FixtureListComponentProps = {
+    fixtures: Fixture[] | undefined,
+    teams: Team[] | undefined,
+}
 
-    // Call oracle service to fetch fixtures and store in FixtureStore
+export const FixtureListComponent = (props: FixtureListComponentProps) => {
+    const [sortedFixtures, setSortedFixture] = useState<Fixture[]>([]);
+
     useEffect(() => {
-        fetchFixtures().then(() => {
-            setFixtures(fixtureStore.getFixtures());
-        });
-    }, []);
+        if (props.fixtures) {
+            setSortedFixture(props.fixtures.sort((a, b) => a.ko_time.getTime() - b.ko_time.getTime()));
+        }
+    }, [props.fixtures])
 
     return (
-        <ul>
-            {fixtures && fixtures.map(fixture => <FixtureComponent key={fixture.fixture_id} fixture={fixture}></FixtureComponent>)}
-        </ul>
+        <div>
+            {sortedFixtures && sortedFixtures.map(fixture => <FixtureComponent key={fixture.fixture_id} fixture={fixture} teams={props.teams}></FixtureComponent>)}
+        </div>
     )
 }
