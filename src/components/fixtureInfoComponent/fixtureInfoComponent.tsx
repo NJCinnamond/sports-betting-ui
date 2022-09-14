@@ -5,6 +5,7 @@ import { Fixture } from "../../types/Fixture";
 import TeamStore from "../../stores/teamStore";
 import { useEffect, useState } from "react";
 import { Team } from "../../types/Team";
+import { FixtureNameBadgeComponent } from '../fixtureNameBadge/fixtureNameBadgeComponent';
 
 export interface FixtureInfoComponentProps {
     fixture: Fixture | undefined,
@@ -18,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         minHeight: "5vh",
     },
-    fixtureTeam: {
-        width: "3em",
+    nameBadge: {
+        width: "6em",
     },
     fixtureTimeBox: {
-        margin: "0 5vh",
+        margin: "0 8vh",
         backgroundColor: "grey",
         padding: "1vh",
         borderRadius: "5px",
@@ -55,15 +56,15 @@ export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
 
     return (
         <Box className={classes.container}>
-            <Box className={classes.fixtureTeam}>
-                {homeTeam?.short_name}
-            </Box>
+            <div className={classes.nameBadge} >
+                <FixtureNameBadgeComponent displayName={homeTeam?.short_name} crest={homeTeam?.crest_url} home={true}></FixtureNameBadgeComponent>
+            </div>
             <Box className={classes.fixtureTimeBox}>
                 {formatKickoffTime(props.fixture?.ko_time)}
             </Box>
-            <Box className={classes.fixtureTeam}>
-                {awayTeam?.short_name}
-            </Box>
+            <div className={classes.nameBadge} >
+                <FixtureNameBadgeComponent displayName={awayTeam?.short_name} crest={awayTeam?.crest_url} home={false}></FixtureNameBadgeComponent>
+            </div>
         </Box>
     );
 }
