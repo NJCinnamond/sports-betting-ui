@@ -1,13 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { fetchFixtures, fetchTeams } from "../../services/SportsOracleService";
-import FixtureStore from "../../stores/fixtureStore";
+import FixtureService from "../../services/fixtureService";
 import TeamStore from "../../stores/teamStore";
-import { Fixture } from "../../types/Fixture";
-import { Team } from "../../types/Team";
+import { Team } from "../../$types/team";
 import { dateToUTCString } from "../../utils/dateUtils";
 import { FixtureListComponent } from "../fixtureListComponent/fixtureListComponent";
 import { LoadingSpinner } from "../loadingSpinner/loadingSpinner";
+import { Fixture } from "../../$types/fixture";
+import { useTypedSelector } from "../../redux/store";
 
 export interface DatedFixtureListComponentProps {
     startDate: Date,
@@ -29,32 +30,39 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const [fixtureStore] = useState<FixtureStore>(FixtureStore.getInstance());
-    const [fixturesByDate, setFixturesByDate] = useState<{ [key: string]: Fixture[] }>();
+    const fixtureService = new FixtureService();
+
+    const fixtures = useTypedSelector((state) => state.fixtures);
+    const fixturesByDate = useTypedSelector((state) => state.fixturesByDate);
+
+    const [filteredFixturesByDate, setFilteredFixturesByDate] = useState<{ [key: string]: Fixture[] }>();
 
     const [teamStore] = useState<TeamStore>(TeamStore.getInstance());
     const [teams, setTeams] = useState<Team[]>();
 
     // Call oracle service to fetch fixtures and store in FixtureStore
     useEffect(() => {
-        setIsLoading(true);
-        fetchFixtures().then(() => {
-            setFixturesByDate(fixtureStore.getFixturesInDateRange(props.startDate, props.endDate));
-        });
-    }, [props.startDate, props.endDate]);
+        if (fixtures && fixturesByDate) {
+            setIsLoading(true);
+            const newFixturesIDsByDate = fixtureService.getFixtureIDsInDateRange(fixturesByDate, props.startDate, props.endDate);
+            const newFixturesByDate = fixtureService.getFixturesFromFixturesByDateState(fixtures, newFixturesIDsByDate)
+            setFilteredFixturesByDate(newFixturesByDate);
+        }
+    }, [fixtures, fixturesByDate, props.startDate, props.endDate]);
 
     useEffect(() => {
         setIsLoading(true);
+        fetchFixtures();
         fetchTeams().then(() => {
             setTeams(teamStore.getTeams())
         });
     }, []);
 
     useEffect(() => {
-        if (teams && fixturesByDate) {
+        if (teams?.length && filteredFixturesByDate) {
             setIsLoading(false);
         }
-    }, [teams, fixturesByDate])
+    }, [teams?.length, filteredFixturesByDate])
 
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
 
@@ -63,7 +71,7 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
             {isLoading && (
                 <LoadingSpinner></LoadingSpinner>
             )}
-            {!isLoading && fixturesByDate && Object.entries(fixturesByDate)
+            {!isLoading && filteredFixturesByDate && Object.entries(filteredFixturesByDate)
                 .map(([date, fixtures]) => (
                     <div key={date}>
                         <div className={classes.title}>{formatDate(date)}</div>

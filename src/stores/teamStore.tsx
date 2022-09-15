@@ -1,4 +1,4 @@
-import { Team } from '../types/Team';
+import { Team } from "../$types/team";
 
 export default class TeamStore {
     static myInstance: TeamStore | null = null;
@@ -18,11 +18,11 @@ export default class TeamStore {
     };
 
     getTeams = (): Team[] => {
-        let fixtures: Team[] = [];
+        let teams: Team[] = [];
         for (const [key, value] of Object.entries(this.teamsByID)) {
-            fixtures.push(value);
+            teams.push(value);
         }
-        return fixtures;
+        return teams;
     };
 
     getTeamByID = (id: number | undefined) => id !== undefined ? this.teamsByID[id] : null;

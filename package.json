@@ -8,6 +8,7 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/material": "^5.10.3",
+    "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
@@ -18,8 +19,11 @@
     "@usedapp/core": "^1.1.5",
     "moment": "^2.29.4",
     "react": "^18.2.0",
+    "react-collapsible": "^2.10.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.2",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
     "typescript": "^4.8.2",
     "web-vitals": "^2.1.4"
   },
@@ -46,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.9"
   }
 }

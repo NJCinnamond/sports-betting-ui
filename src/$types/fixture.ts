@@ -3,7 +3,7 @@ export type Fixture = {
     home_team_id: number,
     away_team_id: number,
     gameweek: number,
-    ko_time: Date,
+    ko_time: number,
     result: string,
     season: string,
     last_modified: string;

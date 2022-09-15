@@ -1,21 +1,20 @@
-import FixtureStore from '../stores/fixtureStore';
+import FixtureService from './fixtureService';
 import TeamStore from '../stores/teamStore';
-import { Fixture } from '../types/Fixture';
 
 // need a .env for this. design a YAML?
 const apiURL = 'http://127.0.0.1:5000/';
 const fixturePath = 'premier-league/fixtures';
 const teamsPath = 'premier-league/teams';
 
-const fixtureStore: FixtureStore = FixtureStore.getInstance();
-const teamStore: TeamStore = TeamStore.getInstance();
+const fixtureService: FixtureService = new FixtureService();
+const teamStore: TeamStore = new TeamStore();
 
 async function fetchFixtures() {
     let fixtureURL = apiURL + fixturePath;
     const response = await fetch(fixtureURL);
     const fixtures = await response.json();
 
-    fixtureStore.addFixturesFromOracle(fixtures);
+    fixtureService.addFixturesFromOracle(fixtures);
 };
 
 async function fetchTeams() {

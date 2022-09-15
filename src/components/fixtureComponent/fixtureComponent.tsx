@@ -1,5 +1,5 @@
-import { Fixture } from "../../types/Fixture";
-import { Team } from "../../types/Team";
+import { Fixture } from "../../$types/fixture";
+import { Team } from "../../$types/team";
 import { FixtureInfoComponent } from "../fixtureInfoComponent/fixtureInfoComponent";
 
 export interface FixtureComponentProps {

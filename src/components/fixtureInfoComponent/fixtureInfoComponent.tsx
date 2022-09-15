@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import moment from "moment";
-import { Fixture } from "../../types/Fixture";
+import { Fixture } from "../../$types/fixture";
 import TeamStore from "../../stores/teamStore";
 import { useEffect, useState } from "react";
-import { Team } from "../../types/Team";
+import { Team } from "../../$types/team";
 import { FixtureNameBadgeComponent } from '../fixtureNameBadge/fixtureNameBadgeComponent';
 
 export interface FixtureInfoComponentProps {
@@ -34,9 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
     const classes = useStyles();
-    const formatKickoffTime = (ko: Date | undefined) => {
-        const kickofftime = moment(ko).format('HH:mm');
-        return kickofftime;
+    const formatKickoffTime = (ko: number | undefined) => {
+        let kickoffTime = '';
+        if (ko) {
+            const date = new Date(ko * 1000);
+            kickoffTime = moment(date).format('HH:mm');
+        }
+        return kickoffTime;
     };
     const [teamStore] = useState<TeamStore>(TeamStore.getInstance());
 
