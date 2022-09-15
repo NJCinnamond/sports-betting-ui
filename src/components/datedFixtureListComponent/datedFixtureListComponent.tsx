@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { fetchFixtures, fetchTeams } from "../../services/SportsOracleService";
 import FixtureService from "../../services/fixtureService";
-import TeamStore from "../../stores/teamStore";
+import TeamStore from "../../services/teamService";
 import { Team } from "../../$types/team";
 import { dateToUTCString } from "../../utils/dateUtils";
 import { FixtureListComponent } from "../fixtureListComponent/fixtureListComponent";
@@ -32,13 +32,12 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
 
     const fixtureService = new FixtureService();
 
+    // Redux stores
     const fixtures = useTypedSelector((state) => state.fixtures);
     const fixturesByDate = useTypedSelector((state) => state.fixturesByDate);
+    const teams = useTypedSelector((state) => state.teams);
 
     const [filteredFixturesByDate, setFilteredFixturesByDate] = useState<{ [key: string]: Fixture[] }>();
-
-    const [teamStore] = useState<TeamStore>(TeamStore.getInstance());
-    const [teams, setTeams] = useState<Team[]>();
 
     // Call oracle service to fetch fixtures and store in FixtureStore
     useEffect(() => {
@@ -53,16 +52,14 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
     useEffect(() => {
         setIsLoading(true);
         fetchFixtures();
-        fetchTeams().then(() => {
-            setTeams(teamStore.getTeams())
-        });
+        fetchTeams();
     }, []);
 
     useEffect(() => {
-        if (teams?.length && filteredFixturesByDate) {
+        if (teams && filteredFixturesByDate) {
             setIsLoading(false);
         }
-    }, [teams?.length, filteredFixturesByDate])
+    }, [teams, filteredFixturesByDate]);
 
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
 
@@ -75,7 +72,7 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
                 .map(([date, fixtures]) => (
                     <div key={date}>
                         <div className={classes.title}>{formatDate(date)}</div>
-                        <FixtureListComponent fixtures={fixtures} teams={teams}></FixtureListComponent>
+                        <FixtureListComponent fixtures={fixtures}></FixtureListComponent>
                     </div>
                 ))
             }
