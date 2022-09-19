@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     box: {
         backgroundColor: "white",
         borderRadius: "25px",
+        margin: "2vh 0"
     },
     header: {
         color: "white"

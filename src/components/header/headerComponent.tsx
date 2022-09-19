@@ -23,11 +23,14 @@ export const Header = () => {
         <div className={classes.container} id="container">
             <LinkFundBtn disabled={!isConnected}></LinkFundBtn>
 
-            {isConnected ? (
-                <Button color="primary" variant="contained" onClick={deactivate}>Disconnect</Button>
-            ) : (
-                <Button color="primary" variant="contained" onClick={activateBrowserWallet}>Connect</Button>
-            )}
+            <Box>
+                {isConnected ? (
+                    <Button color="primary" variant="contained" onClick={deactivate}>Disconnect</Button>
+                ) : (
+                    <Button color="primary" variant="contained" onClick={activateBrowserWallet}>Connect</Button>
+                )}
+            </Box>
+
         </div >
     );
 }

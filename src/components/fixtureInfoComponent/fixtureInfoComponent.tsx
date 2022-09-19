@@ -2,8 +2,6 @@ import { Box } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
 import moment from "moment";
 import { Fixture } from "../../$types/fixture";
-import TeamStore from "../../services/teamService";
-import { useEffect, useState } from "react";
 import { Team } from "../../$types/team";
 import { FixtureNameBadgeComponent } from '../fixtureNameBadge/fixtureNameBadgeComponent';
 
@@ -18,15 +16,15 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "5vh",
+        minHeight: "4em",
     },
     nameBadge: {
         width: "6em",
     },
     fixtureTimeBox: {
-        margin: "0 8vh",
+        margin: "0 6em",
         backgroundColor: "grey",
-        padding: "1vh",
+        padding: "0.6em",
         borderRadius: "5px",
         fontWeight: "bold",
         color: theme.palette.common.white

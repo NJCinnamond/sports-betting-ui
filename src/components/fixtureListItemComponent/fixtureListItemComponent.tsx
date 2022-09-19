@@ -8,7 +8,7 @@ export interface FixtureComponentProps {
     fixture: Fixture | undefined,
 };
 
-export const FixtureComponent = (props: FixtureComponentProps) => {
+export const FixtureListItemComponent = (props: FixtureComponentProps) => {
 
     // Redux store
     const teams = useTypedSelector((state) => state.teams);

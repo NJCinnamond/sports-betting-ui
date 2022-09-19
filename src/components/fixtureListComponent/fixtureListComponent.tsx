@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
-import { FixtureComponent } from "../fixtureComponent/fixtureComponent";
+import { FixtureListItemComponent } from "../fixtureListItemComponent/fixtureListItemComponent";
 import Collapsible from 'react-collapsible';
+import { StakePanelComponent } from "../stakePanelComponent/stakePanelComponent";
 
 export type FixtureListComponentProps = {
     fixtures: Fixture[] | undefined,
@@ -20,17 +21,9 @@ export const FixtureListComponent = (props: FixtureListComponentProps) => {
     return (
         <div>
             {sortedFixtures && sortedFixtures.map(fixture => (
-                <Collapsible transitionTime={200} key={fixture.fixture_id} trigger={<FixtureComponent fixture={fixture}></FixtureComponent>}>
-                    <p>
-                        This is the collapsible content. It can be any element or React
-                        component you like.
-                    </p>
-                    <p>
-                        It can even be another Collapsible component. Check out the next
-                        section!
-                    </p>
+                <Collapsible transitionTime={200} key={fixture.fixture_id} trigger={<FixtureListItemComponent fixture={fixture}></FixtureListItemComponent>}>
+                    <StakePanelComponent fixture={fixture} />
                 </Collapsible>
-
             ))}
         </div>
     )

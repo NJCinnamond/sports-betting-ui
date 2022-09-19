@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
     },
     displayName: {
-        padding: "0 4vh",
+        padding: "0 3em",
         width: "4em",
     },
     crestContainer: {

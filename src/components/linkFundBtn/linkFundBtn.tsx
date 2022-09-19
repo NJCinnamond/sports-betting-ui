@@ -13,7 +13,7 @@ export const LinkFundBtn = (props: LinkFundBtnProps) => {
 
     return (
         <div>
-            <Box sx={{ m: "2rem" }}>
+            <Box>
                 <Button disabled={props.disabled} color="primary" variant="contained" onClick={handleOpen}>Fund with Link</Button>
             </Box>
             <LinkFundModal open={open} handleClose={handleClose}></LinkFundModal>

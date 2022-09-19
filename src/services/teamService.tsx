@@ -8,6 +8,8 @@ export default class TeamService {
             store.dispatch(teamsActions.new(team));
         });
     };
+
+    getTeamByID = (teams: Team[], id: string) => teams.filter((team) => team.team_id == id);
 }
 
 
