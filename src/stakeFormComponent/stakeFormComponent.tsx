@@ -4,6 +4,7 @@ import { StakeDirection } from "../components/openStakeComponent/openStakeCompon
 import { HiSwitchVertical } from 'react-icons/hi';
 
 export interface StakeFormComponentProps {
+    stakeAmount: number,
     direction: StakeDirection,
     toggleStakeDirection: () => void;
 };
@@ -11,14 +12,19 @@ export interface StakeFormComponentProps {
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
+        marginTop: "0.2em"
     },
     stakeBtn: {
-        margin: "1em 0",
         flexBasis: "70%",
     },
     dirBtn: {
-        margin: "1em 0.2em",
+        margin: "0 0.2em",
         flexBasis: "30%",
+    },
+    helperText: {
+        fontSize: "0.7em",
+        padding: "0",
+        marginLeft: "auto",
     }
 }));
 
@@ -34,5 +40,6 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
                 <HiSwitchVertical />
             </Button>
         </Box >
+
     );
 }

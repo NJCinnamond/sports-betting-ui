@@ -36,8 +36,29 @@ export const StakePanelComponent = (props: StakePanelComponentProps) => {
     const [selectedBetType, setSelectedBetType] = useState<BetType>(BetType.HOME);
     const setSelectedBetTypeCB = (betType: BetType) => setSelectedBetType(betType);
 
+    // TODO: Get FixtureEnrichment here to deduce which middle panel to show
+
     const [homeTeam, setHomeTeam] = useState<Team>();
     const [awayTeam, setAwayTeam] = useState<Team>();
+
+    // Human readable string for selected bet type
+    // TODO: Put the below logic in some library and reuse for BetTypeSelectorComponent
+    const [selectedBetTypeStr, setSelectedBetTypeStr] = useState<string>('');
+    useEffect(() => {
+        let betTypeStr = '';
+        switch (selectedBetType) {
+            case BetType.HOME:
+                betTypeStr = homeTeam?.short_name + " WIN";
+                break;
+            case BetType.DRAW:
+                betTypeStr = "DRAW";
+                break;
+            case BetType.AWAY:
+                betTypeStr = awayTeam?.short_name + " WIN";
+                break;
+        };
+        setSelectedBetTypeStr(betTypeStr);
+    }, [selectedBetType, homeTeam, awayTeam])
 
     useEffect(() => {
         const newHomeTeam = teams[props.fixture.home_team_id];
@@ -59,7 +80,7 @@ export const StakePanelComponent = (props: StakePanelComponentProps) => {
                         <BetTypeSelectorComponent homeTeam={homeTeam} awayTeam={awayTeam} selectedBetType={selectedBetType} setSelectedBetType={setSelectedBetTypeCB} />
                     </div>
                     <div className={classes.stakeForm}>
-                        <OpenStakeComponent fixture={props.fixture} selectedBetType={selectedBetType} />
+                        <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
                     </div>
                 </>
             )}

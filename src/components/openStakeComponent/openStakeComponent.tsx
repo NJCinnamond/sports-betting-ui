@@ -9,6 +9,7 @@ import { StakeFormComponent } from "../../stakeFormComponent/stakeFormComponent"
 export interface OpenStakeComponentProps {
     fixture: Fixture,
     selectedBetType: BetType,
+    selectedBetTypeStr: string,
 };
 
 export enum StakeDirection {
@@ -19,8 +20,7 @@ export enum StakeDirection {
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
-        flexDirection: "column-reverse",
-        margin: "0 0 .5em 1em"
+        flexDirection: "column",
     },
 }));
 
@@ -38,8 +38,8 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
 
     return (
         <Box className={classes.container}>
-            <StakeFormComponent direction={stakeDirection} toggleStakeDirection={() => toggleStakeDirection()} />
-            <StakeEntryFieldComponent stakeAmount={stakeAmount} setStakeAmount={setStakeAmountCB} />
+            <StakeEntryFieldComponent stakeAmount={stakeAmount} direction={stakeDirection} setStakeAmount={setStakeAmountCB} selectedBetTypeStr={props.selectedBetTypeStr} />
+            <StakeFormComponent stakeAmount={stakeAmount} direction={stakeDirection} toggleStakeDirection={() => toggleStakeDirection()} />
         </Box >
     );
 }

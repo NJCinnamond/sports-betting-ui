@@ -1,5 +1,5 @@
 import {
-  Kovan,
+  Goerli,
   Config,
   DAppProvider,
 } from '@usedapp/core'
@@ -8,10 +8,10 @@ import { Container } from '@material-ui/core';
 import { Main } from './components/main/mainComponent';
 import { getDefaultProvider } from 'ethers'
 
-const config: Config = {
-  readOnlyChainId: Kovan.chainId,
+export const config: Config = {
+  readOnlyChainId: Goerli.chainId,
   readOnlyUrls: {
-    [Kovan.chainId]: getDefaultProvider('kovan'),
+    [Goerli.chainId]: getDefaultProvider('goerli'),
   },
   notifications: {
     expirationPeriod: 1000,

@@ -49,12 +49,6 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
         }
     }, [fixtures, fixturesByDate, props.startDate, props.endDate]);
 
-    useEffect(() => {
-        setIsLoading(true);
-        fetchFixtures();
-        fetchTeams();
-    }, []);
-
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
 
     return (
