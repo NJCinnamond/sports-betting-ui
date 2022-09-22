@@ -1,13 +1,14 @@
 import { Box } from "@mui/material";
 import { TextField, makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { StakeDirection } from "../openStakeComponent/openStakeComponent";
+import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 
 export interface StakeEntryFieldComponentProps {
     stakeAmount: number,
     direction: StakeDirection,
     setStakeAmount: (amount: number) => void,
     selectedBetTypeStr: string,
+    validity: StakeValidity,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -22,16 +23,20 @@ const useStyles = makeStyles((theme) => ({
 
 const useHelperTextStyles = makeStyles(() => ({
     root: {
-        margin: "0.2em 0 0.8em 0",
-        padding: "0",
+        margin: "0",
     }
 }));
+
+const validNumber = new RegExp(/^\d*\.?\d*$/);
 
 export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) => {
     const classes = useStyles();
     const helperTextStyles = useHelperTextStyles();
 
     const [helperText, setHelperText] = useState<string>();
+
+    // Set to true when field is inputted for first time
+    const [hasHadEntry, setHasHadEntry] = useState<boolean>(false);
 
     useEffect(() => {
         let newText = props.direction === StakeDirection.STAKE ? "Staking" : "Unstaking";
@@ -40,24 +45,30 @@ export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) =
     }, [props.stakeAmount, props.direction, props.selectedBetTypeStr]);
 
     const onStakeChange = (event: any) => {
-        const stake = event.target.value ? event.target.value : 0;
+        // Regex selector ensures numeric input only
+        // TODO: amend regex to allow decimal (. char)
+        event.currentTarget.value = validNumber.test(event.currentTarget.value) ? event.currentTarget.value : props.stakeAmount;
+        console.log("Valid stake: ", event.currentTarget.value);
+        const stake = event.currentTarget.value ? event.currentTarget.value : 0;
         props.setStakeAmount(stake);
+        setHasHadEntry(true);
     };
 
     return (
         <Box className={classes.container}>
             <TextField
-                type="number"
                 label="Enter amount"
+                type="decimal"
                 variant="outlined"
                 fullWidth
                 size="small"
-                helperText={helperText}
+                helperText={props.validity.isValid ? helperText : props.validity.errorStr}
+                error={!props.validity.isValid && hasHadEntry}
                 onChange={onStakeChange}
-                InputProps={{
+                inputProps={{
                     classes: {
                         root: classes.input
-                    }
+                    },
                 }}
                 FormHelperTextProps={{
                     classes: {

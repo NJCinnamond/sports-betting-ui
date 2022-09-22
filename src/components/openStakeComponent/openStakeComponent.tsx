@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Button, makeStyles } from "@material-ui/core";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StakeEntryFieldComponent } from "../stakeEntryFieldComponent/stakeEntryFieldComponent";
 import { StakeFormComponent } from "../../stakeFormComponent/stakeFormComponent";
 
@@ -11,6 +11,11 @@ export interface OpenStakeComponentProps {
     selectedBetType: BetType,
     selectedBetTypeStr: string,
 };
+
+export interface StakeValidity {
+    isValid: boolean,
+    errorStr: string,
+}
 
 export enum StakeDirection {
     STAKE,
@@ -24,12 +29,31 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const defaultValid = {
+    isValid: true,
+    errorStr: '',
+} as StakeValidity;
+
 export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
     const classes = useStyles();
 
     const [stakeDirection, setStakeDirection] = useState<StakeDirection>(StakeDirection.STAKE);
     const [stakeAmount, setStakeAmount] = useState<number>(0);
     const setStakeAmountCB = (amount: number) => setStakeAmount(amount);
+
+    // stakeValidity 
+    const [stakeValidity, setStakeValidity] = useState<StakeValidity>(defaultValid);
+    useEffect(() => {
+        if (stakeAmount == 0) {
+            setStakeValidity({
+                isValid: false,
+                errorStr: "Enter quantity."
+            });
+        }
+        else { // TODO: Set to invalid if unstake and quantity > staked amount
+            setStakeValidity(defaultValid);
+        }
+    }, [stakeAmount, stakeDirection])
 
     const toggleStakeDirection = () => {
         const dir = stakeDirection == StakeDirection.STAKE ? StakeDirection.UNSTAKE : StakeDirection.STAKE;
@@ -38,8 +62,8 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
 
     return (
         <Box className={classes.container}>
-            <StakeEntryFieldComponent stakeAmount={stakeAmount} direction={stakeDirection} setStakeAmount={setStakeAmountCB} selectedBetTypeStr={props.selectedBetTypeStr} />
-            <StakeFormComponent stakeAmount={stakeAmount} direction={stakeDirection} toggleStakeDirection={() => toggleStakeDirection()} />
+            <StakeEntryFieldComponent stakeAmount={stakeAmount} direction={stakeDirection} setStakeAmount={setStakeAmountCB} selectedBetTypeStr={props.selectedBetTypeStr} validity={stakeValidity} />
+            <StakeFormComponent stakeAmount={stakeAmount} direction={stakeDirection} toggleStakeDirection={() => toggleStakeDirection()} validity={stakeValidity} />
         </Box >
     );
 }
