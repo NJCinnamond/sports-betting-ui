@@ -1,9 +1,11 @@
-import { useContractFunction } from "@usedapp/core";
+import { useCall, useContractFunction } from "@usedapp/core";
+import { FixtureEnrichment } from "../$types/fixtureEnrichment";
+import { useSportsBettingContract } from "../services/sportsContractService";
 
-export const useFixtureOpen = (tokenAddress: string) => {
-    // TODO: Set up Contract interface for SportsBettingCtx
+export const useFixtureOpen = () => {
+    const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureOpenState, send: fixtureOpenSend } = useContractFunction(contract, 'openBetForFixture', {
+    const { state: fixtureOpenState, send: fixtureOpenSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
         transactionName: 'FixtureOpen', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         gasLimitBufferPercentage: 10,
     });
@@ -13,10 +15,10 @@ export const useFixtureOpen = (tokenAddress: string) => {
     return { fixtureOpenState, openFixture };
 };
 
-export const useFixtureFulfill = (tokenAddress: string) => {
-    // TODO: Set up Contract interface for SportsBettingCtx
+export const useFixtureFulfill = () => {
+    const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(contract, 'openBetForFixture', {
+    const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
         transactionName: 'FixtureFulfill', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         gasLimitBufferPercentage: 10,
     });
@@ -25,3 +27,22 @@ export const useFixtureFulfill = (tokenAddress: string) => {
 
     return { fixtureFulfillState, fulfillFixture };
 };
+
+export const useFixtureEnrichment = (
+    fixtureId: string,
+) => {
+    const sportsBetting = useSportsBettingContract();
+    const { value: enrichment, error } =
+        useCall(
+            sportsBetting && {
+                contract: sportsBetting,
+                method: "getEnrichedFixtureData",
+                args: [fixtureId],
+            }
+        ) ?? {};
+    if (error) {
+        console.error(error.message)
+        return { enrichment: {} as FixtureEnrichment }
+    }
+    return { enrichment }; // TODO: Does this typecasting work?
+}

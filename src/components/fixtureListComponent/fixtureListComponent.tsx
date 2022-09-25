@@ -6,7 +6,7 @@ import Collapsible from 'react-collapsible';
 import { StakePanelComponent } from "../stakePanelComponent/stakePanelComponent";
 
 export type FixtureListComponentProps = {
-    fixtures: Fixture[] | undefined,
+    fixtures: Fixture[],
 }
 
 export const FixtureListComponent = (props: FixtureListComponentProps) => {

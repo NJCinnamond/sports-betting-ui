@@ -17,4 +17,4 @@ export const fixturesEnrichmentReducer = createSlice({
     },
 });
 
-export const fixturesActions = fixturesEnrichmentReducer.actions;
+export const fixturesEnrichmentActions = fixturesEnrichmentReducer.actions;

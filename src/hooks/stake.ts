@@ -1,10 +1,11 @@
 import { useContractFunction } from "@usedapp/core";
 import { BetType } from "../$types/betType";
+import { useSportsBettingContract } from "../services/sportsContractService";
 
 export const useFixtureStake = () => {
-    // TODO: Set up Contract interface for SportsBettingCtx
+    const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureStakeState, send: fixtureStakeSend } = useContractFunction(contract, 'stake', {
+    const { state: fixtureStakeState, send: fixtureStakeSend } = useContractFunction(sportsBetting, 'stake', {
         transactionName: 'Stake', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         gasLimitBufferPercentage: 10,
     });
@@ -15,9 +16,9 @@ export const useFixtureStake = () => {
 };
 
 export const useFixtureUnstake = () => {
-    // TODO: Set up Contract interface for SportsBettingCtx
+    const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureUnstakeState, send: fixtureUnstakeSend } = useContractFunction(contract, 'unstake', {
+    const { state: fixtureUnstakeState, send: fixtureUnstakeSend } = useContractFunction(sportsBetting, 'unstake', {
         transactionName: 'Unstake', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         gasLimitBufferPercentage: 10,
     });
