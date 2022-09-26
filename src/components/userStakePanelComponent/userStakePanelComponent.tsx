@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Team } from "../../$types/team";
 import { BetType } from "../../$types/betType";
 import { OpenStakeComponent } from "../openStakeComponent/openStakeComponent";
+import TeamService from "../../services/teamService";
 
 export interface UserStakePanelComponentProps {
     fixture: Fixture,
@@ -30,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => {
     const classes = useStyles();
 
+    const teamService = new TeamService();
+
     // Default to HOME win selected
     const [selectedBetType, setSelectedBetType] = useState<BetType>(BetType.HOME);
     const setSelectedBetTypeCB = (betType: BetType) => setSelectedBetType(betType);
@@ -38,18 +41,7 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
     // TODO: Put the below logic in some library and reuse for BetTypeSelectorComponent
     const [selectedBetTypeStr, setSelectedBetTypeStr] = useState<string>('');
     useEffect(() => {
-        let betTypeStr = '';
-        switch (selectedBetType) {
-            case BetType.HOME:
-                betTypeStr = props.homeTeam?.short_name + " WIN";
-                break;
-            case BetType.DRAW:
-                betTypeStr = "DRAW";
-                break;
-            case BetType.AWAY:
-                betTypeStr = props.awayTeam?.short_name + " WIN";
-                break;
-        };
+        const betTypeStr = teamService.formatBetHelperString(props.homeTeam, props.awayTeam, selectedBetType);
         setSelectedBetTypeStr(betTypeStr);
     }, [selectedBetType, props.homeTeam, props.awayTeam])
 
