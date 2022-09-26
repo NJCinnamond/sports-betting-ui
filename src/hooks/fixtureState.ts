@@ -1,6 +1,6 @@
 import { useCall, useContractFunction } from "@usedapp/core";
 import { FixtureEnrichment } from "../$types/fixtureEnrichment";
-import { useSportsBettingContract } from "../services/sportsContractService";
+import { useSportsBettingContract } from "../hooks/contract";
 
 export const useFixtureOpen = () => {
     const sportsBetting = useSportsBettingContract();

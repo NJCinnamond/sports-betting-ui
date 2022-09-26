@@ -62,8 +62,21 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
 
     return (
         <Box className={classes.container}>
-            <StakeEntryFieldComponent stakeAmount={stakeAmount} direction={stakeDirection} setStakeAmount={setStakeAmountCB} selectedBetTypeStr={props.selectedBetTypeStr} validity={stakeValidity} />
-            <StakeFormComponent stakeAmount={stakeAmount} direction={stakeDirection} toggleStakeDirection={() => toggleStakeDirection()} validity={stakeValidity} />
+            <StakeEntryFieldComponent
+                stakeAmount={stakeAmount}
+                direction={stakeDirection}
+                setStakeAmount={setStakeAmountCB}
+                selectedBetTypeStr={props.selectedBetTypeStr}
+                validity={stakeValidity}
+            />
+            <StakeFormComponent
+                fixture={props.fixture}
+                betType={props.selectedBetType}
+                stakeAmount={stakeAmount}
+                direction={stakeDirection}
+                toggleStakeDirection={() => toggleStakeDirection()}
+                validity={stakeValidity}
+            />
         </Box >
     );
 }

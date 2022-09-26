@@ -2,8 +2,14 @@ import { Box } from "@mui/material";
 import { Button, makeStyles } from "@material-ui/core";
 import { StakeDirection, StakeValidity } from "../components/openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
+import { useFixtureStake, useFixtureUnstake } from "../hooks";
+import { useEffect } from "react";
+import { BetType } from "../$types/betType";
+import { Fixture } from "../$types/fixture";
 
 export interface StakeFormComponentProps {
+    fixture: Fixture,
+    betType: BetType,
     stakeAmount: number,
     direction: StakeDirection,
     toggleStakeDirection: () => void;
@@ -28,7 +34,24 @@ const useStyles = makeStyles((theme) => ({
 export const StakeFormComponent = (props: StakeFormComponentProps) => {
     const classes = useStyles();
 
-    const stakeAction = (direction: StakeDirection) => console.log("DIR: ", direction);
+    const { fixtureStakeState: stakeState, stake } = useFixtureStake();
+    const { fixtureUnstakeState: unstakeState, unstake } = useFixtureUnstake();
+
+    const handleStakeAction = (dir: StakeDirection) => {
+        if (dir == StakeDirection.STAKE) {
+            stake(props.fixture.fixture_id, props.betType, props.stakeAmount);
+        } else {
+            unstake(props.fixture.fixture_id, props.betType, props.stakeAmount);
+        }
+    };
+
+    useEffect(() => {
+        console.log("NEW STAKE STATE: ", stakeState);
+    }, [stakeState]);
+
+    useEffect(() => {
+        console.log("NEW UNSTAKE STATE: ", unstakeState);
+    }, [unstakeState]);
 
     return (
         <Box className={classes.container}>
@@ -36,7 +59,7 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
                 className={classes.stakeBtn}
                 color="primary"
                 variant="contained"
-                onClick={() => stakeAction(props.direction)}
+                onClick={() => handleStakeAction(props.direction)}
                 disabled={!props.validity.isValid}
             >
                 {props.direction == StakeDirection.STAKE ? "STAKE" : "UNSTAKE"}

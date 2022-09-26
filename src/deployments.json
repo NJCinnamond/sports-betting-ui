@@ -1,0 +1,773 @@
+{
+  "name": "goerli",
+  "chainId": "5",
+  "contracts": {
+    "SportsBetting": {
+      "address": "0xe06c0515CbB439d86fC7244F6a53368957119c33",
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "_sportsOracleURI",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "_oracle",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_link",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "_jobId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_fee",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "constructor"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "better",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "BetPayout",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "reason",
+              "type": "string"
+            }
+          ],
+          "name": "BetPayoutFulfillmentError",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "better",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "enum SportsBetting.BetType",
+              "name": "betType",
+              "type": "uint8"
+            }
+          ],
+          "name": "BetStaked",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "better",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "enum SportsBetting.BetType",
+              "name": "betType",
+              "type": "uint8"
+            }
+          ],
+          "name": "BetUnstaked",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "enum SportsBetting.BettingState",
+              "name": "state",
+              "type": "uint8"
+            }
+          ],
+          "name": "BettingStateChanged",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "id",
+              "type": "bytes32"
+            }
+          ],
+          "name": "ChainlinkCancelled",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "id",
+              "type": "bytes32"
+            }
+          ],
+          "name": "ChainlinkFulfilled",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "id",
+              "type": "bytes32"
+            }
+          ],
+          "name": "ChainlinkRequested",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "kickoffTime",
+              "type": "uint256"
+            }
+          ],
+          "name": "KickoffTimeUpdated",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferRequested",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "requestId",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureResult",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "kickoff",
+              "type": "uint256"
+            }
+          ],
+          "name": "RequestFixtureParametersFulfilled",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "requestId",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "RequestedFixtureParameters",
+          "type": "event"
+        },
+        {
+          "inputs": [],
+          "name": "acceptOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "activeBetters",
+          "outputs": [
+            {
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "amounts",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "awaitBetForFixture",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "betTypes",
+          "outputs": [
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "name": "bettingState",
+          "outputs": [
+            {
+              "internalType": "enum SportsBetting.BettingState",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "chainlink",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "closeBetForFixture",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "entranceFee",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "fixtureResult",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "name": "fixtureToKickoffTime",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "fulfillBetForFixture",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "getEnrichedFixtureData",
+          "outputs": [
+            {
+              "components": [
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "fixtureState",
+                  "type": "uint8"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "home",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "draw",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "away",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SportsBetting.StakeSummary",
+                  "name": "total",
+                  "type": "tuple"
+                },
+                {
+                  "components": [
+                    {
+                      "internalType": "uint256",
+                      "name": "home",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "draw",
+                      "type": "uint256"
+                    },
+                    {
+                      "internalType": "uint256",
+                      "name": "away",
+                      "type": "uint256"
+                    }
+                  ],
+                  "internalType": "struct SportsBetting.StakeSummary",
+                  "name": "user",
+                  "type": "tuple"
+                }
+              ],
+              "internalType": "struct SportsBetting.FixtureEnrichment",
+              "name": "",
+              "type": "tuple"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "historicalBetters",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "openBetForFixture",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "owner",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "_requestId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "string",
+              "name": "_resultResponse",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_kickoffResponse",
+              "type": "uint256"
+            }
+          ],
+          "name": "rawFulfillMultipleParameters",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "requestMultipleParameters",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "name": "requestToFixture",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "sportsOracleURI",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "betType",
+              "type": "uint8"
+            }
+          ],
+          "name": "stake",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            }
+          ],
+          "name": "transferOwnership",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "betType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "unstake",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "withdrawLink",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        }
+      ]
+    }
+  }
+}

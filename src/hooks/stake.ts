@@ -1,6 +1,7 @@
 import { useContractFunction } from "@usedapp/core";
 import { BetType } from "../$types/betType";
-import { useSportsBettingContract } from "../services/sportsContractService";
+import { useSportsBettingContract } from "../hooks/contract";
+import { utils } from "ethers";
 
 export const useFixtureStake = () => {
     const sportsBetting = useSportsBettingContract();
@@ -10,7 +11,10 @@ export const useFixtureStake = () => {
         gasLimitBufferPercentage: 10,
     });
 
-    const stake = (fixtureID: string, betType: BetType, amount: string) => fixtureStakeSend(fixtureID, betType, { value: amount });
+    const stake = (fixtureID: string, betType: BetType, amount: number) => {
+        const amountInWei = utils.parseEther(amount.toString());
+        fixtureStakeSend(fixtureID, betType, { value: amountInWei });
+    };
 
     return { fixtureStakeState, stake };
 };
@@ -23,7 +27,10 @@ export const useFixtureUnstake = () => {
         gasLimitBufferPercentage: 10,
     });
 
-    const unstake = (fixtureID: string, betType: BetType, amount: string) => fixtureUnstakeSend(fixtureID, betType, amount);
+    const unstake = (fixtureID: string, betType: BetType, amount: number) => {
+        const amountInWei = utils.parseEther(amount.toString());
+        fixtureUnstakeSend(fixtureID, betType, { value: amountInWei });
+    };
 
     return { fixtureUnstakeState, unstake };
 };
