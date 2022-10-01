@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Button, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useEffect, useState } from "react";

@@ -9,10 +9,6 @@ export default class FixtureService {
             // Extract day string
             let fixtureDate = this.formatDate(new Date(Date.parse(fixture.ko_time)));
 
-            // Parse API ko time into JS Date type
-            //fixture.ko_time = new Date(Date.parse(fixture.ko_time));
-            fixture.ko_time = parseInt((new Date(fixture.ko_time).getTime() / 1000).toFixed(0))
-
             const newFixture = fixture as Fixture;
 
             store.dispatch(fixturesActions.new(newFixture));

@@ -38,8 +38,8 @@ export const Body = () => {
     const view = useTypedSelector((state) => state.view);
 
     // TODO: Parametrize these
-    const startDate = new Date(2022, 8, 12);
-    const endDate = new Date(2022, 8, 14);
+    const startDate = new Date(2022, 8, 28);
+    const endDate = new Date(2022, 9, 14);
 
     const [isValidChain, setIsValidChain] = useState<boolean>();
 
@@ -56,18 +56,20 @@ export const Body = () => {
     // TODO: Separate these into two separate components
     return (
         <Box>
-            <Box className={classes.box}>
-                {view.selected && (
-                    <div className={classes.stakePanelContainer}>
-                        <ParentStakePanelComponent fixture={view.selected} />
-                    </div>
-                )}
-                {!view.selected && (
-                    <div className={classes.invalidChainBox}>
-                        Select a fixture to begin staking.
-                    </div>
-                )}
-            </Box>
+            {isValidChain && (
+                <Box className={classes.box}>
+                    {view.selected && (
+                        <div className={classes.stakePanelContainer}>
+                            <ParentStakePanelComponent fixture={view.selected} />
+                        </div>
+                    )}
+                    {!view.selected && (
+                        <div className={classes.invalidChainBox}>
+                            Select a fixture to begin staking.
+                        </div>
+                    )}
+                </Box>
+            )}
             <Box className={classes.box}>
                 {isValidChain && (
                     <DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>

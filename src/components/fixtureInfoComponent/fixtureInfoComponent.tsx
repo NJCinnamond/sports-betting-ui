@@ -48,7 +48,7 @@ export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
                 <FixtureNameBadgeComponent displayName={props.homeTeam?.short_name} crest={props.homeTeam?.crest_url} home={true}></FixtureNameBadgeComponent>
             </div>
             <Box className={classes.fixtureTimeBox}>
-                {formatKickoffTime(props.fixture?.ko_time)}
+                {formatKickoffTime(props.fixture?.ko)}
             </Box>
             <div className={classes.nameBadge} >
                 <FixtureNameBadgeComponent displayName={props.awayTeam?.short_name} crest={props.awayTeam?.crest_url} home={false}></FixtureNameBadgeComponent>

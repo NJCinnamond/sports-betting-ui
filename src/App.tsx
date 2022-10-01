@@ -16,7 +16,10 @@ export const config: Config = {
   notifications: {
     expirationPeriod: 1000,
     checkInterval: 1000,
-  }
+  },
+  networks: [
+    Goerli,
+  ],
 }
 
 function App() {

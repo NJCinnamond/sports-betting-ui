@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "SportsBetting": {
-      "address": "0xe06c0515CbB439d86fC7244F6a53368957119c33",
+      "address": "0x1FB9604939CC1Eb91D28129c94Ff8eDAfe4eC65C",
       "abi": [
         {
           "inputs": [
@@ -224,44 +224,6 @@
           "inputs": [
             {
               "indexed": true,
-              "internalType": "address",
-              "name": "from",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "to",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferRequested",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "from",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "to",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
               "internalType": "bytes32",
               "name": "requestId",
               "type": "bytes32"
@@ -270,12 +232,6 @@
               "indexed": false,
               "internalType": "string",
               "name": "fixtureID",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "internalType": "string",
-              "name": "fixtureResult",
               "type": "string"
             },
             {
@@ -285,7 +241,32 @@
               "type": "uint256"
             }
           ],
-          "name": "RequestFixtureParametersFulfilled",
+          "name": "RequestFixtureKickoffFulfilled",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "requestId",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "result",
+              "type": "uint256"
+            }
+          ],
+          "name": "RequestFixtureResultFulfilled",
           "type": "event"
         },
         {
@@ -304,15 +285,27 @@
               "type": "string"
             }
           ],
-          "name": "RequestedFixtureParameters",
+          "name": "RequestedFixtureKickoff",
           "type": "event"
         },
         {
-          "inputs": [],
-          "name": "acceptOwnership",
-          "outputs": [],
-          "stateMutability": "nonpayable",
-          "type": "function"
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "bytes32",
+              "name": "requestId",
+              "type": "bytes32"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "RequestedFixtureResult",
+          "type": "event"
         },
         {
           "inputs": [
@@ -383,6 +376,32 @@
           "name": "awaitBetForFixture",
           "outputs": [],
           "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "betAdvanceTime",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "betCutOffTime",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -610,6 +629,30 @@
           "inputs": [
             {
               "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "obligations",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
               "name": "fixtureID",
               "type": "string"
             }
@@ -624,7 +667,7 @@
           "name": "owner",
           "outputs": [
             {
-              "internalType": "address",
+              "internalType": "address payable",
               "name": "",
               "type": "address"
             }
@@ -640,17 +683,30 @@
               "type": "bytes32"
             },
             {
-              "internalType": "string",
-              "name": "_resultResponse",
-              "type": "string"
-            },
-            {
               "internalType": "uint256",
-              "name": "_kickoffResponse",
+              "name": "_ko",
               "type": "uint256"
             }
           ],
-          "name": "rawFulfillMultipleParameters",
+          "name": "rawFulfillFixtureKickoffTime",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "_requestId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_result",
+              "type": "uint256"
+            }
+          ],
+          "name": "rawFulfillFixtureResult",
           "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
@@ -663,7 +719,26 @@
               "type": "string"
             }
           ],
-          "name": "requestMultipleParameters",
+          "name": "requestFixtureKickoffTimeParameter",
+          "outputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "requestFixtureResultParameter",
           "outputs": [
             {
               "internalType": "bytes32",
@@ -682,7 +757,26 @@
               "type": "bytes32"
             }
           ],
-          "name": "requestToFixture",
+          "name": "requestKickoffToFixture",
+          "outputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
+            }
+          ],
+          "name": "requestResultToFixture",
           "outputs": [
             {
               "internalType": "string",
@@ -722,19 +816,6 @@
           "name": "stake",
           "outputs": [],
           "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "to",
-              "type": "address"
-            }
-          ],
-          "name": "transferOwnership",
-          "outputs": [],
-          "stateMutability": "nonpayable",
           "type": "function"
         },
         {

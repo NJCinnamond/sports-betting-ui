@@ -7,10 +7,10 @@ export const useFixtureOpen = () => {
 
     const { state: fixtureOpenState, send: fixtureOpenSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
         transactionName: 'FixtureOpen', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
-        gasLimitBufferPercentage: 10,
+        bufferGasLimitPercentage: 10000
     });
 
-    const openFixture = (fixtureID: string) => fixtureOpenSend(fixtureID);
+    const openFixture = (fixtureID: string) => fixtureOpenSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
 
     return { fixtureOpenState, openFixture };
 };
@@ -18,7 +18,7 @@ export const useFixtureOpen = () => {
 export const useFixtureFulfill = () => {
     const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
+    const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(sportsBetting, 'fulfillBetForFixture', {
         transactionName: 'FixtureFulfill', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         gasLimitBufferPercentage: 10,
     });

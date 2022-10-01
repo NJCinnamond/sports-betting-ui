@@ -11,7 +11,7 @@ export const FixtureListComponent = (props: FixtureListComponentProps) => {
 
     useEffect(() => {
         if (props.fixtures) {
-            setSortedFixture(props.fixtures.sort((a, b) => a.ko_time - b.ko_time));
+            setSortedFixture(props.fixtures.sort((a, b) => a.ko - b.ko));
         }
     }, [props.fixtures]);
 

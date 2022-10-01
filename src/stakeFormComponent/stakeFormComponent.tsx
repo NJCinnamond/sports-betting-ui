@@ -45,14 +45,6 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         }
     };
 
-    useEffect(() => {
-        console.log("NEW STAKE STATE: ", stakeState);
-    }, [stakeState]);
-
-    useEffect(() => {
-        console.log("NEW UNSTAKE STATE: ", unstakeState);
-    }, [unstakeState]);
-
     return (
         <Box className={classes.container}>
             <Button

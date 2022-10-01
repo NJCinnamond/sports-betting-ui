@@ -5,6 +5,9 @@ import { useTypedSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
 import { Team } from "../../$types/team";
 import { UserStakePanelComponent } from "../userStakePanelComponent/userStakePanelComponent";
+import { FixtureBettingState } from "../../$types/fixtureBettingState";
+import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeComponent";
+import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
 
 export interface ParentStakePanelComponentProps {
     fixture: Fixture,
@@ -23,6 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps) => {
     const classes = useStyles();
+
+    // Fixture enriched info tells us if fixture state
+    const enrichment = useTypedSelector((state) => state.fixturesEnrichment[props.fixture.fixture_id]);
+    const [fixtureState, setFixtureState] = useState<FixtureBettingState>(FixtureBettingState.CLOSED);
+    useEffect(() => {
+        if (enrichment) {
+            setFixtureState(enrichment.state);
+        }
+    }, [enrichment]);
 
     const teams = useTypedSelector((state) => state.teams);
     const [isValidTeams, setIsValidTeams] = useState<boolean>(true);
@@ -50,7 +62,15 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                         {homeTeam.long_name} vs {awayTeam.long_name}
                     </span>
                 </div>
-                <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} />
+                {fixtureState == FixtureBettingState.CLOSED && (
+                    <ClosedStakeComponent fixture={props.fixture} />
+                )}
+                {fixtureState == FixtureBettingState.OPENING && (
+                    <OpeningStakeComponent />
+                )}
+                {fixtureState == FixtureBettingState.OPEN && (
+                    <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} />
+                )}
             </>
             )}
         </Box>

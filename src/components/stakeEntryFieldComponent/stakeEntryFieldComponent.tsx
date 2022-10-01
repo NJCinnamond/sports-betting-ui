@@ -47,7 +47,6 @@ export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) =
     const onStakeChange = (event: any) => {
         // Regex selector ensures numeric input only
         event.currentTarget.value = validNumber.test(event.currentTarget.value) ? event.currentTarget.value : props.stakeAmount;
-        console.log("Valid stake: ", event.currentTarget.value);
         const stake = event.currentTarget.value ? event.currentTarget.value : 0;
         props.setStakeAmount(stake);
         setHasHadEntry(true);
