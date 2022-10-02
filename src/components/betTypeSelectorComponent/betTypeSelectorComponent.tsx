@@ -4,14 +4,12 @@ import { Team } from "../../$types/team";
 import { BetType } from "../../$types/betType";
 
 import "./betTypeSelectorComponent.css";
-import { useTypedSelector } from "../../redux/store";
-import { setSelectedBetType } from "../../services/viewService";
+import { useFixtureTransacting, useSelectedBetType } from "../../hooks/view";
 
 export interface BetTypeSelectorComponentProps {
     fixtureID: string,
     homeTeam: Team,
     awayTeam: Team,
-    selectedBetType: BetType
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -32,10 +30,15 @@ const useStyles = makeStyles((theme) => ({
 export const BetTypeSelectorComponent = (props: BetTypeSelectorComponentProps) => {
     const classes = useStyles();
 
-    const isDisabled = (betType: BetType) => props.selectedBetType == betType;
+    const { selectedBetType, setSelectedBetType } = useSelectedBetType(props.fixtureID);
+
+    // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
+    const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
+
+    const isDisabled = (betType: BetType) => selectedBetType == betType || isFixtureTransacting;
 
     const selectType = (betType: BetType) => {
-        setSelectedBetType(props.fixtureID, betType);
+        setSelectedBetType(betType);
     };
 
     return (

@@ -8,7 +8,7 @@ export const useFixtureStake = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureStakeState, send: fixtureStakeSend } = useContractFunction(sportsBetting, 'stake', {
-        transactionName: getStakingTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getStakingTransactionName(fixtureID),
         gasLimitBufferPercentage: 10,
     });
 
@@ -24,7 +24,7 @@ export const useFixtureUnstake = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureUnstakeState, send: fixtureUnstakeSend } = useContractFunction(sportsBetting, 'unstake', {
-        transactionName: getStakingTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getStakingTransactionName(fixtureID),
         gasLimitBufferPercentage: 10,
     });
 

@@ -9,6 +9,7 @@ import { Fixture } from "../../$types/fixture";
 import Alert from "@material-ui/lab/Alert";
 import { useNotifications } from "@usedapp/core";
 import { useTypedSelector } from "../../redux/store";
+import { useFixtureTransacting } from "../../hooks/view";
 
 export interface StakeFormComponentProps {
     fixture: Fixture,
@@ -36,30 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const StakeFormComponent = (props: StakeFormComponentProps) => {
     const classes = useStyles();
-    const { notifications } = useNotifications();
 
     const { stake } = useFixtureStake(props.fixture?.fixture_id);
     const { unstake } = useFixtureUnstake(props.fixture?.fixture_id);
 
-    // Redux store for fixture view state
-    const fixtureViewStates = useTypedSelector((state) => state.view.fixtureViewStates);
-
-    //const isMining = stakeState.status === "Mining" || unstakeState.status === "Mining";
-
-    // Deduce whether fixture is currently staking/unstaking from redux store
-    const [isStaking, setIsStaking] = useState(false);
-    useEffect(() => {
-        const isStakingTxMining = fixtureViewStates[props.fixture.fixture_id]?.staking === 'Mining';
-        setIsStaking(isStakingTxMining);
-    }, [props.fixture.fixture_id, [fixtureViewStates[props.fixture.fixture_id]]]);
-
-    // Handle logic for fixture staking/unstaking failing, so snackbar appears with alert
-    const [showStakeFailed, setShowStakeFailed] = useState(false);
-    useEffect(() => {
-        if (notifications.filter((n) => n.type === "transactionFailed" && (n.transactionName === "Stake" || n.transactionName === "Unstake")).length > 0) {
-            setShowStakeFailed(true);
-        };
-    }, [notifications]);
+    // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
+    const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
 
     const handleStakeAction = (dir: StakeDirection) => {
         if (dir == StakeDirection.STAKE) {
@@ -67,10 +50,6 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         } else {
             unstake(props.fixture.fixture_id, props.betType, props.stakeAmount);
         }
-    };
-
-    const handleSnackbarClose = () => {
-        setShowStakeFailed(false);
     };
 
     return (
@@ -81,19 +60,14 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
                     color="primary"
                     variant="contained"
                     onClick={() => handleStakeAction(props.direction)}
-                    disabled={!props.validity.isValid || isStaking}
+                    disabled={!props.validity.isValid || isFixtureTransacting}
                 >
-                    {isStaking ? <CircularProgress size={26} /> : props.direction == StakeDirection.STAKE ? "STAKE" : "UNSTAKE"}
+                    {isFixtureTransacting ? <CircularProgress size={26} /> : props.direction == StakeDirection.STAKE ? "STAKE" : "UNSTAKE"}
                 </Button>
-                <Button className={classes.dirBtn} color="primary" variant="contained" onClick={() => props.toggleStakeDirection()}>
+                <Button className={classes.dirBtn} color="primary" variant="contained" onClick={() => props.toggleStakeDirection()} disabled={isFixtureTransacting}>
                     <HiSwitchVertical />
                 </Button>
             </Box >
-            <Snackbar
-                open={showStakeFailed}
-                onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="error">Stake action failed.</Alert>
-            </Snackbar>
         </>
     );
 }

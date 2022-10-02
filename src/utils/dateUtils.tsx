@@ -14,13 +14,13 @@ const numToMonth: { [key: number]: string } = {
 }
 
 const numToDay: { [key: number]: string } = {
-    0: "Mon",
-    1: "Tues",
-    2: "Weds",
-    3: "Thurs",
-    4: "Fri",
-    5: "Sat",
-    6: "Sun",
+    0: "Sun",
+    1: "Mon",
+    2: "Tues",
+    3: "Weds",
+    4: "Thurs",
+    5: "Fri",
+    6: "Sat",
 }
 
 export const dateToUTCString = (date: Date) => numToDay[date.getUTCDay()] + " " + date.getUTCDate() + " " + numToMonth[date.getUTCMonth()];

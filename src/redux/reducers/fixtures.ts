@@ -28,7 +28,6 @@ export const fixturesByDateReducer = createSlice({
     reducers: {
         new(state, action: PayloadAction<{ date: string, fixture_id: string }>) {
             if (state[action.payload.date]) {
-                // IMPORTANT: DON'T DUPLICATE FIXTURES
                 if (!state[action.payload.date].includes(action.payload.fixture_id)) {
                     state[action.payload.date] = state[action.payload.date].concat(action.payload.fixture_id);
                 }

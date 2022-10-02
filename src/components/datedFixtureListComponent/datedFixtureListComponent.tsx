@@ -1,6 +1,5 @@
 import { makeStyles } from "@material-ui/core";
 import { useEffect, useState } from "react";
-import { fetchFixtures, fetchTeams } from "../../services/sportsOracleService";
 import FixtureService from "../../services/fixtureService";
 import { dateToUTCString } from "../../utils/dateUtils";
 import { FixtureListComponent } from "../fixtureListComponent/fixtureListComponent";

@@ -48,7 +48,7 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
     return (
         <Box className={classes.container}>
             <div className={classes.selector}>
-                <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} selectedBetType={selectedBetType} />
+                <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
             </div>
             <div className={classes.stakeForm}>
                 <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />

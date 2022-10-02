@@ -5,7 +5,7 @@ import { useFixtureOpen } from "../../hooks/fixtureState";
 import { useEffect, useState } from "react";
 import { useNotifications } from "@usedapp/core";
 import Alert from "@material-ui/lab/Alert";
-import { useTypedSelector } from "../../redux/store";
+import { useFixtureTransacting } from "../../hooks/view";
 
 export interface ClosedStakeComponentProps {
     fixture: Fixture,
@@ -30,15 +30,8 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
     const { notifications } = useNotifications();
     const { openFixture } = useFixtureOpen(props.fixture?.fixture_id);
 
-    // Redux store for fixture view state
-    const fixtureViewStates = useTypedSelector((state) => state.view.fixtureViewStates);
-
-    // Deduce whether fixture is currently opening from redux store
-    const [isOpening, setIsOpening] = useState(false);
-    useEffect(() => {
-        const isOpeningTxMining = fixtureViewStates[props.fixture.fixture_id]?.opening === 'Mining';
-        setIsOpening(isOpeningTxMining);
-    }, [props.fixture.fixture_id, [fixtureViewStates[props.fixture.fixture_id]]]);
+    // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
+    const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
 
     // Handle logic for fixture opening failing, so snackbar appears with alert
     // TODO: Move this to generic snackbar component which can display regardless of whether failing fixture is selected
@@ -66,9 +59,9 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
                         color="primary"
                         variant="contained"
                         onClick={() => openFixture(props.fixture.fixture_id)}
-                        disabled={isOpening}
+                        disabled={isFixtureTransacting}
                     >
-                        {isOpening ? <CircularProgress size={26} /> : "OPEN"}
+                        {isFixtureTransacting ? <CircularProgress size={26} /> : "OPEN"}
                     </Button>
                 </div>
             </Box >
