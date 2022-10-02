@@ -40,9 +40,7 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
     useEffect(() => {
         if (fixtures && Object.keys(fixtures).length && fixturesByDate && Object.keys(fixturesByDate).length) {
             setIsLoading(true);
-            console.log("RECEIVED FIXTURES", fixtures);
             const newFixturesIDsByDate = fixtureService.getFixtureIDsInDateRange(fixturesByDate, props.startDate, props.endDate);
-            console.log("RECEIVED FIXTURESBYDATE: ", newFixturesIDsByDate);
             const newFixturesByDate = fixtureService.getFixturesFromFixturesByDateState(fixtures, newFixturesIDsByDate);
             if (newFixturesIDsByDate) {
                 setFilteredFixturesByDate(newFixturesByDate);

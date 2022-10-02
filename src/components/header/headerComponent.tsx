@@ -17,8 +17,6 @@ export const Header = () => {
 
     const isConnected = account !== undefined;
 
-    console.log("Account: ", account);
-
     return (
         <div className={classes.container} id="container">
             <LinkFundBtn disabled={!isConnected}></LinkFundBtn>

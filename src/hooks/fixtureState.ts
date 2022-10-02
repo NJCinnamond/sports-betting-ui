@@ -1,12 +1,13 @@
-import { useCall, useContractFunction } from "@usedapp/core";
+import { useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { FixtureEnrichment } from "../$types/fixtureEnrichment";
 import { useSportsBettingContract } from "../hooks/contract";
+import { getOpeningFixtureTransactionName } from "../services/notificationService";
 
-export const useFixtureOpen = () => {
+export const useFixtureOpen = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureOpenState, send: fixtureOpenSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
-        transactionName: 'FixtureOpen', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getOpeningFixtureTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         bufferGasLimitPercentage: 10000
     });
 
@@ -32,12 +33,13 @@ export const useFixtureEnrichment = (
     fixtureId: string,
 ) => {
     const sportsBetting = useSportsBettingContract();
+    const { account } = useEthers();
     const { value: enrichment, error } =
         useCall(
             sportsBetting && {
                 contract: sportsBetting,
                 method: "getEnrichedFixtureData",
-                args: [fixtureId],
+                args: [fixtureId, account],
             }
         ) ?? {};
     if (error) {

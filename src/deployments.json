@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "SportsBetting": {
-      "address": "0x1FB9604939CC1Eb91D28129c94Ff8eDAfe4eC65C",
+      "address": "0x0b64f8Bb261261ea071CCE31f7f067B08Cc2cDBa",
       "abi": [
         {
           "inputs": [
@@ -532,6 +532,11 @@
               "internalType": "string",
               "name": "fixtureID",
               "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
             }
           ],
           "name": "getEnrichedFixtureData",
@@ -544,48 +549,14 @@
                   "type": "uint8"
                 },
                 {
-                  "components": [
-                    {
-                      "internalType": "uint256",
-                      "name": "home",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "draw",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "away",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct SportsBetting.StakeSummary",
+                  "internalType": "uint256[3]",
                   "name": "total",
-                  "type": "tuple"
+                  "type": "uint256[3]"
                 },
                 {
-                  "components": [
-                    {
-                      "internalType": "uint256",
-                      "name": "home",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "draw",
-                      "type": "uint256"
-                    },
-                    {
-                      "internalType": "uint256",
-                      "name": "away",
-                      "type": "uint256"
-                    }
-                  ],
-                  "internalType": "struct SportsBetting.StakeSummary",
+                  "internalType": "uint256[3]",
                   "name": "user",
-                  "type": "tuple"
+                  "type": "uint256[3]"
                 }
               ],
               "internalType": "struct SportsBetting.FixtureEnrichment",
@@ -593,7 +564,7 @@
               "type": "tuple"
             }
           ],
-          "stateMutability": "nonpayable",
+          "stateMutability": "view",
           "type": "function"
         },
         {
@@ -620,6 +591,35 @@
               "internalType": "address",
               "name": "",
               "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            },
+            {
+              "internalType": "enum SportsBetting.BetType",
+              "name": "",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "historicalBettersIndex",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
             }
           ],
           "stateMutability": "view",

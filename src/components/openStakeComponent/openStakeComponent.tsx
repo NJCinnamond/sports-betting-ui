@@ -4,7 +4,7 @@ import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useEffect, useState } from "react";
 import { StakeEntryFieldComponent } from "../stakeEntryFieldComponent/stakeEntryFieldComponent";
-import { StakeFormComponent } from "../../stakeFormComponent/stakeFormComponent";
+import { StakeFormComponent } from "../stakeFormComponent/stakeFormComponent";
 
 export interface OpenStakeComponentProps {
     fixture: Fixture,

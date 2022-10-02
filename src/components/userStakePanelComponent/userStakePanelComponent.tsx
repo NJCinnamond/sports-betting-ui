@@ -7,6 +7,8 @@ import { Team } from "../../$types/team";
 import { BetType } from "../../$types/betType";
 import { OpenStakeComponent } from "../openStakeComponent/openStakeComponent";
 import TeamService from "../../services/teamService";
+import { useTypedSelector } from "../../redux/store";
+import { useSelectedBetType } from "../../hooks/view";
 
 export interface UserStakePanelComponentProps {
     fixture: Fixture,
@@ -33,9 +35,7 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
 
     const teamService = new TeamService();
 
-    // Default to HOME win selected
-    const [selectedBetType, setSelectedBetType] = useState<BetType>(BetType.HOME);
-    const setSelectedBetTypeCB = (betType: BetType) => setSelectedBetType(betType);
+    const { selectedBetType } = useSelectedBetType(props.fixture?.fixture_id);
 
     // Human readable string for selected bet type
     // TODO: Put the below logic in some library and reuse for BetTypeSelectorComponent
@@ -43,12 +43,12 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
     useEffect(() => {
         const betTypeStr = teamService.formatBetHelperString(props.homeTeam, props.awayTeam, selectedBetType);
         setSelectedBetTypeStr(betTypeStr);
-    }, [selectedBetType, props.homeTeam, props.awayTeam])
+    }, [selectedBetType, props.homeTeam, props.awayTeam]);
 
     return (
         <Box className={classes.container}>
             <div className={classes.selector}>
-                <BetTypeSelectorComponent homeTeam={props.homeTeam} awayTeam={props.awayTeam} selectedBetType={selectedBetType} setSelectedBetType={setSelectedBetTypeCB} />
+                <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} selectedBetType={selectedBetType} />
             </div>
             <div className={classes.stakeForm}>
                 <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />

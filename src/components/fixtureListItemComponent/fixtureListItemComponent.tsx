@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
 import { useFixtureEnrichment } from "../../hooks/fixtureState";
+import { useFixtureNotifications } from "../../hooks/notifications";
 import { useTypedSelector } from "../../redux/store";
 import { handleEnrichmentAndDispatch } from "../../services/sportsContractService";
 import { setSelected } from "../../services/viewService";
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const FixtureListItemComponent = (props: FixtureComponentProps) => {
     const classes = useStyles();
+
+    // Important: this hook ensures we accurately receive all notifications for transactions on this fixture
+    useFixtureNotifications(props.fixture.fixture_id);
 
     // Important: this hook ensures we have the latest enriched fixture data for each rendered fixture list item
     const { enrichment } = useFixtureEnrichment(props.fixture.fixture_id);

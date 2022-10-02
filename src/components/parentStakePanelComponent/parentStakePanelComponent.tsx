@@ -8,6 +8,8 @@ import { UserStakePanelComponent } from "../userStakePanelComponent/userStakePan
 import { FixtureBettingState } from "../../$types/fixtureBettingState";
 import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeComponent";
 import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
+import { UserStakeInsightComponent } from "../userStakeInsightComponent/userStakeInsightComponent";
+import { TotalStakeInsightComponent } from "../totalStakeInsightComponent/totalStakeInsightComponent";
 
 export interface ParentStakePanelComponentProps {
     fixture: Fixture,
@@ -21,6 +23,12 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         fontSize: "1.1em",
         padding: "0 0 0.8em 0"
+    },
+    stakeInsightContainer: {
+        display: "flex",
+    },
+    stakeInsightContainerItem: {
+        flexBasis: "50%",
     }
 }));
 
@@ -62,6 +70,19 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                         {homeTeam.long_name} vs {awayTeam.long_name}
                     </span>
                 </div>
+
+
+                {!(fixtureState == FixtureBettingState.CLOSED) && !(fixtureState == FixtureBettingState.OPENING) && (
+                    <div className={classes.stakeInsightContainer}>
+                        <div className={classes.stakeInsightContainerItem}>
+                            <UserStakeInsightComponent enrichment={enrichment} />
+                        </div>
+                        <div className={classes.stakeInsightContainerItem}>
+                            <TotalStakeInsightComponent enrichment={enrichment} />
+                        </div>
+                    </div>
+                )}
+
                 {fixtureState == FixtureBettingState.CLOSED && (
                     <ClosedStakeComponent fixture={props.fixture} />
                 )}

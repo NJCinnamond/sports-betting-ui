@@ -5,6 +5,7 @@ import { useFixtureOpen } from "../../hooks/fixtureState";
 import { useEffect, useState } from "react";
 import { useNotifications } from "@usedapp/core";
 import Alert from "@material-ui/lab/Alert";
+import { useTypedSelector } from "../../redux/store";
 
 export interface ClosedStakeComponentProps {
     fixture: Fixture,
@@ -27,11 +28,20 @@ const useStyles = makeStyles((theme) => ({
 export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
     const classes = useStyles();
     const { notifications } = useNotifications();
-    const { fixtureOpenState, openFixture } = useFixtureOpen();
+    const { openFixture } = useFixtureOpen(props.fixture?.fixture_id);
 
-    const isMining = fixtureOpenState.status === "Mining";
+    // Redux store for fixture view state
+    const fixtureViewStates = useTypedSelector((state) => state.view.fixtureViewStates);
+
+    // Deduce whether fixture is currently opening from redux store
+    const [isOpening, setIsOpening] = useState(false);
+    useEffect(() => {
+        const isOpeningTxMining = fixtureViewStates[props.fixture.fixture_id]?.opening === 'Mining';
+        setIsOpening(isOpeningTxMining);
+    }, [props.fixture.fixture_id, [fixtureViewStates[props.fixture.fixture_id]]]);
 
     // Handle logic for fixture opening failing, so snackbar appears with alert
+    // TODO: Move this to generic snackbar component which can display regardless of whether failing fixture is selected
     const [showFixtureOpenFailed, setShowFixtureOpenFailed] = useState(false);
     useEffect(() => {
         if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === "FixtureOpen").length > 0) {
@@ -56,9 +66,9 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
                         color="primary"
                         variant="contained"
                         onClick={() => openFixture(props.fixture.fixture_id)}
-                        disabled={isMining}
+                        disabled={isOpening}
                     >
-                        {isMining ? <CircularProgress size={26} /> : "OPEN"}
+                        {isOpening ? <CircularProgress size={26} /> : "OPEN"}
                     </Button>
                 </div>
             </Box >

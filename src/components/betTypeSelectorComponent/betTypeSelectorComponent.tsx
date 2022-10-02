@@ -4,12 +4,14 @@ import { Team } from "../../$types/team";
 import { BetType } from "../../$types/betType";
 
 import "./betTypeSelectorComponent.css";
+import { useTypedSelector } from "../../redux/store";
+import { setSelectedBetType } from "../../services/viewService";
 
 export interface BetTypeSelectorComponentProps {
+    fixtureID: string,
     homeTeam: Team,
     awayTeam: Team,
-    selectedBetType: BetType,
-    setSelectedBetType: (betType: BetType) => void,
+    selectedBetType: BetType
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -30,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
 export const BetTypeSelectorComponent = (props: BetTypeSelectorComponentProps) => {
     const classes = useStyles();
 
-    const selectType = (betType: BetType) => {
-        props.setSelectedBetType(betType);
-    }
-
     const isDisabled = (betType: BetType) => props.selectedBetType == betType;
+
+    const selectType = (betType: BetType) => {
+        setSelectedBetType(props.fixtureID, betType);
+    };
 
     return (
         <Box className={classes.container}>
