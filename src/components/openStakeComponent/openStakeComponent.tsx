@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { Button, makeStyles } from "@material-ui/core";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useEffect, useState } from "react";
 import { StakeEntryFieldComponent } from "../stakeEntryFieldComponent/stakeEntryFieldComponent";
 import { StakeFormComponent } from "../stakeFormComponent/stakeFormComponent";
+import { useFixtureRequestKickoff } from "../../hooks/fixtureState";
 
 export interface OpenStakeComponentProps {
     fixture: Fixture,
@@ -26,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         flexDirection: "column",
+        width: "70%",
+        margin: "auto"
     },
 }));
 
@@ -53,12 +56,18 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
         else { // TODO: Set to invalid if unstake and quantity > staked amount
             setStakeValidity(defaultValid);
         }
-    }, [stakeAmount, stakeDirection])
+    }, [stakeAmount, stakeDirection]);
 
     const toggleStakeDirection = () => {
         const dir = stakeDirection == StakeDirection.STAKE ? StakeDirection.UNSTAKE : StakeDirection.STAKE;
         setStakeDirection(dir);
     }
+
+    // TODO: COMPONENTIZE
+    const { requestFixtureKickoff } = useFixtureRequestKickoff(props.fixture.fixture_id);
+    const handleRequestFixtureKickoff = () => {
+        requestFixtureKickoff(props.fixture.fixture_id);
+    };
 
     return (
         <Box className={classes.container}>
@@ -77,6 +86,10 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
+
+            <Button color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
+                GET KO TIME
+            </Button>
         </Box >
     );
 }

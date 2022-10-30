@@ -10,6 +10,7 @@ import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeCompone
 import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
 import { UserStakeInsightComponent } from "../userStakeInsightComponent/userStakeInsightComponent";
 import { TotalStakeInsightComponent } from "../totalStakeInsightComponent/totalStakeInsightComponent";
+import { useFixtureEnrichment } from "../../hooks/enrichment";
 
 export interface ParentStakePanelComponentProps {
     fixture: Fixture,
@@ -36,13 +37,9 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
     const classes = useStyles();
 
     // Fixture enriched info tells us if fixture state
-    const enrichment = useTypedSelector((state) => state.fixturesEnrichment[props.fixture.fixture_id]);
-    const [fixtureState, setFixtureState] = useState<FixtureBettingState>(FixtureBettingState.CLOSED);
-    useEffect(() => {
-        if (enrichment) {
-            setFixtureState(enrichment.state);
-        }
-    }, [enrichment]);
+    const enrichment = useFixtureEnrichment(props.fixture.fixture_id);
+
+    const fixtureState = enrichment?.state;
 
     const teams = useTypedSelector((state) => state.teams);
     const [isValidTeams, setIsValidTeams] = useState<boolean>(true);
@@ -89,9 +86,12 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                 {fixtureState == FixtureBettingState.OPENING && (
                     <OpeningStakeComponent />
                 )}
-                {fixtureState == FixtureBettingState.OPEN && (
-                    <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} />
-                )}
+                {((fixtureState == FixtureBettingState.OPEN) ||
+                    (fixtureState == FixtureBettingState.AWAITING) ||
+                    (fixtureState == FixtureBettingState.FULFILLING) ||
+                    (fixtureState == FixtureBettingState.FULFILLED)) && (
+                        <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} enrichment={enrichment} />
+                    )}
             </>
             )}
         </Box>

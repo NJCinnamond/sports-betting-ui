@@ -68,7 +68,7 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
             <Snackbar
                 open={showFixtureOpenFailed}
                 onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="error">Opening fixture failed. Does the contract need more LINK?</Alert>
+                <Alert onClose={handleSnackbarClose} severity="error">Opening fixture failed. Have you sent enough LINK?</Alert>
             </Snackbar>
         </>
 

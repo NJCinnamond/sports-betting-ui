@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { LinkFundComponent } from '../linkFundComponent/linkFundComponent';
 
 export type LinkFundModalProps = {
     open: boolean,
@@ -20,6 +21,7 @@ const style = {
 };
 
 export const LinkFundModal = (props: LinkFundModalProps) => {
+    console.log("RERENDERING MODAL");
     return (
         <Modal
             open={props.open}
@@ -29,7 +31,7 @@ export const LinkFundModal = (props: LinkFundModalProps) => {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Please fund us with LINK!
+                    <LinkFundComponent />
                 </Typography>
             </Box>
         </Modal>

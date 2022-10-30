@@ -12,4 +12,6 @@ const setOpeningTransactionState = (fixtureID: string, state: TransactionState) 
 
 const setStakingTransactionState = (fixtureID: string, state: TransactionState) => store.dispatch(viewActions.setStakingTransactionState({ fixtureID, transactionState: state } as SetTransactionStatePayload));
 
-export { setSelected, setFixtureSelectedBetType, setOpeningTransactionState, setStakingTransactionState }
+const setFulfillingTransactionState = (fixtureID: string, state: TransactionState) => store.dispatch(viewActions.setFulfillingTransactionState({ fixtureID, transactionState: state } as SetTransactionStatePayload));
+
+export { setSelected, setFixtureSelectedBetType, setOpeningTransactionState, setStakingTransactionState, setFulfillingTransactionState }

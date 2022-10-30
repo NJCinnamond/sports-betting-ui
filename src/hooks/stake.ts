@@ -1,4 +1,4 @@
-import { useContractFunction } from "@usedapp/core";
+import { useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { BetType } from "../$types/betType";
 import { useSportsBettingContract } from "../hooks/contract";
 import { utils } from "ethers";
@@ -34,4 +34,22 @@ export const useFixtureUnstake = (fixtureID: string) => {
     };
 
     return { fixtureUnstakeState, unstake };
+};
+
+export const useFixturePayout = (fixtureID: string) => {
+    const sportsBetting = useSportsBettingContract();
+    const { account } = useEthers();
+    const { value, error } =
+        useCall(
+            account && {
+                contract: sportsBetting,
+                method: 'obligations',
+                args: [fixtureID, account],
+            }
+        ) ?? {};
+    if (error) {
+        console.error(error.message);
+        return {};
+    }
+    return { value };
 };

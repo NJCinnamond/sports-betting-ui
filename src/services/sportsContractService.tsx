@@ -4,6 +4,16 @@ import { fixturesEnrichmentActions } from "../redux/reducers/fixturesEnrichment"
 import { FixtureBettingState } from "../$types/fixtureBettingState";
 import { BetType } from "../$types/betType";
 
+export interface UserLinkState {
+    userLinkTransferred: any;
+};
+
+export interface UserPayout {
+    amount: number;
+}
+
+const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
+
 // TODO: Parse enrichment payload 
 // Currently response is in some array format with hex numbers
 const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
@@ -21,10 +31,30 @@ const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
 
 const parseStakeSummaryFromEnrichmentPayload = (stakes: StakeSummaryPayload) => {
     let stakeSummary = {} as StakeSummary;
-    stakeSummary[BetType.HOME] = parseInt(stakes[BetType.HOME]._hex) / 10 ** 18; // TODO: Lib fn for this. Also do we wanna show in wei/gwei/eth?
+    stakeSummary[BetType.HOME] = parseInt(stakes[BetType.HOME]._hex) / 10 ** 18; // TODO: Use parseBigNumber?
     stakeSummary[BetType.DRAW] = parseInt(stakes[BetType.DRAW]._hex) / 10 ** 18;
     stakeSummary[BetType.AWAY] = parseInt(stakes[BetType.AWAY]._hex) / 10 ** 18;
     return stakeSummary;
 };
 
-export { handleEnrichmentAndDispatch }
+const handleUserLinkTransferred = (response: any) => {
+    if (response) {
+        const userLinkState: UserLinkState = {
+            userLinkTransferred: parseBigNumber(response?.[0]),
+        };
+        return userLinkState;
+    };
+    return {} as UserLinkState;
+};
+
+const handleUserPayout = (response: any) => {
+    if (response) {
+        const userPayout: UserPayout = {
+            amount: parseBigNumber(response?.[0]),
+        };
+        return userPayout;
+    };
+    return {} as UserPayout;
+};
+
+export { handleEnrichmentAndDispatch, handleUserLinkTransferred, handleUserPayout }

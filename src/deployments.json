@@ -3,7 +3,7 @@
   "chainId": "5",
   "contracts": {
     "SportsBetting": {
-      "address": "0x0b64f8Bb261261ea071CCE31f7f067B08Cc2cDBa",
+      "address": "0xf74cE6eA2E9c2A359d6BbE171ACb216D33a23543",
       "abi": [
         {
           "inputs": [
@@ -30,6 +30,11 @@
             {
               "internalType": "uint256",
               "name": "_fee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "_commissionRate",
               "type": "uint256"
             }
           ],
@@ -469,6 +474,38 @@
           "type": "function"
         },
         {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "",
+              "type": "string"
+            }
+          ],
+          "name": "commissionMap",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "commissionRate",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
           "inputs": [],
           "name": "entranceFee",
           "outputs": [
@@ -667,7 +704,7 @@
           "name": "owner",
           "outputs": [
             {
-              "internalType": "address payable",
+              "internalType": "address",
               "name": "",
               "type": "address"
             }
@@ -719,6 +756,19 @@
               "type": "string"
             }
           ],
+          "name": "requestFixtureKickoffTime",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
           "name": "requestFixtureKickoffTimeParameter",
           "outputs": [
             {
@@ -727,6 +777,19 @@
               "type": "bytes32"
             }
           ],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "string",
+              "name": "fixtureID",
+              "type": "string"
+            }
+          ],
+          "name": "requestFixtureResult",
+          "outputs": [],
           "stateMutability": "nonpayable",
           "type": "function"
         },
@@ -821,6 +884,19 @@
         {
           "inputs": [
             {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "transferLink",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
               "internalType": "string",
               "name": "fixtureID",
               "type": "string"
@@ -842,7 +918,32 @@
           "type": "function"
         },
         {
-          "inputs": [],
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "userToLink",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
           "name": "withdrawLink",
           "outputs": [],
           "stateMutability": "nonpayable",

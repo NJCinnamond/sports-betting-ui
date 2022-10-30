@@ -3,7 +3,7 @@ import { Alert } from "@mui/material";
 import { useNotifications } from "@usedapp/core";
 import { useEffect, useState } from "react";
 import { useFixtureNotifications } from "../../hooks/notifications";
-import { getOpeningFixtureTransactionName, getStakingTransactionName } from "../../services/notificationService";
+import { getFulfillingTransactionName, getOpeningFixtureTransactionName, getStakingTransactionName } from "../../services/notificationService";
 
 
 export interface FixtureNotificationsComponentProps {
@@ -27,6 +27,10 @@ export const FixtureNotificationsComponent = (props: FixtureNotificationsCompone
             setSnackbarMessage(snackbarMsg);
         } else if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === getStakingTransactionName(props.fixtureID)).length > 0) {
             const snackbarMsg = 'Stake action on fixture failed.';
+            setShowSnackbar(true);
+            setSnackbarMessage(snackbarMsg);
+        } else if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === getFulfillingTransactionName(props.fixtureID)).length > 0) {
+            const snackbarMsg = 'Payout on fixture failed.';
             setShowSnackbar(true);
             setSnackbarMessage(snackbarMsg);
         };

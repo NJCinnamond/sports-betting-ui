@@ -4,16 +4,21 @@ import { Fixture } from "../../$types/fixture";
 import { BetTypeSelectorComponent } from "../betTypeSelectorComponent/betTypeSelectorComponent";
 import { useEffect, useState } from "react";
 import { Team } from "../../$types/team";
-import { BetType } from "../../$types/betType";
 import { OpenStakeComponent } from "../openStakeComponent/openStakeComponent";
 import TeamService from "../../services/teamService";
-import { useTypedSelector } from "../../redux/store";
 import { useSelectedBetType } from "../../hooks/view";
+import { BetSlipComponent } from "../betSlipComponent/betSlipComponent";
+import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
+import { FixtureBettingState } from "../../$types/fixtureBettingState";
+import { AwaitingStakeComponent } from "../awaitingStakeComponent/awaitingStakeComponent";
+import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfillingStakeComponent";
+import { FulfilledStakeComponent } from "../fulfilledStakeComponent/fulfilledStakeComponent";
 
 export interface UserStakePanelComponentProps {
     fixture: Fixture,
     homeTeam: Team,
     awayTeam: Team,
+    enrichment: FixtureEnrichment
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -22,11 +27,18 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "1em",
     },
     selector: {
-        flexBasis: "20%"
+        flexBasis: "30%",
+        justifyContent: 'space-between'
     },
     stakeForm: {
+        flexBasis: "40%",
+        margin: "0 auto",
+        justifyContent: 'space-between'
+    },
+    betSlip: {
         flexBasis: "30%",
         margin: "0 auto",
+        justifyContent: 'space-between'
     }
 }));
 
@@ -45,13 +57,28 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
         setSelectedBetTypeStr(betTypeStr);
     }, [selectedBetType, props.homeTeam, props.awayTeam]);
 
+    // TODO: Add FulfillingStakeComponent and FulfilledStakeComponent
     return (
         <Box className={classes.container}>
             <div className={classes.selector}>
                 <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
             </div>
             <div className={classes.stakeForm}>
-                <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
+                {props.enrichment.state == FixtureBettingState.OPEN && (
+                    <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
+                )}
+                {props.enrichment.state == FixtureBettingState.AWAITING && (
+                    <AwaitingStakeComponent fixtureID={props.fixture.fixture_id} />
+                )}
+                {props.enrichment.state == FixtureBettingState.FULFILLING && (
+                    <FulfillingStakeComponent />
+                )}
+                {props.enrichment.state == FixtureBettingState.FULFILLED && (
+                    <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} />
+                )}
+            </div>
+            <div className={classes.betSlip}>
+                <BetSlipComponent fixtureID={props.fixture?.fixture_id} />
             </div>
         </Box>
     );

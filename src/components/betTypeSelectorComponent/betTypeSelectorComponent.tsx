@@ -15,8 +15,9 @@ export interface BetTypeSelectorComponentProps {
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
+        width: "70%",
         flexDirection: "column",
-        margin: "0 0 1em 1em",
+        margin: "auto",
         '& > * + *': {
             marginTop: "1em",
         },

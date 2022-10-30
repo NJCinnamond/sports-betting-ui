@@ -38,8 +38,8 @@ export const Body = () => {
     const view = useTypedSelector((state) => state.view);
 
     // TODO: Parametrize these
-    const startDate = new Date(2022, 8, 28);
-    const endDate = new Date(2022, 9, 14);
+    const startDate = new Date(2022, 9, 20);
+    const endDate = new Date(2022, 10, 14);
 
     const [isValidChain, setIsValidChain] = useState<boolean>();
 

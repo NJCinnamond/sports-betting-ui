@@ -23,7 +23,7 @@ const useFixtureTransacting = (fixtureID: string) => {
     const fixtureViewStates = useTypedSelector((state) => state.view.fixtureViewStates);
 
     // Deduce if fixture is transacting (opening, staking, etc)
-    const isFixtureTransacting = fixtureViewStates[fixtureID]?.staking === 'Mining' || fixtureViewStates[fixtureID]?.opening === 'Mining';
+    const isFixtureTransacting = fixtureViewStates[fixtureID]?.staking === 'Mining' || fixtureViewStates[fixtureID]?.opening === 'Mining' || fixtureViewStates[fixtureID]?.fulfilling === 'Mining';
 
     return { isFixtureTransacting };
 }
