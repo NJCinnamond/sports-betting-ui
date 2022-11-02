@@ -43,7 +43,7 @@ export const useFixturePayout = (fixtureID: string) => {
         useCall(
             account && {
                 contract: sportsBetting,
-                method: 'obligations',
+                method: 'payouts',
                 args: [fixtureID, account],
             }
         ) ?? {};

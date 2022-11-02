@@ -1,5 +1,6 @@
 import { Button, CircularProgress, makeStyles } from "@material-ui/core";
 import { useFixtureFulfill } from "../../hooks";
+import { useCanMakeOracleRequest } from "../../hooks/link";
 import { useFixtureTransacting } from "../../hooks/view";
 
 export interface PayoutComponentProps {
@@ -17,6 +18,8 @@ export const PayoutComponent = (props: PayoutComponentProps) => {
 
     const { fulfillFixture } = useFixtureFulfill(props.fixtureID);
 
+    const { canMakeOracleRequest } = useCanMakeOracleRequest();
+
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
 
@@ -28,7 +31,7 @@ export const PayoutComponent = (props: PayoutComponentProps) => {
             color="primary"
             variant="contained"
             onClick={handlePayoutAction}
-            disabled={isFixtureTransacting}
+            disabled={isFixtureTransacting || canMakeOracleRequest}
         >
             {isFixtureTransacting ? <CircularProgress size={26} /> : "PAYOUT"}
         </Button>

@@ -4,6 +4,7 @@ import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
 import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
+import { handleUserLinkTransferred } from "../services/sportsContractService";
 
 const useLinkContract = () => {
     const { chainId } = useEthers();
@@ -86,3 +87,11 @@ export const useLinkTransferred = (
     }
     return { linkResponse };
 };
+
+export const useCanMakeOracleRequest = () => {
+    const { linkResponse } = useLinkTransferred();
+    const link = handleUserLinkTransferred(linkResponse);
+    const canMakeOracleRequest = link.userLinkTransferred !== null && link.userLinkTransferred >= 0.1;
+    console.log("Link transferred: ", link);
+    return { canMakeOracleRequest }
+}

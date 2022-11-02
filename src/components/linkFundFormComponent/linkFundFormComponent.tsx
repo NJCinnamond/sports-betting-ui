@@ -48,7 +48,7 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
     };
 
     const isMining = approveAndStakeERC20State.status === "Mining";
-    const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(true);
+    const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(false);
     const [showStakeTokenSuccess, setShowStakeTokenSuccess] = useState(false);
 
     // TODO: notifs for errors

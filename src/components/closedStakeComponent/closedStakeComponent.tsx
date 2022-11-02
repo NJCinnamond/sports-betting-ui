@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNotifications } from "@usedapp/core";
 import Alert from "@material-ui/lab/Alert";
 import { useFixtureTransacting } from "../../hooks/view";
+import { useCanMakeOracleRequest } from "../../hooks/link";
 
 export interface ClosedStakeComponentProps {
     fixture: Fixture,
@@ -29,6 +30,8 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
     const classes = useStyles();
     const { notifications } = useNotifications();
     const { openFixture } = useFixtureOpen(props.fixture?.fixture_id);
+
+    const { canMakeOracleRequest } = useCanMakeOracleRequest();
 
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
@@ -59,7 +62,7 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
                         color="primary"
                         variant="contained"
                         onClick={() => openFixture(props.fixture.fixture_id)}
-                        disabled={isFixtureTransacting}
+                        disabled={isFixtureTransacting || !canMakeOracleRequest}
                     >
                         {isFixtureTransacting ? <CircularProgress size={26} /> : "OPEN"}
                     </Button>
