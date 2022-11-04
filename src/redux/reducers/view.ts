@@ -17,6 +17,7 @@ export type FixtureViewState = {
     selectedBetType: BetType,
     staking: TransactionState,
     opening: TransactionState,
+    awaiting: TransactionState,
     fulfilling: TransactionState
 };
 
@@ -58,6 +59,12 @@ export const viewReducer = createSlice({
             state.fixtureViewStates[action.payload.fixtureID] = {
                 ...state.fixtureViewStates[action.payload.fixtureID],
                 staking: action.payload.transactionState,
+            } as FixtureViewState;
+        },
+        setAwaitingTransactionState(state, action: PayloadAction<SetTransactionStatePayload>) {
+            state.fixtureViewStates[action.payload.fixtureID] = {
+                ...state.fixtureViewStates[action.payload.fixtureID],
+                awaiting: action.payload.transactionState,
             } as FixtureViewState;
         },
         setFulfillingTransactionState(state, action: PayloadAction<SetTransactionStatePayload>) {

@@ -65,7 +65,6 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         }
     }, [betEndTime]);
 
-    // TODO: Disable staking/unstaking if fixture betting should be AWAITING
     return (
         <>
             <Box className={classes.container}>

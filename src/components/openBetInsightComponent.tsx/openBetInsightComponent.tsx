@@ -2,8 +2,9 @@ import { makeStyles } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import { useFixtureBettingEndTime } from "../../hooks/stake";
 import { BetCountdownComponent } from "../betCountdownComponent/betCountdownComponent";
+import { BetTimeUpComponent } from "../betTimeUpComponent/betTimeUpComponent";
 
-export type OpenBetInsightComponent = {
+export type OpenBetInsightComponentProps = {
     fixtureID: string;
 }
 
@@ -12,22 +13,10 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         textAlign: "center",
         justifyContent: "center",
-        height: "100%",
-        position: "relative",
     },
-    timeUpComp: {
-        position: "absolute",
-        width: "100%",
-        height: "50%",
-        top: "0",
-        left: "0",
-        bottom: "0",
-        right: "0",
-        margin: "auto"
-    }
 }));
 
-export const OpenBetInsightComponent = (props: OpenBetInsightComponent) => {
+export const OpenBetInsightComponent = (props: OpenBetInsightComponentProps) => {
     const classes = useStyles();
 
     const { betEndTime } = useFixtureBettingEndTime(props.fixtureID);
@@ -42,15 +31,11 @@ export const OpenBetInsightComponent = (props: OpenBetInsightComponent) => {
         }
     }, [betEndTime]);
 
-    // TODO: When time is up, render new AWAIT action button which calls awaitBetForFixture
-    // to perform the OPEN -> AWAITING transition
     return (
         <div className={classes.container}>
             {timeUp || betEndTime === undefined ? 
                 (
-                    <div className={classes.timeUpComp}>
-                        Betting has finished.
-                    </div>
+                    <BetTimeUpComponent fixtureID={props.fixtureID}/>
                 ) :
                 (
                     <BetCountdownComponent endDate={betEndTime}/>

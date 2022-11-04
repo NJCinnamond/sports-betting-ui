@@ -21,15 +21,8 @@ const useStyles = makeStyles((theme) => ({
         height: "100%",
         position: "relative",
     },
-    timeUpComp: {
-        position: "absolute",
-        width: "100%",
-        height: "50%",
-        top: "0",
-        left: "0",
-        bottom: "0",
-        right: "0",
-        margin: "auto"
+    caption: {
+        marginTop: "0.8em",
     }
 }));
 
@@ -80,9 +73,9 @@ export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
         <div className={classes.container}>
             <div>
                 <BetCountdownClockComponent timerComponents={timerComponents}/>
-                <p>
+                <div className={classes.caption}>
                     left until betting closes
-                </p>
+                </div>
             </div>
         </div>
     )

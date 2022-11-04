@@ -1,6 +1,6 @@
 import { useContractFunction } from "@usedapp/core";
 import { useSportsBettingContract } from "../hooks/contract";
-import { getOpeningFixtureTransactionName, getFulfillingTransactionName } from "../services/notificationService";
+import { getOpeningFixtureTransactionName, getFulfillingTransactionName, getAwaitingFixtureTransactionName } from "../services/notificationService";
 
 export const useFixtureOpen = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
@@ -26,7 +26,20 @@ export const useFixtureRequestKickoff = (fixtureID: string) => {
     const requestFixtureKickoff = (fixtureID: string) => fixtureRequestKickoffSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
 
     return { fixtureRequestKickoffState, requestFixtureKickoff };
-}
+};
+
+export const useFixtureAwaiting = (fixtureID: string) => {
+    const sportsBetting = useSportsBettingContract();
+
+    const { state: fixtureAwaitState, send: fixtureAwaitSend } = useContractFunction(sportsBetting, 'awaitBetForFixture', {
+        transactionName: getAwaitingFixtureTransactionName(fixtureID),
+        bufferGasLimitPercentage: 10000
+    });
+
+    const awaitFixture = (fixtureID: string) => fixtureAwaitSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
+
+    return { fixtureAwaitState, awaitFixture };
+};
 
 export const useFixtureFulfill = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
