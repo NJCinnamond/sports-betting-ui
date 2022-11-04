@@ -22,8 +22,14 @@ const useFixtureTransacting = (fixtureID: string) => {
     // Redux store for fixture view state
     const fixtureViewStates = useTypedSelector((state) => state.view.fixtureViewStates);
 
+    console.log("Fixture view state: ", fixtureViewStates[fixtureID]);
+
     // Deduce if fixture is transacting (opening, staking, etc)
-    const isFixtureTransacting = fixtureViewStates[fixtureID]?.staking === 'Mining' || fixtureViewStates[fixtureID]?.opening === 'Mining' || fixtureViewStates[fixtureID]?.fulfilling === 'Mining';
+    const isFixtureTransacting = 
+        fixtureViewStates[fixtureID]?.staking === 'Mining' || 
+        fixtureViewStates[fixtureID]?.opening === 'Mining' || 
+        fixtureViewStates[fixtureID]?.fulfilling === 'Mining' || 
+        fixtureViewStates[fixtureID]?.awaiting === 'Mining';
 
     return { isFixtureTransacting };
 }

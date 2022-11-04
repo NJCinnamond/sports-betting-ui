@@ -31,17 +31,17 @@ export const useFixtureNotifications = (fixtureID: string) => {
         //
         // Staking or unstaking transaction started
         if (notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === getStakingTransactionName(fixtureID)).length > 0) {
-            setAwaitingTransactionState(fixtureID, "Mining");
+            setStakingTransactionState(fixtureID, "Mining");
         };
 
         // Staking or unstaking transaction success
         if (notifications.filter((n) => n.type === "transactionSucceed" && n.transactionName === getStakingTransactionName(fixtureID)).length > 0) {
-            setAwaitingTransactionState(fixtureID, "Success");
+            setStakingTransactionState(fixtureID, "Success");
         };
 
         // Staking or unstaking transaction failed
         if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === getStakingTransactionName(fixtureID)).length > 0) {
-            setAwaitingTransactionState(fixtureID, "Fail");
+            setStakingTransactionState(fixtureID, "Fail");
         };
 
 
@@ -50,17 +50,17 @@ export const useFixtureNotifications = (fixtureID: string) => {
         //
         // Awaiting fixture result transaction started
         if (notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === getAwaitingFixtureTransactionName(fixtureID)).length > 0) {
-            setStakingTransactionState(fixtureID, "Mining");
+            setAwaitingTransactionState(fixtureID, "Mining");
         };
 
         // Awaiting fixture result transaction success
         if (notifications.filter((n) => n.type === "transactionSucceed" && n.transactionName === getAwaitingFixtureTransactionName(fixtureID)).length > 0) {
-            setStakingTransactionState(fixtureID, "Success");
+            setAwaitingTransactionState(fixtureID, "Success");
         };
 
         // Awaiting fixture result transaction failed
         if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === getAwaitingFixtureTransactionName(fixtureID)).length > 0) {
-            setStakingTransactionState(fixtureID, "Fail");
+            setAwaitingTransactionState(fixtureID, "Fail");
         };
 
 

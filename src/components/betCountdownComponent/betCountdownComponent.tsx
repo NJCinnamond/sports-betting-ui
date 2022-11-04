@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         justifyContent: "center",
         height: "100%",
-        position: "relative",
+        fontSize: "0.9em"
     },
     caption: {
         marginTop: "0.8em",

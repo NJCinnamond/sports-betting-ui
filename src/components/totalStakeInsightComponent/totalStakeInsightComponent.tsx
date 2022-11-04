@@ -6,6 +6,7 @@ export interface TotalStakeInsightComponentProps {
 };
 
 export const TotalStakeInsightComponent = (props: TotalStakeInsightComponentProps) => {
+    console.log("enrichment: ", props.enrichment);
     return (
         <>
             {props.enrichment && props.enrichment.total && (<StakeInsightComponent stakes={props.enrichment.total} />)}

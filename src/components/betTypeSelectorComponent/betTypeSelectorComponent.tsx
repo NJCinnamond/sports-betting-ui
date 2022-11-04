@@ -36,6 +36,8 @@ export const BetTypeSelectorComponent = (props: BetTypeSelectorComponentProps) =
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
 
+    console.log("Is fixture transacting: ", isFixtureTransacting);
+
     const isDisabled = (betType: BetType) => selectedBetType == betType || isFixtureTransacting;
 
     const selectType = (betType: BetType) => {

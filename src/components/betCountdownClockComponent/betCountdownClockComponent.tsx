@@ -21,7 +21,7 @@ export const BetCountdownClockComponent = (props: BetCountdownClockComponentProp
 
     props.timerComponents.forEach(timerComponent => {
         elements.push(
-            <BetCountdownClockElementComponent value={timerComponent.value} unit={timerComponent.unit}/>
+            <BetCountdownClockElementComponent value={timerComponent.value} unit={timerComponent.unit} key={timerComponent.unit}/>
         );
     });
 
