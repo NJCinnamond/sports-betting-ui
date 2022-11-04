@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
         width: "70%",
         margin: "auto"
     },
+    openKOBtn: {
+        marginTop: "1em",
+    }
 }));
 
 const defaultValid = {
@@ -87,7 +90,7 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 validity={stakeValidity}
             />
 
-            <Button color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
+            <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
                 GET KO TIME
             </Button>
         </Box >

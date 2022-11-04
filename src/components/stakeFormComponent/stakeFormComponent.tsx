@@ -10,6 +10,7 @@ import Alert from "@material-ui/lab/Alert";
 import { useNotifications } from "@usedapp/core";
 import { useTypedSelector } from "../../redux/store";
 import { useFixtureTransacting } from "../../hooks/view";
+import { useFixtureBettingEndTime } from "../../hooks/stake";
 
 export interface StakeFormComponentProps {
     fixture: Fixture,
@@ -52,6 +53,19 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         }
     };
 
+    const { betEndTime } = useFixtureBettingEndTime(props.fixture.fixture_id);
+
+    const [timeUp, setTimeUp] = useState<boolean>();
+    useEffect(() => {
+        if (betEndTime) {
+            const timeIsUp = new Date() > betEndTime;
+            setTimeUp(timeIsUp);
+        } else {
+            setTimeUp(true);
+        }
+    }, [betEndTime]);
+
+    // TODO: Disable staking/unstaking if fixture betting should be AWAITING
     return (
         <>
             <Box className={classes.container}>
@@ -60,7 +74,7 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
                     color="primary"
                     variant="contained"
                     onClick={() => handleStakeAction(props.direction)}
-                    disabled={!props.validity.isValid || isFixtureTransacting}
+                    disabled={!props.validity.isValid || isFixtureTransacting || timeUp}
                 >
                     {isFixtureTransacting ? <CircularProgress size={26} /> : props.direction == StakeDirection.STAKE ? "STAKE" : "UNSTAKE"}
                 </Button>

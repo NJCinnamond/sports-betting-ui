@@ -3,6 +3,7 @@ import { BetType } from "../$types/betType";
 import { useSportsBettingContract } from "../hooks/contract";
 import { utils } from "ethers";
 import { getStakingTransactionName } from "../services/notificationService";
+import { useTypedSelector } from "../redux/store";
 
 export const useFixtureStake = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
@@ -53,3 +54,30 @@ export const useFixturePayout = (fixtureID: string) => {
     }
     return { value };
 };
+
+export const useFixtureBettingEndTime = (fixtureID: string) => {
+    const sportsBetting = useSportsBettingContract();
+    const { account } = useEthers();
+    const fixtures = useTypedSelector((state) => state.fixtures);
+    const { value, error } =
+        useCall(
+            account && {
+                contract: sportsBetting,
+                method: 'betCutOffTime',
+                args: [],
+            }
+        ) ?? {};
+    if (error) {
+        console.error(error.message);
+        return {};
+    }
+
+    const fixture = fixtures[fixtureID];
+    if (fixture === undefined || fixture === null) {
+        return {};
+    }
+
+    const difference = fixture.ko - value;
+    const betEndTime = new Date(difference * 1000); // Multiplied by 1000 so arg is in ms
+    return { betEndTime };
+}

@@ -18,10 +18,16 @@ const useStyles = makeStyles((theme) => ({
 export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
     const classes = useStyles();
 
+    // TODO: Disable Payout if no result detected in API
     return (
         <div className={classes.container}>
             <div className={classes.info}>
-                Betting has closed while we await the fixture result. When we detect the fixture result is available, you will be able to click the button below to initiate payout to winners.
+                <p>
+                    Betting has closed while we await the fixture result.
+                </p>
+                <p>
+                    When we detect the fixture result is available, you will be able to click the button below to initiate payout to winners.
+                </p> 
             </div>
             <PayoutComponent fixtureID={props.fixtureID} />
         </div>

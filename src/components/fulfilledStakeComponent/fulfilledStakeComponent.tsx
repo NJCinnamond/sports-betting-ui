@@ -26,6 +26,7 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
         }
     }, [value]);
 
+    // TODO: Add result here
     return (
         <div className={classes.container}>
             <div>

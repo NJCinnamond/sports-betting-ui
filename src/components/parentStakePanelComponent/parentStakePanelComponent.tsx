@@ -11,6 +11,9 @@ import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComp
 import { UserStakeInsightComponent } from "../userStakeInsightComponent/userStakeInsightComponent";
 import { TotalStakeInsightComponent } from "../totalStakeInsightComponent/totalStakeInsightComponent";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
+import { AwaitingStakeComponent } from "../awaitingStakeComponent/awaitingStakeComponent";
+import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfillingStakeComponent";
+import { FulfilledStakeComponent } from "../fulfilledStakeComponent/fulfilledStakeComponent";
 
 export interface ParentStakePanelComponentProps {
     fixture: Fixture,
@@ -86,12 +89,18 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                 {fixtureState == FixtureBettingState.OPENING && (
                     <OpeningStakeComponent />
                 )}
-                {((fixtureState == FixtureBettingState.OPEN) ||
-                    (fixtureState == FixtureBettingState.AWAITING) ||
-                    (fixtureState == FixtureBettingState.FULFILLING) ||
-                    (fixtureState == FixtureBettingState.FULFILLED)) && (
-                        <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} enrichment={enrichment} />
-                    )}
+                {(fixtureState == FixtureBettingState.OPEN) && (
+                    <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} enrichment={enrichment} />
+                )}
+                {fixtureState == FixtureBettingState.AWAITING && (
+                    <AwaitingStakeComponent fixtureID={props.fixture.fixture_id} />
+                )}
+                {fixtureState == FixtureBettingState.FULFILLING && (
+                    <FulfillingStakeComponent />
+                )}
+                {fixtureState == FixtureBettingState.FULFILLED && (
+                    <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} />
+                )}
             </>
             )}
         </Box>

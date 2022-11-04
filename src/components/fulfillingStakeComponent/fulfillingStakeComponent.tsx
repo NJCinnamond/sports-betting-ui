@@ -9,12 +9,13 @@ const useStyles = makeStyles((theme) => ({
 
 export const FulfillingStakeComponent = () => {
     const classes = useStyles();
-
+    
+    // TODO: Add result and expected payout here
     return (
         <div className={classes.container}>
-            <div>
+            <p>
                 The smart contract is currently paying out winning stakers for this fixture.
-            </div>
+            </p>
         </div>
     )
 }
