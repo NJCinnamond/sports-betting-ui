@@ -8,12 +8,13 @@ import { UserStakePanelComponent } from "../userStakePanelComponent/userStakePan
 import { FixtureBettingState } from "../../$types/fixtureBettingState";
 import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeComponent";
 import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
-import { UserStakeInsightComponent } from "../userStakeInsightComponent/userStakeInsightComponent";
-import { TotalStakeInsightComponent } from "../totalStakeInsightComponent/totalStakeInsightComponent";
+import { UserStakeChartComponent } from "../userStakeChartComponent/userStakeChartComponent";
+import { TotalStakeChartComponent } from "../totalStakeChartComponent/totalStakeChartComponent";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
 import { AwaitingStakeComponent } from "../awaitingStakeComponent/awaitingStakeComponent";
 import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfillingStakeComponent";
 import { FulfilledStakeComponent } from "../fulfilledStakeComponent/fulfilledStakeComponent";
+import { StakeInsightComponent } from "../stakeInsightComponent/stakeInsightComponent";
 
 export interface ParentStakePanelComponentProps {
     fixture: Fixture,
@@ -28,12 +29,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "1.1em",
         padding: "0 0 0.8em 0"
     },
-    stakeInsightContainer: {
-        display: "flex",
-    },
-    stakeInsightContainerItem: {
-        flexBasis: "50%",
-    }
 }));
 
 export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps) => {
@@ -73,14 +68,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
 
 
                 {!(fixtureState == FixtureBettingState.CLOSED) && !(fixtureState == FixtureBettingState.OPENING) && (
-                    <div className={classes.stakeInsightContainer}>
-                        <div className={classes.stakeInsightContainerItem}>
-                            <UserStakeInsightComponent enrichment={enrichment} />
-                        </div>
-                        <div className={classes.stakeInsightContainerItem}>
-                            <TotalStakeInsightComponent enrichment={enrichment} />
-                        </div>
-                    </div>
+                    <StakeInsightComponent homeTeam={homeTeam} awayTeam={awayTeam} enrichment={enrichment} />
                 )}
 
                 {fixtureState == FixtureBettingState.CLOSED && (
