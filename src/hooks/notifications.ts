@@ -81,5 +81,5 @@ export const useFixtureNotifications = (fixtureID: string) => {
         if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === getFulfillingTransactionName(fixtureID)).length > 0) {
             setFulfillingTransactionState(fixtureID, "Fail");
         };
-    }, [notifications]);
+    }, [notifications, fixtureID]);
 }

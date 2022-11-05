@@ -1,8 +1,8 @@
 import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
 import { Team } from "../../$types/team";
 import { TotalStakeChartComponent } from "../totalStakeChartComponent/totalStakeChartComponent";
-import { UserStakeChartComponent } from "../userStakeChartComponent/userStakeChartComponent";
 import { makeStyles } from "@material-ui/core";
+import { StakeInsightTableComponent } from "../stakeInsightTableComponent/stakeInsightTableComponent";
 
 export interface StakeInsightComponentProps {
     enrichment: FixtureEnrichment,
@@ -13,11 +13,13 @@ export interface StakeInsightComponentProps {
 const useStyles = makeStyles((theme) => ({
     stakeInsightContainer: {
         display: "flex",
-        justifyContent: "space-between"
+        justifyContent: "space-around"
     },
-    stakeInsightContainerItem: {
+    stakeInsightChartItem: {
         flexBasis: "30%",
-        height: "25vh",
+    },
+    stakeInsightTableItem: {
+        flexBasis: "40%",
     }
 }));
 
@@ -26,16 +28,11 @@ export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
 
     return (
         <div className={classes.stakeInsightContainer}>
-            <div className={classes.stakeInsightContainerItem}>
+            <div className={classes.stakeInsightChartItem}>
                 <TotalStakeChartComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
-            <div className={classes.stakeInsightContainerItem}>
-                <p>
-                    Hello!
-                </p>
-            </div>
-            <div className={classes.stakeInsightContainerItem}>
-                <UserStakeChartComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
+            <div className={classes.stakeInsightTableItem}>
+                <StakeInsightTableComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
         </div>
     )
