@@ -1,4 +1,4 @@
-import { useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { ArbitrumGoerli, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { useSportsBettingContract } from "./contract";
 import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
@@ -10,7 +10,14 @@ const useLinkContract = () => {
     const { chainId } = useEthers();
 
     // TODO: Parametrize token address
-    const tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
+    let tokenAddress;
+    if (chainId == Goerli.chainId) {
+        tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
+    } else if (chainId == ArbitrumGoerli.chainId) {
+        tokenAddress = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28";
+    } else {
+        tokenAddress = '';
+    }
 
     const erc20ABI = ERC20.abi;
     const erc20Interface = new utils.Interface(erc20ABI);

@@ -21,7 +21,6 @@ const style = {
 };
 
 export const LinkFundModal = (props: LinkFundModalProps) => {
-    console.log("RERENDERING MODAL");
     return (
         <Modal
             open={props.open}

@@ -16,7 +16,7 @@
     "@types/node": "^16.11.56",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@usedapp/core": "^1.1.5",
+    "@usedapp/core": "^1.2.1",
     "chart.js": "^3.9.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",

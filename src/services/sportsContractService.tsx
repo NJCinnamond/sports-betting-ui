@@ -17,7 +17,7 @@ const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
 // TODO: Parse enrichment payload 
 // Currently response is in some array format with hex numbers
 const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
-    if (response) {
+    if (response !== undefined && response.length) {
         const enrichment = response[0];
         const parsedEnrichment: FixtureEnrichment = {
             fixture_id: fixtureID,

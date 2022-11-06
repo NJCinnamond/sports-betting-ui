@@ -40,7 +40,7 @@ export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) =
 
     useEffect(() => {
         let newText = props.direction === StakeDirection.STAKE ? "Staking" : "Unstaking";
-        newText += " " + props.stakeAmount + " DAI on " + props.selectedBetTypeStr + ".";
+        newText += " " + props.stakeAmount + " ETH on " + props.selectedBetTypeStr + ".";
         setHelperText(newText);
     }, [props.stakeAmount, props.direction, props.selectedBetTypeStr]);
 
