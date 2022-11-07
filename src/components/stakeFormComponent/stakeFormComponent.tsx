@@ -6,9 +6,6 @@ import { useFixtureStake, useFixtureUnstake } from "../../hooks";
 import { useEffect, useState } from "react";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
-import Alert from "@material-ui/lab/Alert";
-import { useNotifications } from "@usedapp/core";
-import { useTypedSelector } from "../../redux/store";
 import { useFixtureTransacting } from "../../hooks/view";
 import { useFixtureBettingEndTime } from "../../hooks/stake";
 
@@ -39,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 export const StakeFormComponent = (props: StakeFormComponentProps) => {
     const classes = useStyles();
 
-    const { stake } = useFixtureStake(props.fixture?.fixture_id);
+    const { fixtureStakeState, stake } = useFixtureStake(props.fixture?.fixture_id);
     const { unstake } = useFixtureUnstake(props.fixture?.fixture_id);
 
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.

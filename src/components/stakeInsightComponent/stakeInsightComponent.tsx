@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-around"
     },
     stakeInsightChartItem: {
-        flexBasis: "30%",
+        flexBasis: "40%",
     },
     stakeInsightTableItem: {
         flexBasis: "40%",

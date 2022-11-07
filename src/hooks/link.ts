@@ -99,6 +99,5 @@ export const useCanMakeOracleRequest = () => {
     const { linkResponse } = useLinkTransferred();
     const link = handleUserLinkTransferred(linkResponse);
     const canMakeOracleRequest = link.userLinkTransferred !== null && link.userLinkTransferred >= 0.1;
-    console.log("Link transferred: ", link);
     return { canMakeOracleRequest }
 }
