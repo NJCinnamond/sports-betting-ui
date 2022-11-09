@@ -8,8 +8,6 @@ import { UserStakePanelComponent } from "../userStakePanelComponent/userStakePan
 import { FixtureBettingState } from "../../$types/fixtureBettingState";
 import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeComponent";
 import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
-import { UserStakeChartComponent } from "../userStakeChartComponent/userStakeChartComponent";
-import { TotalStakeChartComponent } from "../totalStakeChartComponent/totalStakeChartComponent";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
 import { AwaitingStakeComponent } from "../awaitingStakeComponent/awaitingStakeComponent";
 import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfillingStakeComponent";
@@ -75,7 +73,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                     <ClosedStakeComponent fixture={props.fixture} />
                 )}
                 {fixtureState == FixtureBettingState.OPENING && (
-                    <OpeningStakeComponent />
+                    <OpeningStakeComponent fixture={props.fixture} />
                 )}
                 {(fixtureState == FixtureBettingState.OPEN) && (
                     <UserStakePanelComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam} enrichment={enrichment} />

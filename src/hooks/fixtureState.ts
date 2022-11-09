@@ -20,7 +20,7 @@ export const useFixtureRequestKickoff = (fixtureID: string) => {
 
     const { state: fixtureRequestKickoffState, send: fixtureRequestKickoffSend } = useContractFunction(sportsBetting, 'requestFixtureKickoffTime', {
         transactionName: 'requestKickoffTime', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
-        bufferGasLimitPercentage: 10000
+        bufferGasLimitPercentage: 6000000
     });
 
     const requestFixtureKickoff = (fixtureID: string) => fixtureRequestKickoffSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
