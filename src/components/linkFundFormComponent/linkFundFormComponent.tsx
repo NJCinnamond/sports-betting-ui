@@ -2,10 +2,12 @@ import { Alert, Box } from "@mui/material";
 import { Button, CircularProgress, makeStyles, Snackbar } from "@material-ui/core";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
-import { useLinkTransfer, useLinkWithdraw } from "../../hooks/link";
+import { approveLinkTransactionName, transferLinkTransactionName, useLinkTransfer, useLinkWithdraw } from "../../hooks/link";
 import { useNotifications } from "@usedapp/core";
 import { useEffect, useState } from "react";
 import { utils } from "ethers";
+import { TransactionEntry, transactionsActions } from "../../redux/reducers/transactions";
+import { store, useTypedSelector } from "../../redux/store";
 
 export interface LinkFundFormComponentProps {
     stakeAmount: number,
@@ -33,6 +35,10 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
     const classes = useStyles();
     const { notifications } = useNotifications();
 
+    // Redux store for selected fixture view
+    const txns = useTypedSelector((state) => state.transactions);
+    const txnNameFromHash = (hash: string) => txns[hash];
+
     const { approveAndStake, state: approveAndStakeERC20State } = useLinkTransfer();
     const { linkWithdrawSend, linkWithdrawState } = useLinkWithdraw();
 
@@ -51,21 +57,42 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
     const [showErc20ApprovalSuccess, setShowErc20ApprovalSuccess] = useState(false);
     const [showStakeTokenSuccess, setShowStakeTokenSuccess] = useState(false);
 
-    // TODO: notifs for errors
+    // Maintain txn identity via txn hash store
     useEffect(() => {
-        if (notifications.filter((n) => n.type === "transactionSucceed" && n.transactionName === "Approve LINK transfer").length > 0) {
+        console.log(notifications);
+        if (notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === approveLinkTransactionName).length > 0) {
+            const notif: any = notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === approveLinkTransactionName)[0];
+            store.dispatch(transactionsActions.new({ name: notif.transactionName, hash: notif.transaction?.hash } as TransactionEntry));
+        }
+        if (notifications.filter((n) => n.type === "transactionSucceed" && txnNameFromHash(n.transaction?.hash) === approveLinkTransactionName).length > 0) {
             setShowErc20ApprovalSuccess(true);
             setShowStakeTokenSuccess(false);
         }
-        if (notifications.filter((n) => n.type === "transactionSucceed" && n.transactionName === "Transfer LINK").length > 0) {
+        if (notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === transferLinkTransactionName).length > 0) {
+            const notif: any = notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === transferLinkTransactionName)[0];
+            store.dispatch(transactionsActions.new({ name: notif.transactionName, hash: notif.transaction?.hash } as TransactionEntry));
+        }
+        else if (notifications.filter((n) => n.type === "transactionSucceed" && txnNameFromHash(n.transaction?.hash) === transferLinkTransactionName).length > 0) {
             setShowErc20ApprovalSuccess(false);
             setShowStakeTokenSuccess(true);
         }
     }, [notifications, showErc20ApprovalSuccess, showStakeTokenSuccess]);
 
+    // State of LINK approval & transfer
+    const [isException, setIsException] = useState<boolean>(false);
+    useEffect(() => {
+        if (approveAndStakeERC20State.status === "Exception") {
+            setIsException(true);
+        }
+        if (linkWithdrawState.status === "Exception") {
+            setIsException(true);
+        }
+    }, [approveAndStakeERC20State]);
+
     const handleSnackbarClose = () => {
         setShowErc20ApprovalSuccess(false);
         setShowStakeTokenSuccess(false);
+        setIsException(false);
     };
 
     return (
@@ -95,6 +122,12 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
                 autoHideDuration={5000}
                 onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity="success">LINK transferred!.</Alert>
+            </Snackbar>
+            <Snackbar
+                open={isException}
+                autoHideDuration={5000}
+                onClose={handleSnackbarClose}>
+                <Alert onClose={handleSnackbarClose} severity="error">Link transfer failed.</Alert>
             </Snackbar>
         </>
     );

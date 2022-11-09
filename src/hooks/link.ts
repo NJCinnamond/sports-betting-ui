@@ -6,6 +6,9 @@ import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { handleUserLinkTransferred } from "../services/sportsContractService";
 
+export const approveLinkTransactionName = "Approve LINK transfer";
+export const transferLinkTransactionName = "Transfer LINK";
+
 const useLinkContract = () => {
     const { chainId } = useEthers();
 
@@ -31,7 +34,7 @@ export const useLinkTransfer = () => {
     // approve
     const { send: approveErc20Send, state: approveAndStakeErc20State } =
         useContractFunction(linkToken, "approve", {
-            transactionName: "Approve LINK transfer",
+            transactionName: approveLinkTransactionName,
         })
     const approveAndStake = (amount: string) => {
         setAmountToStake(amount)
@@ -40,7 +43,7 @@ export const useLinkTransfer = () => {
     // stake
     const { send: stakeSend, state: stakeState } =
         useContractFunction(sportsBetting, "transferLink", {
-            transactionName: "Transfer LINK",
+            transactionName: transferLinkTransactionName,
         })
     const [amountToStake, setAmountToStake] = useState<string>('0');
 

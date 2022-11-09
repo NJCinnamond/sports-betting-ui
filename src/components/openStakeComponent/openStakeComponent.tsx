@@ -65,16 +65,12 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
         const dir = stakeDirection == StakeDirection.STAKE ? StakeDirection.UNSTAKE : StakeDirection.STAKE;
         setStakeDirection(dir);
     }
-
     
     // TODO: COMPONENTIZE
     const { requestFixtureKickoff } = useFixtureRequestKickoff(props.fixture.fixture_id);
     const handleRequestFixtureKickoff = () => {
         requestFixtureKickoff(props.fixture.fixture_id);
     };
-
-    
-    
 
     return (
         <Box className={classes.container}>
