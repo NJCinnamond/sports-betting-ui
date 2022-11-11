@@ -127,7 +127,7 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
                 open={isException}
                 autoHideDuration={5000}
                 onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="error">Link transfer failed.</Alert>
+                <Alert onClose={handleSnackbarClose} severity="error">LINK transfer failed.</Alert>
             </Snackbar>
         </>
     );
