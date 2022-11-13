@@ -1,5 +1,5 @@
 export enum BetType {
-    HOME,
-    DRAW,
-    AWAY
+    HOME = 1,
+    DRAW = 2,
+    AWAY = 3
 }

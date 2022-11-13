@@ -89,10 +89,10 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
+
             <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
                 GET KO TIME
             </Button>
-            
         </Box >
     );
 }

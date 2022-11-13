@@ -82,7 +82,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                     <AwaitingStakeComponent fixtureID={props.fixture.fixture_id} />
                 )}
                 {fixtureState == FixtureBettingState.FULFILLING && (
-                    <FulfillingStakeComponent />
+                    <FulfillingStakeComponent fixtureID={props.fixture.fixture_id}/>
                 )}
                 {fixtureState == FixtureBettingState.FULFILLED && (
                     <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} />

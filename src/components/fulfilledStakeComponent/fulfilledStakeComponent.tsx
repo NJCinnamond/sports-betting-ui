@@ -10,7 +10,6 @@ export interface FulfilledStakeComponentProps {
 const useStyles = makeStyles((theme) => ({
     container: {
         textAlign: "center",
-        fontSize: "1em",
         margin: "1em"
     },
 }));

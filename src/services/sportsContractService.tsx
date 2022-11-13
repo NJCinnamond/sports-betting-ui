@@ -31,9 +31,9 @@ const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
 
 const parseStakeSummaryFromEnrichmentPayload = (stakes: StakeSummaryPayload) => {
     let stakeSummary = {} as StakeSummary;
-    stakeSummary[BetType.HOME] = parseInt(stakes[BetType.HOME]._hex) / 10 ** 18; // TODO: Use parseBigNumber?
-    stakeSummary[BetType.DRAW] = parseInt(stakes[BetType.DRAW]._hex) / 10 ** 18;
-    stakeSummary[BetType.AWAY] = parseInt(stakes[BetType.AWAY]._hex) / 10 ** 18;
+    stakeSummary[BetType.HOME] = parseInt(stakes[0]._hex) / 10 ** 18; // TODO: Use parseBigNumber?
+    stakeSummary[BetType.DRAW] = parseInt(stakes[1]._hex) / 10 ** 18;
+    stakeSummary[BetType.AWAY] = parseInt(stakes[2]._hex) / 10 ** 18;
     return stakeSummary;
 };
 

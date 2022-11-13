@@ -1,8 +1,9 @@
 import { useCall, useEthers } from "@usedapp/core";
-import { FixtureBettingState } from "../$types/fixtureBettingState";
 import { FixtureEnrichment } from "../$types/fixtureEnrichment";
 import { useTypedSelector } from "../redux/store";
 import { useSportsBettingContract } from "./contract";
+
+const { AddressZero } = require("@ethersproject/constants");
 
 const useFixtureEnrichment = (fixtureID: string) => useTypedSelector((state) => state.fixturesEnrichment[fixtureID]);
 
@@ -16,12 +17,19 @@ export const useFixtureEnrichmentCall = (
 ) => {
     const sportsBetting = useSportsBettingContract();
     const { account } = useEthers();
+
+    let address: string;
+    if (account === undefined) {
+        address = AddressZero;
+    } else {
+        address = account;
+    }
     const { value: enrichment, error } =
         useCall(
             sportsBetting && {
                 contract: sportsBetting,
                 method: "getEnrichedFixtureData",
-                args: [fixtureId, account],
+                args: [fixtureId, address],
             }
         ) ?? {};
     if (error) {
