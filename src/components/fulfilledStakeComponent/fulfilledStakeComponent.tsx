@@ -23,6 +23,8 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
         const payout = handleUserPayout(value);
         if (payout.amount !== undefined) {
             setPayoutAmount(payout.amount.toString());
+        } else {
+            setPayoutAmount('');
         }
     }, [value]);
 
@@ -30,13 +32,13 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
     return (
         <div className={classes.container}>
             Winners have been paid out for this fixture!
-            <p>
+            <div>
                 {payoutAmount && Number(payoutAmount) > 0 && (
                     <p>
                         Congratulations, you were paid {payoutAmount} ETH
                     </p>
                 )}
-            </p>
+            </div>
         </div>
     )
 }

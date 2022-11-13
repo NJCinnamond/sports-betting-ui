@@ -44,9 +44,10 @@ export const Body = () => {
     const [isValidChain, setIsValidChain] = useState<boolean>();
 
     useEffect(() => {
-        const isValid: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
-        setIsValidChain(isValid);
-        console.log("Set is valid chain of ID ", chainId, " to ", isValid);
+        if (chainId != null) {
+            const isValid: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
+            setIsValidChain(isValid);
+        }
     }, [chainId]);
 
     useEffect(() => {

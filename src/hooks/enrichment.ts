@@ -33,7 +33,6 @@ export const useFixtureEnrichmentCall = (
             }
         ) ?? {};
     if (error) {
-        console.error(error.message)
         return { enrichment: {} as FixtureEnrichment }
     }
     return { enrichment }; // TODO: Does this typecasting work?

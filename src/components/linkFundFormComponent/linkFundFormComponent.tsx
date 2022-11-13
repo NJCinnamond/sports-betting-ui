@@ -59,7 +59,6 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
 
     // Maintain txn identity via txn hash store
     useEffect(() => {
-        console.log(notifications);
         if (notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === approveLinkTransactionName).length > 0) {
             const notif: any = notifications.filter((n) => n.type === "transactionStarted" && n.transactionName === approveLinkTransactionName)[0];
             store.dispatch(transactionsActions.new({ name: notif.transactionName, hash: notif.transaction?.hash } as TransactionEntry));
