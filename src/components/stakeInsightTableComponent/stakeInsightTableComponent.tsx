@@ -54,7 +54,7 @@ export const StakeInsightTableComponent = (props: StakeInsightTableComponentProp
                         <TableRow>
                             <TableCell>Result</TableCell>
                             <TableCell align="right">Total Bets</TableCell>
-                            {props.enrichment.user && (
+                            {props.enrichment?.user && (
                                 <TableCell align="right">Your Bets</TableCell>
                             )}
                         </TableRow>
@@ -69,7 +69,7 @@ export const StakeInsightTableComponent = (props: StakeInsightTableComponentProp
                                     {row.betTypeStr}
                                 </TableCell>
                                 <TableCell align="right">{row.total}</TableCell>
-                                {props.enrichment.user && (
+                                {props.enrichment?.user && (
                                     <TableCell align="right">{row.user}</TableCell>                            
                                 )}
                             </TableRow>

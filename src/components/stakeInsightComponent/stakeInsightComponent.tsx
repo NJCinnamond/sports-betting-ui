@@ -1,4 +1,5 @@
 import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
+import { useMediaQuery } from 'react-responsive';
 import { Team } from "../../$types/team";
 import { TotalStakeChartComponent } from "../totalStakeChartComponent/totalStakeChartComponent";
 import { makeStyles } from "@material-ui/core";
@@ -11,27 +12,35 @@ export interface StakeInsightComponentProps {
 };
 
 const useStyles = makeStyles((theme) => ({
-    stakeInsightContainer: {
+    stakeInsightRowContainer: {
         display: "flex",
         justifyContent: "space-around"
     },
+    stakeInsightColumContainer: {
+        display: "flex",
+        flexDirection: "column",
+    },
     stakeInsightChartItem: {
         flexBasis: "40%",
+        maxWidth: "40%"
     },
     stakeInsightTableItem: {
         flexBasis: "40%",
+        maxWidth: "40%"
     }
 }));
 
 export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
     const classes = useStyles();
 
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 700px)' });
+
     return (
-        <div className={classes.stakeInsightContainer}>
-            <div className={classes.stakeInsightChartItem}>
+        <div className={isTabletOrMobile ? classes.stakeInsightColumContainer : classes.stakeInsightRowContainer}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightChartItem}>
                 <TotalStakeChartComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
-            <div className={classes.stakeInsightTableItem}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightTableItem}>
                 <StakeInsightTableComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
         </div>

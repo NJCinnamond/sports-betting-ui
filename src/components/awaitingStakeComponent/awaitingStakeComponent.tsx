@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
     },
     info: {
-        fontSize: "0.9em",
+        fontSize: "1em",
         marginBottom: "0.6em",
     }
 }));
@@ -38,7 +38,9 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
                     When we detect the fixture result is available, you will be able to click the button below to initiate payout to winners.
                 </p> 
             </div>
-            <PayoutButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
+            <div>
+                <PayoutButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
+            </div>
         </div>
     )
 }

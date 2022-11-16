@@ -23,12 +23,12 @@ export const FulfillingStakeComponent = (props: FulfillingStakeComponentProps) =
             <p>
                 The smart contract is currently awaiting the fixture result. When it receives the result, it will payout winners for this fixture.
             </p>
-            <p>
+            <div>
                 To retry payout, click the button below.
                 <div className={classes.payout}>
                     <PayoutButtonComponent fixtureID={props.fixtureID} disabled={false}/>
                 </div>
-            </p>
+            </div>
         </div>
     )
 }

@@ -10,7 +10,7 @@ export interface FulfilledStakeComponentProps {
 const useStyles = makeStyles((theme) => ({
     container: {
         textAlign: "center",
-        margin: "1em"
+        marginTop: "1em"
     },
 }));
 
@@ -33,13 +33,11 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
     return (
         <div className={classes.container}>
             Winners have been paid out for this fixture!
-            <div>
-                {payoutAmount && Number(payoutAmount) > 0 && (
-                    <p>
-                        Congratulations, you were paid {payoutAmount} ETH
-                    </p>
-                )}
-            </div>
+            {payoutAmount && Number(payoutAmount) > 0 && (
+                <p>
+                    Congratulations, you were paid {payoutAmount} ETH
+                </p>
+            )}
         </div>
     )
 }

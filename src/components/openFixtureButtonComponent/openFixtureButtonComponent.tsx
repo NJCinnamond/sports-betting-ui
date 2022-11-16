@@ -1,7 +1,4 @@
-import { Button, CircularProgress, makeStyles, Snackbar } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { useNotifications } from "@usedapp/core";
-import { useEffect, useState } from "react";
+import { Button, CircularProgress, makeStyles } from "@material-ui/core";
 import { Fixture } from "../../$types/fixture";
 import { useFixtureOpen } from "../../hooks/fixtureState";
 import { useCanMakeOracleRequest } from "../../hooks/link";

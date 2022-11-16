@@ -1919,7 +1919,7 @@
       "chainId": "421613",
       "contracts": {
         "SportsBetting": {
-          "address": "0xf8041CCE9E4A5FE99A8c75deD5f1b7A0e03AB4e2",
+          "address": "0x63148F9986b3aca26A349f860d82D22C6a60E8ff",
           "abi": [
             {
               "inputs": [
@@ -1956,6 +1956,25 @@
               ],
               "stateMutability": "nonpayable",
               "type": "constructor"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "string",
+                  "name": "fixtureID",
+                  "type": "string"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "BetCommissionPayout",
+              "type": "event"
             },
             {
               "anonymous": false,
