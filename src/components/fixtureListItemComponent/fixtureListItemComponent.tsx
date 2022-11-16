@@ -53,8 +53,10 @@ export const FixtureListItemComponent = (props: FixtureComponentProps) => {
     return (
         <>
             <div key={props.fixture?.fixture_id} onClick={() => onClickHandler()} className={classes.container}>
-                {props.fixture && homeTeam && awayTeam && <FixtureInfoComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam}></FixtureInfoComponent>}
-            </div >
+                {props.fixture && homeTeam && awayTeam && (
+                    <FixtureInfoComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam}></FixtureInfoComponent>
+                )}
+            </div>
             <FixtureNotificationsComponent fixtureID={props.fixture?.fixture_id} />
         </>
     )

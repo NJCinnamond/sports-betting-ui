@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { makeStyles } from "@material-ui/core";
+import { useMediaQuery } from 'react-responsive';
 import { Fixture } from "../../$types/fixture";
 import { BetTypeSelectorComponent } from "../betTypeSelectorComponent/betTypeSelectorComponent";
 import { useEffect, useState } from "react";
@@ -18,9 +19,20 @@ export interface UserStakePanelComponentProps {
 };
 
 const useStyles = makeStyles((theme) => ({
-    container: {
+    rowContainer: {
         display: "flex",
         marginTop: "1em",
+    },
+    columnContainer: {
+        display: "flex",
+        flexDirection: "column",
+        marginTop: "1em",
+    },
+    columnItem: {
+        width: "100%",
+        margin: "1.2em auto",
+        justifyContent: "center",
+        textAlign: 'center',
     },
     selector: {
         flexBasis: "30%",
@@ -41,6 +53,8 @@ const useStyles = makeStyles((theme) => ({
 export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => {
     const classes = useStyles();
 
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 700px)' });
+
     const teamService = new TeamService();
 
     const { selectedBetType } = useSelectedBetType(props.fixture?.fixture_id);
@@ -54,14 +68,14 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
     }, [selectedBetType, props.homeTeam, props.awayTeam]);
 
     return (
-        <Box className={classes.container}>
-            <div className={classes.selector}>
+        <Box className={isTabletOrMobile ? classes.columnContainer : classes.rowContainer}>
+            <div className={isTabletOrMobile ? classes.columnItem :  classes.selector}>
                 <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
             </div>
-            <div className={classes.stakeForm}>
+            <div className={isTabletOrMobile ? classes.columnItem :  classes.stakeForm}>
                 <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
             </div>
-            <div className={classes.betSlip}>
+            <div className={isTabletOrMobile ? classes.columnItem :  classes.betSlip}>
                 <OpenBetInsightComponent fixtureID={props.fixture?.fixture_id} />
             </div>
         </Box>

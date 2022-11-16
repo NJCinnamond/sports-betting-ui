@@ -14,20 +14,16 @@ export interface StakeInsightComponentProps {
 const useStyles = makeStyles((theme) => ({
     stakeInsightRowContainer: {
         display: "flex",
-        justifyContent: "space-around"
+        justifyContent: "space-around",
     },
     stakeInsightColumContainer: {
         display: "flex",
         flexDirection: "column",
     },
-    stakeInsightChartItem: {
+    stakeInsightItem: {
         flexBasis: "40%",
         maxWidth: "40%"
     },
-    stakeInsightTableItem: {
-        flexBasis: "40%",
-        maxWidth: "40%"
-    }
 }));
 
 export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
@@ -37,10 +33,10 @@ export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
 
     return (
         <div className={isTabletOrMobile ? classes.stakeInsightColumContainer : classes.stakeInsightRowContainer}>
-            <div className={isTabletOrMobile ? '' : classes.stakeInsightChartItem}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightItem}>
                 <TotalStakeChartComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
-            <div className={isTabletOrMobile ? '' : classes.stakeInsightTableItem}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightItem}>
                 <StakeInsightTableComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
         </div>

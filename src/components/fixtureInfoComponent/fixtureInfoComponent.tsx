@@ -17,12 +17,16 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "center",
         alignItems: "center",
         minHeight: "4em",
+        fontSize: "1.1em",
+        [theme.breakpoints.only('xs')]: {
+            fontSize: '3.2vw',
+        },
     },
     nameBadge: {
         width: "6em",
     },
     fixtureTimeBox: {
-        margin: "0 6em",
+        margin: "0 4em",
         backgroundColor: "grey",
         padding: "0.6em",
         borderRadius: "5px",
