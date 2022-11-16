@@ -9,15 +9,12 @@ const useSportsBettingContract = () => {
     const { chainId } = useEthers();
     const deployments: Deployment = Deployments;
 
-    let chainIdString;
+    let chainIdString = ChainId.ArbitrumGoerli.toString();
     if (chainId !== undefined) {
         chainIdString = chainId.toString();
-    } else {
-        chainIdString = "5"; // TODO don't default to goerli
     }
     
     const { abi, address } = deployments[chainIdString][0].contracts.SportsBetting;
-
     const sportsBettingInterface = new utils.Interface(abi);
     return new Contract(address, sportsBettingInterface);
 };

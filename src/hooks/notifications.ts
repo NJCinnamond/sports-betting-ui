@@ -99,7 +99,6 @@ export const useFixtureNotifications = (fixtureID: string) => {
 
             setFulfillingTransactionState(fixtureID, "Mining");
         };
-
         // Staking or unstaking transaction success
         if (notifications.filter((n) => n.type === "transactionSucceed" && txnNameFromHash(n.transaction?.hash) === getFulfillingTransactionName(fixtureID)).length > 0) {
             setFulfillingTransactionState(fixtureID, "Success");

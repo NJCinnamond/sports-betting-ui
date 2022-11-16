@@ -19,6 +19,7 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
 
     const [payoutAmount, setPayoutAmount] = useState<string>('0');
     const { value } = useFixturePayout(props.fixtureID);
+    
     useEffect(() => {
         const payout = handleUserPayout(value);
         if (payout.amount !== undefined) {

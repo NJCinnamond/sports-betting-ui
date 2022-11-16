@@ -1,7 +1,7 @@
 import { Box } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core";
 import { useEthers } from '@usedapp/core';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { config } from '../../App';
 import { useTypedSelector } from '../../redux/store';
 import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Body = () => {
     const classes = useStyles();
-    const { chainId } = useEthers();
+    const { chainId, account } = useEthers();
 
     // Redux store for selected fixture view
     const view = useTypedSelector((state) => state.view);
@@ -41,14 +41,8 @@ export const Body = () => {
     const startDate = new Date(2022, 9, 20);
     const endDate = new Date(2022, 11, 14);
 
-    const [isValidChain, setIsValidChain] = useState<boolean>();
-
-    useEffect(() => {
-        if (chainId != null) {
-            const isValid: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
-            setIsValidChain(isValid);
-        }
-    }, [chainId]);
+    const isValidChain: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
+    const shouldShowBody = (!account || (account && isValidChain));
 
     useEffect(() => {
         fetchFixtures();
@@ -58,7 +52,7 @@ export const Body = () => {
     // TODO: Separate these into two separate components
     return (
         <Box>
-            {isValidChain && (
+            {shouldShowBody && (
                 <Box className={classes.box}>
                     {view.selected && (
                         <div className={classes.stakePanelContainer}>
@@ -73,12 +67,12 @@ export const Body = () => {
                 </Box>
             )}
             <Box className={classes.box}>
-                {isValidChain && (
+                {shouldShowBody && (
                     <DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>
                 )}
-                {!isValidChain && (
+                {!shouldShowBody && (
                     <div className={classes.invalidChainBox}>
-                        Please use Mainnet or Goerli test net.
+                        Please use Arbitrum or Arbitrum Goerli test net.
                     </div>
                 )}
             </Box>

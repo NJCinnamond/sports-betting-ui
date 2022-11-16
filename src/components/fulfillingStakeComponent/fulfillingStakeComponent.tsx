@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { PayoutComponent } from "../payoutComponent/payoutComponent";
+import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
 
 export type FulfillingStakeComponentProps = {
     fixtureID: string;
@@ -26,7 +26,7 @@ export const FulfillingStakeComponent = (props: FulfillingStakeComponentProps) =
             <p>
                 To retry payout, click the button below.
                 <div className={classes.payout}>
-                    <PayoutComponent fixtureID={props.fixtureID} />
+                    <PayoutButtonComponent fixtureID={props.fixtureID} disabled={false}/>
                 </div>
             </p>
         </div>

@@ -3,8 +3,9 @@ import { useFixtureFulfill } from "../../hooks";
 import { useCanMakeOracleRequest } from "../../hooks/link";
 import { useFixtureTransacting } from "../../hooks/view";
 
-export interface PayoutComponentProps {
+export interface PayoutButtonComponentProps {
     fixtureID: string,
+    disabled: boolean
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const PayoutComponent = (props: PayoutComponentProps) => {
+export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
     const classes = useStyles();
 
     const { fulfillFixture } = useFixtureFulfill(props.fixtureID);
@@ -30,7 +31,7 @@ export const PayoutComponent = (props: PayoutComponentProps) => {
             color="primary"
             variant="contained"
             onClick={handlePayoutAction}
-            disabled={isFixtureTransacting || !canMakeOracleRequest}
+            disabled={isFixtureTransacting || !canMakeOracleRequest || props.disabled}
         >
             {isFixtureTransacting ? <CircularProgress size={26} /> : "PAYOUT"}
         </Button>

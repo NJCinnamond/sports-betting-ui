@@ -21,26 +21,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const OpenFixtureButtonComponent = (props: OpenFixtureButtonComponentProps) => {
     const classes = useStyles();
-    const { notifications } = useNotifications();
     const { openFixture } = useFixtureOpen(props.fixture?.fixture_id);
 
     const { canMakeOracleRequest } = useCanMakeOracleRequest();
 
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
-
-    // Handle logic for fixture opening failing, so snackbar appears with alert
-    // TODO: Move this to generic snackbar component which can display regardless of whether failing fixture is selected
-    const [showFixtureOpenFailed, setShowFixtureOpenFailed] = useState(false);
-    useEffect(() => {
-        if (notifications.filter((n) => n.type === "transactionFailed" && n.transactionName === "FixtureOpen").length > 0) {
-            setShowFixtureOpenFailed(true);
-        };
-    }, [notifications]);
-
-    const handleSnackbarClose = () => {
-        setShowFixtureOpenFailed(false);
-    };
 
     // TODO: Improve alert text to explain time requirements for fixture opening
     return (
@@ -54,11 +40,6 @@ export const OpenFixtureButtonComponent = (props: OpenFixtureButtonComponentProp
             >
                 {isFixtureTransacting ? <CircularProgress size={26} /> : "OPEN"}
             </Button>
-            <Snackbar
-                open={showFixtureOpenFailed}
-                onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="error">Opening fixture failed. Have you sent enough LINK?</Alert>
-            </Snackbar>
         </>
 
     );

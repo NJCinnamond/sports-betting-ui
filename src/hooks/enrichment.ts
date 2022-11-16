@@ -16,6 +16,7 @@ export const useFixtureEnrichmentCall = (
     fixtureId: string,
 ) => {
     const sportsBetting = useSportsBettingContract();
+
     const { account } = useEthers();
 
     let address: string;

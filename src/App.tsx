@@ -14,7 +14,6 @@ import { providers } from 'ethers';
 export const config: Config = {
   readOnlyChainId: ArbitrumGoerli.chainId,
   readOnlyUrls: {
-    [Goerli.chainId]: getDefaultProvider('goerli'),
     [ArbitrumGoerli.chainId]: new providers.AlchemyProvider("arbitrum-goerli", "b0XzEKP50JHFBu21CJUeIuyPfNTdauMj"), //TODO Put this in a .env
   },
   notifications: {
@@ -22,7 +21,6 @@ export const config: Config = {
     checkInterval: 1000,
   },
   networks: [
-    Goerli,
     ArbitrumGoerli
   ],
 }

@@ -1919,7 +1919,7 @@
       "chainId": "421613",
       "contracts": {
         "SportsBetting": {
-          "address": "0xF138a7Bb192c61A3486e3A6D6B52462CF3097336",
+          "address": "0xf8041CCE9E4A5FE99A8c75deD5f1b7A0e03AB4e2",
           "abi": [
             {
               "inputs": [
@@ -1939,9 +1939,9 @@
                   "type": "address"
                 },
                 {
-                  "internalType": "bytes32",
+                  "internalType": "string",
                   "name": "_jobId",
-                  "type": "bytes32"
+                  "type": "string"
                 },
                 {
                   "internalType": "uint256",

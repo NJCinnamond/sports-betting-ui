@@ -1,5 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import { PayoutComponent } from "../payoutComponent/payoutComponent";
+import { useEffect, useState } from "react";
+import { useTypedSelector } from "../../redux/store";
+import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
 
 export type AwaitingStakeComponentProps = {
     fixtureID: string;
@@ -18,6 +20,13 @@ const useStyles = makeStyles((theme) => ({
 export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
     const classes = useStyles();
 
+    const fixtures = useTypedSelector((state) => state.fixtures);
+    const [fixtureHasResult, setFixtureHasResult] = useState<boolean>(false);
+    useEffect(() => {
+        const hasResult = fixtures[props.fixtureID] != null && fixtures[props.fixtureID].result != null;
+        setFixtureHasResult(hasResult);
+    })
+
     // TODO: Disable Payout if no result detected in API
     return (
         <div className={classes.container}>
@@ -29,7 +38,7 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
                     When we detect the fixture result is available, you will be able to click the button below to initiate payout to winners.
                 </p> 
             </div>
-            <PayoutComponent fixtureID={props.fixtureID} />
+            <PayoutButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
         </div>
     )
 }

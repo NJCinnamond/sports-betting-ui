@@ -85,7 +85,7 @@ export const useLinkTransferred = (
     const { account } = useEthers();
     const { value: linkResponse, error } =
         useCall(
-            account && {
+            sportsBetting && account && {
                 contract: sportsBetting,
                 method: 'userToLink',
                 args: [account],
