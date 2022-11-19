@@ -57,16 +57,13 @@ export const useFixturePayout = (fixtureID: string) => {
 
 export const useFixtureBettingEndTime = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
-    const { account } = useEthers();
     const fixtures = useTypedSelector((state) => state.fixtures);
     const { value, error } =
-        useCall(
-            account && {
+        useCall({
                 contract: sportsBetting,
                 method: 'betCutOffTime',
                 args: [],
-            }
-        ) ?? {};
+        }) ?? {};
     if (error) {
         console.error(error.message);
         return {};

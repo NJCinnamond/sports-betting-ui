@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight: "4em",
         fontSize: "1.1em",
         [theme.breakpoints.only('xs')]: {
-            fontSize: '3.2vw',
+            fontSize: '2.9vw',
         },
     },
     nameBadge: {

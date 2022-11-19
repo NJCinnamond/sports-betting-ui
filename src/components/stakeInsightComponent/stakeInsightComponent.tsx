@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
     const classes = useStyles();
 
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 700px)' });
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 650px)' });
 
     return (
         <div className={isTabletOrMobile ? classes.stakeInsightColumContainer : classes.stakeInsightRowContainer}>

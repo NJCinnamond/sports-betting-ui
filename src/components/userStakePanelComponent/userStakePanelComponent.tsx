@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => {
     const classes = useStyles();
 
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 700px)' });
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 650px)' });
 
     const teamService = new TeamService();
 

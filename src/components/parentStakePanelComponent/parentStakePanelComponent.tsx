@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     fixtureTitle: {
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: "1.1em",
+        fontSize: "1.3em",
         padding: "0 0 0.8em 0"
     },
 }));
@@ -85,7 +85,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                     <FulfillingStakeComponent fixtureID={props.fixture.fixture_id}/>
                 )}
                 {fixtureState == FixtureBettingState.FULFILLED && (
-                    <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} />
+                    <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>
                 )}
             </>
             )}
