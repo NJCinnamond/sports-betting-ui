@@ -78,3 +78,19 @@ export const useFixtureBettingEndTime = (fixtureID: string) => {
     const betEndTime = new Date(difference * 1000); // Multiplied by 1000 so arg is in ms
     return { betEndTime };
 }
+
+export const useFixtureOpeningAdvanceTime = () => {
+    const sportsBetting = useSportsBettingContract();
+    const { value, error } =
+        useCall({
+                contract: sportsBetting,
+                method: 'betAdvanceTime',
+                args: [],
+        }) ?? {};
+    if (error) {
+        console.error(error.message);
+        return {};
+    }
+    const betAdvanceTime = new Date(value * 1000); // Multiplied by 1000 so arg is in ms
+    return { betAdvanceTime };
+}

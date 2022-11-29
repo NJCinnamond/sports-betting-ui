@@ -14,7 +14,6 @@ export interface UserPayout {
 
 const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
 
-// TODO: Parse enrichment payload 
 // Currently response is in some array format with hex numbers
 const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
     if (response !== undefined && response.length) {
@@ -31,9 +30,9 @@ const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
 
 const parseStakeSummaryFromEnrichmentPayload = (stakes: StakeSummaryPayload) => {
     let stakeSummary = {} as StakeSummary;
-    stakeSummary[BetType.HOME] = parseInt(stakes[0]._hex) / 10 ** 18; // TODO: Use parseBigNumber?
-    stakeSummary[BetType.DRAW] = parseInt(stakes[1]._hex) / 10 ** 18;
-    stakeSummary[BetType.AWAY] = parseInt(stakes[2]._hex) / 10 ** 18;
+    stakeSummary[BetType.HOME] = parseBigNumber(stakes[0]);
+    stakeSummary[BetType.DRAW] = parseBigNumber(stakes[1]);
+    stakeSummary[BetType.AWAY] = parseBigNumber(stakes[2]);
     return stakeSummary;
 };
 

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps) => {
     const classes = useStyles();
 
-    // Fixture enriched info tells us if fixture state
+    // Fixture enriched info contains fixture betting state and bet amounts
     const enrichment = useFixtureEnrichment(props.fixture.fixture_id);
 
     const fixtureState = enrichment?.state;
@@ -82,7 +82,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                     <AwaitingStakeComponent fixtureID={props.fixture.fixture_id} />
                 )}
                 {fixtureState == FixtureBettingState.FULFILLING && (
-                    <FulfillingStakeComponent fixtureID={props.fixture.fixture_id}/>
+                    <FulfillingStakeComponent fixtureID={props.fixture.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>
                 )}
                 {fixtureState == FixtureBettingState.FULFILLED && (
                     <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>

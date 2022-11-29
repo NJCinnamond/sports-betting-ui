@@ -32,7 +32,6 @@ export const ResultComponent = (props: ResultComponentProps) => {
         resultStr = 'Unknown';
     };
 
-    // TODO: Add result here
     return (
         <div className={classes.container}>
             Result: {resultStr}

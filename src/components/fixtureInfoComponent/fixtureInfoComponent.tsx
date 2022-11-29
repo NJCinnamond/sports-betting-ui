@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { createTheme, makeStyles } from "@material-ui/core";
 import moment from "moment";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
@@ -11,15 +11,26 @@ export interface FixtureInfoComponentProps {
     awayTeam: Team | undefined,
 };
 
+const theme = createTheme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 300,
+            md: 900,
+            lg: 1200,
+            xl: 1536,
+        },
+    },
+});
+
 const useStyles = makeStyles((theme) => ({
     container: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         minHeight: "4em",
-        fontSize: "1.1em",
-        [theme.breakpoints.only('xs')]: {
-            fontSize: '2.9vw',
+        [theme.breakpoints.down(460)]: {
+            fontSize: '3.5vw',
         },
     },
     nameBadge: {
@@ -36,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
-    const classes = useStyles();
+    const classes = useStyles(theme);
     const formatKickoffTime = (ko: number | undefined) => {
         let kickoffTime = '';
         if (ko) {

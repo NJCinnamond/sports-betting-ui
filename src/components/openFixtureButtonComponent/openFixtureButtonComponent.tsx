@@ -22,7 +22,7 @@ export const OpenFixtureButtonComponent = (props: OpenFixtureButtonComponentProp
 
     const { canMakeOracleRequest } = useCanMakeOracleRequest();
 
-    // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
+    // Hook into whether a user transaction on this fixture is mining. Disable opening if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
 
     // TODO: Improve alert text to explain time requirements for fixture opening

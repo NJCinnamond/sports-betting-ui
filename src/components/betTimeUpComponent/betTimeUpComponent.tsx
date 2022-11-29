@@ -8,11 +8,17 @@ export type BetTimeUpComponentProps = {
 
 const useStyles = makeStyles((theme) => ({
     container: {
-        fontSize: "0.9em",
-        marginTop: "-1em"
+        fontSize: "1em",
+        marginTop: "-0.2em",
+        '& > * + *': {
+            marginTop: "0.6em",
+        },
+    },
+    awaitContainerItem: {
+        fontSize: "1em",
     },
     awaitBtn: {
-        maxHeight: "1.8em",
+        maxHeight: "2em",
     }
 }));
 
@@ -26,21 +32,21 @@ export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
         awaitFixture(props.fixtureID);
     };
 
-    // TODO: When time is up, render new AWAIT action button which calls awaitBetForFixture
-    // to perform the OPEN -> AWAITING transition
     return (
         <div className={classes.container}>
-            <p>
+            <div>
                 Betting has finished.
-            </p>
+            </div>
             {account && (
                 <>
-                    <p>
-                        Click the button below to close contract staking and await the fixture result.
-                    </p>
-                    <Button className={classes.awaitBtn} color="primary" variant="contained" onClick={() => handleAwaitFixture()}>
-                        AWAIT RESULT
-                    </Button>
+                    <div className={classes.awaitContainerItem}>
+                        Click below to close staking and await result.
+                    </div>
+                    <div className={classes.awaitContainerItem}>
+                        <Button className={classes.awaitBtn} color="primary" variant="contained" onClick={() => handleAwaitFixture()}>
+                            AWAIT RESULT
+                        </Button>
+                    </div>
                 </>
             )}
         </div>

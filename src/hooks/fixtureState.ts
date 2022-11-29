@@ -6,7 +6,7 @@ export const useFixtureOpen = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureOpenState, send: fixtureOpenSend } = useContractFunction(sportsBetting, 'openBetForFixture', {
-        transactionName: getOpeningFixtureTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getOpeningFixtureTransactionName(fixtureID),
         bufferGasLimitPercentage: 10000
     });
 
@@ -45,7 +45,7 @@ export const useFixtureFulfill = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(sportsBetting, 'fulfillBetForFixture', {
-        transactionName: getFulfillingTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getFulfillingTransactionName(fixtureID),
         gasLimitBufferPercentage: 10,
     });
 

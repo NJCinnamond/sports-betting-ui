@@ -60,7 +60,6 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
     const { selectedBetType } = useSelectedBetType(props.fixture?.fixture_id);
 
     // Human readable string for selected bet type
-    // TODO: Put the below logic in some library and reuse for BetTypeSelectorComponent
     const [selectedBetTypeStr, setSelectedBetTypeStr] = useState<string>('');
     useEffect(() => {
         const betTypeStr = teamService.formatBetHelperString(props.homeTeam, props.awayTeam, selectedBetType);

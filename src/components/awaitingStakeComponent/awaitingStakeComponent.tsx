@@ -27,7 +27,6 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
         setFixtureHasResult(hasResult);
     })
 
-    // TODO: Disable Payout if no result detected in API
     return (
         <div className={classes.container}>
             <div className={classes.info}>

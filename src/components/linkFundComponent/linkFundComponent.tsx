@@ -48,8 +48,12 @@ export const LinkFundComponent = () => {
                 isValid: false,
                 errorStr: "Enter quantity."
             });
-        }
-        else { // TODO: Set to invalid if unstake and quantity > staked amount
+        } else if (stakeDirection == StakeDirection.UNSTAKE && stakeAmount > linkTransferred) {
+            setStakeValidity({
+                isValid: false,
+                errorStr: "Cannot unstake more than existing stake."
+            });
+        }   else {
             setStakeValidity(defaultValid);
         }
     }, [stakeAmount, stakeDirection]);

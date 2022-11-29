@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getAwaitingFixtureTransactionName, getFulfillingTransactionName, getOpeningFixtureTransactionName, getStakingTransactionName } from "../services/notificationService";
 import { setAwaitingTransactionState, setFulfillingTransactionState, setOpeningTransactionState, setStakingTransactionState } from "../services/viewService";
 import { store, useTypedSelector } from "../redux/store"
-import { TransactionEntry, transactionsActions } from "../redux/reducers/transactions";
+import { TransactionEntry, TransactionEntryType, transactionsActions } from "../redux/reducers/transactions";
 
 export const useFixtureNotifications = (fixtureID: string) => {
     const { notifications } = useNotifications();
@@ -14,9 +14,9 @@ export const useFixtureNotifications = (fixtureID: string) => {
     //////////////////////////////////
     // Basically, Success/Failure txns received via notifications on ArbitrumGoerli don't seem to retain the transactionName from the Started notifs
     // Hence we use a redux store 'notifications' to act as a key-value store for transaction hash -> transaction name, allowing us to recover the transaction 
-    // name when we receive a txn payload via a notification.
+    // name when we receive a txn payload via a useDapp notification hook payload.
     //////////////////////////////////
-    const txnNameFromHash = (hash: string) => txns[hash];
+    const txnNameFromHash = (hash: string) => txns[TransactionEntryType.HASH][hash];
 
     useEffect(() => {
         //

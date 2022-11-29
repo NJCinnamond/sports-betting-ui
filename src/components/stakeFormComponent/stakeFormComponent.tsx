@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Button, CircularProgress, makeStyles, Snackbar } from "@material-ui/core";
+import { Button, CircularProgress, makeStyles } from "@material-ui/core";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
 import { useFixtureStake, useFixtureUnstake } from "../../hooks";

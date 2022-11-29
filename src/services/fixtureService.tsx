@@ -8,7 +8,6 @@ export default class FixtureService {
         data.forEach((fixture) => {
             // Extract day string
             let fixtureDate = this.formatDate(new Date(Date.parse(fixture.ko_time)));
-
             const newFixture = fixture as Fixture;
 
             store.dispatch(fixturesActions.new(newFixture));

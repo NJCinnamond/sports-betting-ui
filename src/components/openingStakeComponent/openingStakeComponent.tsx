@@ -22,12 +22,14 @@ export const OpeningStakeComponent = (props: OpeningStakeComponentProps) => {
     return (
         <div className={classes.container}>
             Hold tight! This fixture is being opened for betting...
-            <p className={classes.takingTooLong}>
-                Taking too long? Click below to retry opening the fixture
+            <div className={classes.takingTooLong}>
                 <p>
-                    <OpenFixtureButtonComponent fixture={props.fixture}/>
+                    Taking too long? Click below to retry opening the fixture
                 </p>
-            </p>
+                <div>
+                    <OpenFixtureButtonComponent fixture={props.fixture}/>
+                </div>
+            </div>
         </div>
     );
 }

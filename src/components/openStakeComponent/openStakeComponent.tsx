@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { StakeEntryFieldComponent } from "../stakeEntryFieldComponent/stakeEntryFieldComponent";
 import { StakeFormComponent } from "../stakeFormComponent/stakeFormComponent";
 import { useFixtureRequestKickoff } from "../../hooks/fixtureState";
+import { useFixtureEnrichment } from "../../hooks/enrichment";
 
 export interface OpenStakeComponentProps {
     fixture: Fixture,
@@ -47,6 +48,10 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
     const [stakeAmount, setStakeAmount] = useState<number>(0);
     const setStakeAmountCB = (amount: number) => setStakeAmount(amount);
 
+    // Fixture enriched info tells us bet amounts for this user
+    const enrichment = useFixtureEnrichment(props.fixture.fixture_id);
+    const existingStakeAmount = enrichment?.user[props.selectedBetType];
+
     // stakeValidity 
     const [stakeValidity, setStakeValidity] = useState<StakeValidity>(defaultValid);
     useEffect(() => {
@@ -55,8 +60,12 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 isValid: false,
                 errorStr: "Enter quantity."
             });
-        }
-        else { // TODO: Set to invalid if unstake and quantity > staked amount
+        } else if (existingStakeAmount !== undefined && stakeDirection == StakeDirection.UNSTAKE && stakeAmount > existingStakeAmount) {
+            setStakeValidity({
+                isValid: false,
+                errorStr: "Cannot unstake more than existing stake."
+            });
+        } else { 
             setStakeValidity(defaultValid);
         }
     }, [stakeAmount, stakeDirection]);
@@ -66,11 +75,15 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
         setStakeDirection(dir);
     }
     
-    // TODO: COMPONENTIZE
+    /*// TODO: COMPONENTIZE
     const { requestFixtureKickoff } = useFixtureRequestKickoff(props.fixture.fixture_id);
     const handleRequestFixtureKickoff = () => {
         requestFixtureKickoff(props.fixture.fixture_id);
     };
+
+    <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
+                GET KO TIME
+            </Button>*/
 
     return (
         <Box className={classes.container}>
@@ -89,10 +102,6 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
-
-            <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
-                GET KO TIME
-            </Button>
         </Box >
     );
 }

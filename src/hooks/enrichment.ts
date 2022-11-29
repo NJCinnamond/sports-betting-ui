@@ -36,7 +36,7 @@ export const useFixtureEnrichmentCall = (
     if (error) {
         return { enrichment: {} as FixtureEnrichment }
     }
-    return { enrichment }; // TODO: Does this typecasting work?
+    return { enrichment };
 }
 
 export { useFixtureEnrichment, useFixtureBettingState }

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         padding: "1em 0",
         fontWeight: "bold",
-        fontSize: "1.1em",
+        fontSize: "1.3em",
     }
 }));
 

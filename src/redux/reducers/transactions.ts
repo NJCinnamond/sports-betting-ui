@@ -5,18 +5,34 @@ export type TransactionEntry = {
     hash: string,
 }
 
-export type TransactionStore = {
-    [key: string]: string
+export enum TransactionEntryType {
+    NAME,
+    HASH
+};
+
+export type TransactionMap = {
+    [key: string]: string,
 }
 
-export const transactionsInitialState: TransactionStore = {};
+export type TransactionStore = {
+    [key in TransactionEntryType]: TransactionMap;
+};
+
+
+// 0 = TransactionEntryType.NAME
+// 1 = TransactionEntryType.HASH
+export const transactionsInitialState: any = {
+    0: {},
+    1: {}
+};
 
 export const transactionsReducer = createSlice({
     name: 'transactions',
     initialState: transactionsInitialState,
     reducers: {
         new(state, action: PayloadAction<TransactionEntry>) {
-            state[action.payload.hash] = action.payload.name;
+            state[TransactionEntryType.NAME][action.payload.name] = action.payload.hash;
+            state[TransactionEntryType.HASH][action.payload.hash] = action.payload.name;
         },
     },
 });
