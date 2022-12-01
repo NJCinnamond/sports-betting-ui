@@ -31,7 +31,7 @@ const StyledBox = styled(Box)((
 ) => ({
     [`&.${classes.rowContainer}`]: {
         display: "flex",
-        marginTop: "1em",
+        marginTop: "2em",
     },
 
     [`&.${classes.columnContainer}`]: {
@@ -48,24 +48,24 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.selector}`]: {
-        flexBasis: "30%",
-        justifyContent: 'space-between'
+        flexBasis: "25%",
+        justifyContent: 'space-around'
     },
 
     [`& .${classes.stakeForm}`]: {
-        flexBasis: "40%",
+        flexBasis: "30%",
         margin: "0 auto",
-        justifyContent: 'space-between'
+        justifyContent: 'space-around'
     },
 
     [`& .${classes.betSlip}`]: {
         flexBasis: "30%",
         margin: "0 auto",
-        justifyContent: 'space-between'
+        justifyContent: 'space-around'
     },
 
     [`& .${classes.disconnectedText}`]: {
-        flexBasis: "70%",
+        flexBasis: "55%",
         margin: "auto",
         justifyContent: 'center',
         textAlign: 'center',

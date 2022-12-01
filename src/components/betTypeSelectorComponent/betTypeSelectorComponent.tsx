@@ -30,7 +30,6 @@ const StyledBox  = styled(Box )((
     },
 
     [`& .${classes.betTypeButton}`]: {
-
         maxHeight: "2em",
     }
 }));

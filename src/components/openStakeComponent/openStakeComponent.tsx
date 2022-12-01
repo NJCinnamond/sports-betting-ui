@@ -24,7 +24,7 @@ const StyledBox  = styled(Box )((
     [`&.${classes.container}`]: {
         display: "flex",
         flexDirection: "column",
-        width: "70%",
+        width: "100%",
         margin: "auto"
     },
 
