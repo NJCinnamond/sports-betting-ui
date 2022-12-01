@@ -21,10 +21,10 @@ const Root = styled('div')((
     },
 
     [`& .${classes.displayName}`]: {
-        padding: "0 2em",
         width: "4em",
         fontWeight: 500,
-        fontSize: "1.1em"
+        fontSize: "1.1em",
+        textAlign: "center",
     },
 
     [`& .${classes.crestContainer}`]: {

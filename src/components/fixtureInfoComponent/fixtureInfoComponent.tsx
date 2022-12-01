@@ -34,7 +34,7 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.fixtureTimeBox}`]: {
-        margin: "0 4em",
+        margin: "0 3em",
         backgroundColor: "grey",
         padding: "0.6em",
         borderRadius: "5px",
