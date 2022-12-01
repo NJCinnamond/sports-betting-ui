@@ -16,7 +16,7 @@ const Text = styled('div')((
         theme
     }
 ) => ({
-    [`& .${classes.text}`]: {
+    [`&.${classes.text}`]: {
         textAlign: 'center',
         top: "30%",
         position: "relative",

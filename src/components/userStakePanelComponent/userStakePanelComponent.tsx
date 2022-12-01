@@ -10,6 +10,7 @@ import TeamService from "../../services/teamService";
 import { useSelectedBetType } from "../../hooks/view";
 import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
 import { OpenBetInsightComponent } from "../openBetInsightComponent.tsx/openBetInsightComponent";
+import { useEthers } from "@usedapp/core";
 
 const PREFIX = 'UserStakePanelComponent';
 
@@ -19,7 +20,8 @@ const classes = {
     columnItem: `${PREFIX}-columnItem`,
     selector: `${PREFIX}-selector`,
     stakeForm: `${PREFIX}-stakeForm`,
-    betSlip: `${PREFIX}-betSlip`
+    betSlip: `${PREFIX}-betSlip`,
+    disconnectedText: `${PREFIX}-disconnectedText`,
 };
 
 const StyledBox = styled(Box)((
@@ -60,6 +62,13 @@ const StyledBox = styled(Box)((
         flexBasis: "30%",
         margin: "0 auto",
         justifyContent: 'space-between'
+    },
+
+    [`& .${classes.disconnectedText}`]: {
+        flexBasis: "70%",
+        margin: "auto",
+        justifyContent: 'center',
+        textAlign: 'center',
     }
 }));
 
@@ -71,7 +80,7 @@ export interface UserStakePanelComponentProps {
 }
 
 export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => {
-
+    const { account } = useEthers();
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 650px)' });
 
@@ -88,12 +97,21 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
 
     return (
         <StyledBox className={isTabletOrMobile ? classes.columnContainer : classes.rowContainer}>
-            <div className={isTabletOrMobile ? classes.columnItem :  classes.selector}>
-                <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
-            </div>
-            <div className={isTabletOrMobile ? classes.columnItem :  classes.stakeForm}>
-                <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
-            </div>
+            {account && (
+                <>
+                    <div className={isTabletOrMobile ? classes.columnItem :  classes.selector}>
+                    <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
+                    </div>
+                    <div className={isTabletOrMobile ? classes.columnItem :  classes.stakeForm}>
+                        <OpenStakeComponent selectedBetTypeStr={selectedBetTypeStr} fixture={props.fixture} selectedBetType={selectedBetType} />
+                    </div>
+                </>
+            )}
+            {!account && (
+                <div className={isTabletOrMobile ? classes.columnItem :  classes.disconnectedText}>
+                    Connect your wallet to begin staking!
+                </div>
+            )}
             <div className={isTabletOrMobile ? classes.columnItem :  classes.betSlip}>
                 <OpenBetInsightComponent fixtureID={props.fixture?.fixture_id} />
             </div>
