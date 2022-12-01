@@ -1,4 +1,4 @@
-import { Box, Button, makeStyles } from '@material-ui/core';
+import { Box, Button } from '@mui/material';
 import React from 'react';
 import { LinkFundModal } from '../linkFundModal/linkFundModal';
 

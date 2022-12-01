@@ -1,5 +1,6 @@
 import { Alert, Box } from "@mui/material";
-import { Button, CircularProgress, makeStyles, Snackbar } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { Button, CircularProgress, Snackbar } from "@mui/material";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
 import { approveLinkTransactionName, transferLinkTransactionName, useLinkTransfer, useLinkWithdraw } from "../../hooks/link";
@@ -9,30 +10,45 @@ import { utils } from "ethers";
 import { TransactionEntry, TransactionEntryType, transactionsActions } from "../../redux/reducers/transactions";
 import { store, useTypedSelector } from "../../redux/store";
 
+const PREFIX = 'LinkFundFormComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    stakeBtn: `${PREFIX}-stakeBtn`,
+    dirBtn: `${PREFIX}-dirBtn`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.container}`]: {
+        display: "flex",
+        marginTop: "0.4em",
+        height: "2.8em",
+    },
+
+    [`& .${classes.stakeBtn}`]: {
+        flexBasis: "70%",
+    },
+
+    [`& .${classes.dirBtn}`]: {
+        margin: "0 0.3em",
+        flexBasis: "30%",
+    }
+}));
+
 export interface LinkFundFormComponentProps {
     stakeAmount: number,
     direction: StakeDirection,
     toggleStakeDirection: () => void;
     validity: StakeValidity,
-};
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        marginTop: "0.4em",
-        height: "2.8em",
-    },
-    stakeBtn: {
-        flexBasis: "70%",
-    },
-    dirBtn: {
-        margin: "0 0.3em",
-        flexBasis: "30%",
-    },
-}));
+}
 
 export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
-    const classes = useStyles();
+
     const { notifications } = useNotifications();
 
     // Redux store for selected fixture view
@@ -95,7 +111,7 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
     };
 
     return (
-        <>
+        (<Root>
             <Box className={classes.container}>
                 <Button
                     className={classes.stakeBtn}
@@ -128,6 +144,6 @@ export const LinkFundFormComponent = (props: LinkFundFormComponentProps) => {
                 onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity="error">LINK transfer failed.</Alert>
             </Snackbar>
-        </>
+        </Root>)
     );
 }

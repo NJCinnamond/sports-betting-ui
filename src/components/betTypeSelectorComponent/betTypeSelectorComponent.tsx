@@ -1,19 +1,25 @@
 import { Box } from "@mui/material";
-import { Button, makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { Button } from "@mui/material";
 import { Team } from "../../$types/team";
 import { BetType } from "../../$types/betType";
 
 import "./betTypeSelectorComponent.css";
 import { useFixtureTransacting, useSelectedBetType } from "../../hooks/view";
 
-export interface BetTypeSelectorComponentProps {
-    fixtureID: string,
-    homeTeam: Team,
-    awayTeam: Team,
+const PREFIX = 'BetTypeSelectorComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    betTypeButton: `${PREFIX}-betTypeButton`
 };
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const StyledBox  = styled(Box )((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         display: "flex",
         width: "70%",
         flexDirection: "column",
@@ -22,14 +28,21 @@ const useStyles = makeStyles((theme) => ({
             marginTop: "1em",
         },
     },
-    betTypeButton: {
+
+    [`& .${classes.betTypeButton}`]: {
 
         maxHeight: "2em",
     }
 }));
 
+export interface BetTypeSelectorComponentProps {
+    fixtureID: string,
+    homeTeam: Team,
+    awayTeam: Team,
+}
+
 export const BetTypeSelectorComponent = (props: BetTypeSelectorComponentProps) => {
-    const classes = useStyles();
+
 
     const { selectedBetType, setSelectedBetType } = useSelectedBetType(props.fixtureID);
 
@@ -43,10 +56,10 @@ export const BetTypeSelectorComponent = (props: BetTypeSelectorComponentProps) =
     };
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             <Button className={classes.betTypeButton} color="primary" variant="contained" onClick={() => selectType(BetType.HOME)} disabled={isDisabled(BetType.HOME)}>{props.homeTeam.short_name} WIN</Button >
             <Button className={classes.betTypeButton} color="primary" variant="contained" onClick={() => selectType(BetType.DRAW)} disabled={isDisabled(BetType.DRAW)}>DRAW</Button>
             <Button className={classes.betTypeButton} color="primary" variant="contained" onClick={() => selectType(BetType.AWAY)} disabled={isDisabled(BetType.AWAY)}>{props.awayTeam.short_name} WIN</Button>
-        </Box >
+        </StyledBox >
     );
 }

@@ -1,29 +1,44 @@
-import { Button, makeStyles } from "@material-ui/core";
+import { Button } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import { useEthers } from "@usedapp/core";
 import { useFixtureAwaiting } from "../../hooks/fixtureState";
 
-export type BetTimeUpComponentProps = {
-    fixtureID: string;
-}
+const PREFIX = 'BetTimeUpComponent';
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const classes = {
+    container: `${PREFIX}-container`,
+    awaitContainerItem: `${PREFIX}-awaitContainerItem`,
+    awaitBtn: `${PREFIX}-awaitBtn`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         fontSize: "1em",
         marginTop: "-0.2em",
         '& > * + *': {
             marginTop: "0.6em",
         },
     },
-    awaitContainerItem: {
+
+    [`& .${classes.awaitContainerItem}`]: {
         fontSize: "1em",
     },
-    awaitBtn: {
+
+    [`& .${classes.awaitBtn}`]: {
         maxHeight: "2em",
     }
 }));
 
+export type BetTimeUpComponentProps = {
+    fixtureID: string;
+}
+
 export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
-    const classes = useStyles();
+
 
     const { account } = useEthers();
 
@@ -33,7 +48,7 @@ export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
     };
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             <div>
                 Betting has finished.
             </div>
@@ -49,6 +64,6 @@ export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
                     </div>
                 </>
             )}
-        </div>
-    )
+        </Root>
+    );
 }

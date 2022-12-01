@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { Team } from "../../$types/team";
 import { useFixturePayout } from "../../hooks/stake";
@@ -6,21 +6,31 @@ import { useTypedSelector } from "../../redux/store";
 import { handleUserPayout } from "../../services/sportsContractService";
 import { ResultComponent } from "../resultComponent/resultComponent";
 
+const PREFIX = 'FulfilledStakeComponent';
+
+const classes = {
+    container: `${PREFIX}-container`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        textAlign: "center",
+        marginTop: "1em"
+    }
+}));
+
 export interface FulfilledStakeComponentProps {
     fixtureID: string,
     homeTeam: Team,
     awayTeam: Team
-};
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        textAlign: "center",
-        marginTop: "1em"
-    },
-}));
+}
 
 export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => {
-    const classes = useStyles();
+
 
     const fixtures = useTypedSelector((state) => state.fixtures);
     const fixture = fixtures[props.fixtureID];
@@ -38,7 +48,7 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
     }, [value]);
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             {fixture?.result && (
                 <ResultComponent result={fixture.result} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             )}
@@ -48,6 +58,6 @@ export const FulfilledStakeComponent = (props: FulfilledStakeComponentProps) => 
                     Congratulations, you were paid {payoutAmount} ETH
                 </p>
             )}
-        </div>
-    )
+        </Root>
+    );
 }

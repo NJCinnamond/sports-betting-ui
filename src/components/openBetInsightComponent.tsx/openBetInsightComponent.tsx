@@ -1,23 +1,33 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useState, useEffect } from "react";
 import { useFixtureBettingEndTime } from "../../hooks/stake";
 import { BetCountdownComponent } from "../betCountdownComponent/betCountdownComponent";
 import { BetTimeUpComponent } from "../betTimeUpComponent/betTimeUpComponent";
 
+const PREFIX = 'OpenBetInsightComponent';
+
+const classes = {
+    container: `${PREFIX}-container`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        width: "100%",
+        textAlign: "center",
+        justifyContent: "center",
+    }
+}));
+
 export type OpenBetInsightComponentProps = {
     fixtureID: string;
 }
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        width: "100%",
-        textAlign: "center",
-        justifyContent: "center",
-    },
-}));
-
 export const OpenBetInsightComponent = (props: OpenBetInsightComponentProps) => {
-    const classes = useStyles();
+
 
     const { betEndTime } = useFixtureBettingEndTime(props.fixtureID);
 
@@ -32,7 +42,7 @@ export const OpenBetInsightComponent = (props: OpenBetInsightComponentProps) => 
     }, [betEndTime]);
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             {timeUp || betEndTime === undefined ? 
                 (
                     <BetTimeUpComponent fixtureID={props.fixtureID}/>
@@ -41,6 +51,6 @@ export const OpenBetInsightComponent = (props: OpenBetInsightComponentProps) => 
                     <BetCountdownComponent endDate={betEndTime}/>
                 )
             }
-        </div>
-    )
+        </Root>
+    );
 }

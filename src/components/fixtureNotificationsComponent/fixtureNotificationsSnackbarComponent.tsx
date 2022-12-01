@@ -1,4 +1,4 @@
-import { Snackbar } from "@material-ui/core";
+import { Snackbar } from "@mui/material";
 import { Alert, AlertColor } from "@mui/material";
 import { TransactionLinkComponent } from "../transactionLinkComponent/transactionLinkComponent";
 

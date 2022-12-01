@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import { Button, makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { Button } from "@mui/material";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useEffect, useState } from "react";
@@ -8,11 +9,35 @@ import { StakeFormComponent } from "../stakeFormComponent/stakeFormComponent";
 import { useFixtureRequestKickoff } from "../../hooks/fixtureState";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
 
+const PREFIX = 'OpenStakeComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    openKOBtn: `${PREFIX}-openKOBtn`
+};
+
+const StyledBox  = styled(Box )((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        display: "flex",
+        flexDirection: "column",
+        width: "70%",
+        margin: "auto"
+    },
+
+    [`& .${classes.openKOBtn}`]: {
+        marginTop: "1em",
+    }
+}));
+
 export interface OpenStakeComponentProps {
     fixture: Fixture,
     selectedBetType: BetType,
     selectedBetTypeStr: string,
-};
+}
 
 export interface StakeValidity {
     isValid: boolean,
@@ -24,25 +49,13 @@ export enum StakeDirection {
     UNSTAKE
 }
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        flexDirection: "column",
-        width: "70%",
-        margin: "auto"
-    },
-    openKOBtn: {
-        marginTop: "1em",
-    }
-}));
-
 const defaultValid = {
     isValid: true,
     errorStr: '',
 } as StakeValidity;
 
 export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
-    const classes = useStyles();
+
 
     const [stakeDirection, setStakeDirection] = useState<StakeDirection>(StakeDirection.STAKE);
     const [stakeAmount, setStakeAmount] = useState<number>(0);
@@ -86,7 +99,7 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
             </Button>*/
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             <StakeEntryFieldComponent
                 stakeAmount={stakeAmount}
                 direction={stakeDirection}
@@ -102,6 +115,6 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
-        </Box >
+        </StyledBox >
     );
 }

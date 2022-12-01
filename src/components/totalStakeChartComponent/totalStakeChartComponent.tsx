@@ -1,26 +1,37 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
 import { Team } from "../../$types/team";
 import { StakeChartComponent } from "../stakeChartComponent/stakeChartComponent";
 
-export interface TotalStakeChartComponentProps {
-    enrichment: FixtureEnrichment,
-    homeTeam: Team,
-    awayTeam: Team
+const PREFIX = 'TotalStakeChartComponent';
+
+const classes = {
+    text: `${PREFIX}-text`
 };
 
-const useStyles = makeStyles((theme) => ({
-    text: {
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Text = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.text}`]: {
         textAlign: 'center',
         top: "30%",
         position: "relative",
         fontSize: "1.1em"
-    },
+    }
 }));
 
+export interface TotalStakeChartComponentProps {
+    enrichment: FixtureEnrichment,
+    homeTeam: Team,
+    awayTeam: Team
+}
+
 export const TotalStakeChartComponent = (props: TotalStakeChartComponentProps) => {
-    const classes = useStyles();
+
     const [stakesPresent, setStakesPresent] = useState<boolean>(false);
 
     useEffect(() => {
@@ -33,17 +44,17 @@ export const TotalStakeChartComponent = (props: TotalStakeChartComponentProps) =
     }, [props.enrichment]);
 
     return (
-        <>
+        (<>
             {stakesPresent && (
                 <StakeChartComponent stakes={props.enrichment.total} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             )}
             {!stakesPresent && (
-                <div className={classes.text}>
+                <Text className={classes.text}>
                     <p>
                         No bets placed!
                     </p>
-                </div>
+                </Text>
             )}
-        </>
+        </>)
     );
 };

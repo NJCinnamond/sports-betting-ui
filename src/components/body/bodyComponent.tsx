@@ -1,5 +1,5 @@
-import { Box } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core";
+import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
 import { config } from '../../App';
@@ -8,30 +8,46 @@ import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
 import { DatedFixtureListComponent } from '../datedFixtureListComponent/datedFixtureListComponent';
 import { ParentStakePanelComponent } from '../parentStakePanelComponent/parentStakePanelComponent';
 
-export type BettingTab = {
-    name: string
+const PREFIX = 'Body';
+
+const classes = {
+    box: `${PREFIX}-box`,
+    header: `${PREFIX}-header`,
+    invalidChainBox: `${PREFIX}-invalidChainBox`,
+    stakePanelContainer: `${PREFIX}-stakePanelContainer`
 };
 
-const useStyles = makeStyles((theme) => ({
-    box: {
+const StyledBox = styled(Box)((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.box}`]: {
         backgroundColor: "white",
         borderRadius: "25px",
         margin: "2vh 0"
     },
-    header: {
+
+    [`& .${classes.header}`]: {
         color: "white"
     },
-    invalidChainBox: {
+
+    [`& .${classes.invalidChainBox}`]: {
         padding: "1em",
         textAlign: "center",
     },
-    stakePanelContainer: {
+
+    [`& .${classes.stakePanelContainer}`]: {
         padding: "1em",
     }
 }));
 
+export type BettingTab = {
+    name: string
+};
+
 export const Body = () => {
-    const classes = useStyles();
+
     const { chainId, account } = useEthers();
 
     // Redux store for selected fixture view
@@ -51,7 +67,7 @@ export const Body = () => {
 
     // TODO: Separate these into two separate components
     return (
-        <Box>
+        <StyledBox>
             {shouldShowBody && (
                 <Box className={classes.box}>
                     {view.selected && (
@@ -76,6 +92,6 @@ export const Body = () => {
                     </div>
                 )}
             </Box>
-        </Box>
-    )
+        </StyledBox>
+    );
 }

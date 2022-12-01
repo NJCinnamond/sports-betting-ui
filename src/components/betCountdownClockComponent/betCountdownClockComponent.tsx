@@ -1,21 +1,31 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { TimeComponent } from "../betCountdownComponent/betCountdownComponent";
 import { BetCountdownClockElementComponent } from "../BetCountdownClockElementComponent/BetCountdownClockElementComponent";
+
+const PREFIX = 'BetCountdownClockComponent';
+
+const classes = {
+    container: `${PREFIX}-container`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        display: "flex",
+        textAlign: "center",
+        justifyContent: "space-between",
+    }
+}));
 
 export type BetCountdownClockComponentProps = {
     timerComponents: TimeComponent[];
 }
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        textAlign: "center",
-        justifyContent: "space-between"
-    },
-}));
-
 export const BetCountdownClockComponent = (props: BetCountdownClockComponentProps) => {
-    const classes = useStyles();
+
 
     const elements: any[] = [];
 
@@ -26,8 +36,8 @@ export const BetCountdownClockComponent = (props: BetCountdownClockComponentProp
     });
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             {elements}
-        </div>
-    )
+        </Root>
+    );
 }

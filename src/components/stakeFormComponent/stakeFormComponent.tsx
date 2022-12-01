@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
-import { Button, CircularProgress, makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { Button, CircularProgress } from "@mui/material";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
 import { useFixtureStake, useFixtureUnstake } from "../../hooks";
@@ -9,6 +10,36 @@ import { Fixture } from "../../$types/fixture";
 import { useFixtureTransacting } from "../../hooks/view";
 import { useFixtureBettingEndTime } from "../../hooks/stake";
 
+const PREFIX = 'StakeFormComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    stakeBtn: `${PREFIX}-stakeBtn`,
+    dirBtn: `${PREFIX}-dirBtn`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.container}`]: {
+        display: "flex",
+        marginTop: "0.4em",
+        height: "2.8em",
+    },
+
+    [`& .${classes.stakeBtn}`]: {
+        flexBasis: "70%",
+    },
+
+    [`& .${classes.dirBtn}`]: {
+        margin: "0 0.3em",
+        flexBasis: "30%",
+    }
+}));
+
 export interface StakeFormComponentProps {
     fixture: Fixture,
     betType: BetType,
@@ -16,25 +47,10 @@ export interface StakeFormComponentProps {
     direction: StakeDirection,
     toggleStakeDirection: () => void;
     validity: StakeValidity,
-};
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        marginTop: "0.4em",
-        height: "2.8em",
-    },
-    stakeBtn: {
-        flexBasis: "70%",
-    },
-    dirBtn: {
-        margin: "0 0.3em",
-        flexBasis: "30%",
-    },
-}));
+}
 
 export const StakeFormComponent = (props: StakeFormComponentProps) => {
-    const classes = useStyles();
+
 
     const { fixtureStakeState, stake } = useFixtureStake(props.fixture?.fixture_id);
     const { unstake } = useFixtureUnstake(props.fixture?.fixture_id);
@@ -63,7 +79,7 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
     }, [betEndTime]);
 
     return (
-        <>
+        (<Root>
             <Box className={classes.container}>
                 <Button
                     className={classes.stakeBtn}
@@ -78,6 +94,6 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
                     <HiSwitchVertical />
                 </Button>
             </Box >
-        </>
+        </Root>)
     );
 }

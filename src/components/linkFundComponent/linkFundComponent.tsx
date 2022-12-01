@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useLinkTransferred } from "../../hooks/link";
 import { useEffect, useState } from "react";
 import { handleUserLinkTransferred } from "../../services/sportsContractService";
@@ -8,13 +8,25 @@ import { LinkEntryFieldComponent } from "../linkEntryFieldComponent/linkEntryFie
 import { LinkFundFormComponent } from "../linkFundFormComponent/linkFundFormComponent";
 
 
-const useStyles = makeStyles((theme) => ({
-    title: {
+const PREFIX = 'LinkFundComponent';
+
+const classes = {
+    title: `${PREFIX}-title`,
+    helper: `${PREFIX}-helper`
+};
+
+const StyledBox  = styled(Box )((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.title}`]: {
         textAlign: "center",
         marginBottom: "1em",
         fontSize: "1.1em"
     },
-    helper: {
+
+    [`& .${classes.helper}`]: {
         fontSize: "0.8em",
         marginBottom: "1em",
     }
@@ -26,7 +38,7 @@ const defaultValid = {
 } as StakeValidity;
 
 export const LinkFundComponent = () => {
-    const classes = useStyles();
+
     // Get Link currently transferred by users
     const [linkTransferred, setLinkTransferred] = useState<number>(0);
     const { linkResponse } = useLinkTransferred();
@@ -64,7 +76,7 @@ export const LinkFundComponent = () => {
     }
 
     return (
-        <Box>
+        <StyledBox>
             <div className={classes.title}>
                 <span>
                     Total LINK transferred: {linkTransferred}
@@ -89,7 +101,7 @@ export const LinkFundComponent = () => {
                     validity={stakeValidity}
                 />
             </div>
-        </Box >
+        </StyledBox >
 
     );
 }

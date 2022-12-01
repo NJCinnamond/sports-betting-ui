@@ -1,30 +1,25 @@
 import { Box } from "@mui/material";
-import { createTheme, makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { createTheme, adaptV4Theme } from "@mui/material";
 import moment from "moment";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
 import { FixtureNameBadgeComponent } from '../fixtureNameBadge/fixtureNameBadgeComponent';
 
-export interface FixtureInfoComponentProps {
-    fixture: Fixture | undefined,
-    homeTeam: Team | undefined,
-    awayTeam: Team | undefined,
+const PREFIX = 'FixtureInfoComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    nameBadge: `${PREFIX}-nameBadge`,
+    fixtureTimeBox: `${PREFIX}-fixtureTimeBox`
 };
 
-const theme = createTheme({
-    breakpoints: {
-        values: {
-            xs: 0,
-            sm: 300,
-            md: 900,
-            lg: 1200,
-            xl: 1536,
-        },
-    },
-});
-
-const useStyles = makeStyles((theme) => ({
-    container: {
+const StyledBox = styled(Box)((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -33,10 +28,12 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '3.5vw',
         },
     },
-    nameBadge: {
+
+    [`& .${classes.nameBadge}`]: {
         width: "6em",
     },
-    fixtureTimeBox: {
+
+    [`& .${classes.fixtureTimeBox}`]: {
         margin: "0 4em",
         backgroundColor: "grey",
         padding: "0.6em",
@@ -46,8 +43,26 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+export interface FixtureInfoComponentProps {
+    fixture: Fixture | undefined,
+    homeTeam: Team | undefined,
+    awayTeam: Team | undefined,
+}
+
+const theme = createTheme(adaptV4Theme({
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 300,
+            md: 900,
+            lg: 1200,
+            xl: 1536,
+        },
+    },
+}));
+
 export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
-    const classes = useStyles(theme);
+
     const formatKickoffTime = (ko: number | undefined) => {
         let kickoffTime = '';
         if (ko) {
@@ -58,7 +73,7 @@ export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
     };
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             <div className={classes.nameBadge} >
                 <FixtureNameBadgeComponent displayName={props.homeTeam?.short_name} crest={props.homeTeam?.crest_url} home={true}></FixtureNameBadgeComponent>
             </div>
@@ -68,6 +83,6 @@ export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
             <div className={classes.nameBadge} >
                 <FixtureNameBadgeComponent displayName={props.awayTeam?.short_name} crest={props.awayTeam?.crest_url} home={false}></FixtureNameBadgeComponent>
             </div>
-        </Box>
+        </StyledBox>
     );
 }

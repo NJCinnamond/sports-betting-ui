@@ -1,6 +1,31 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { BetCountdownClockComponent } from "../betCountdownClockComponent/betCountdownClockComponent";
+
+const PREFIX = 'BetCountdownComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    caption: `${PREFIX}-caption`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        width: "100%",
+        textAlign: "center",
+        justifyContent: "center",
+        height: "100%",
+        fontSize: "0.9em"
+    },
+
+    [`& .${classes.caption}`]: {
+        marginTop: "0.8em",
+    }
+}));
 
 type TimeLeft = { [key in string]: number };
 
@@ -13,21 +38,8 @@ export type BetCountdownComponentProps = {
     endDate: Date;
 }
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        width: "100%",
-        textAlign: "center",
-        justifyContent: "center",
-        height: "100%",
-        fontSize: "0.9em"
-    },
-    caption: {
-        marginTop: "0.8em",
-    }
-}));
-
 export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
-    const classes = useStyles();
+
 
     const timerComponents: TimeComponent[] = [];
 
@@ -70,13 +82,13 @@ export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
     });
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             <div>
                 <BetCountdownClockComponent timerComponents={timerComponents}/>
                 <div className={classes.caption}>
                     left until betting closes
                 </div>
             </div>
-        </div>
-    )
+        </Root>
+    );
 }

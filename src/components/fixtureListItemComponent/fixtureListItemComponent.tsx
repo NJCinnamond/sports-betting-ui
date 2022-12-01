@@ -1,4 +1,5 @@
-import { emphasize, makeStyles } from "@material-ui/core";
+import { emphasize } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
@@ -9,12 +10,19 @@ import { setSelected } from "../../services/viewService";
 import { FixtureInfoComponent } from "../fixtureInfoComponent/fixtureInfoComponent";
 import { FixtureNotificationsComponent } from "../fixtureNotificationsComponent/fixtureNotificationsComponent";
 
-export interface FixtureComponentProps {
-    fixture: Fixture,
+const PREFIX = 'FixtureListItemComponent';
+
+const classes = {
+    container: `${PREFIX}-container`
 };
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.container}`]: {
         "&:hover, &:focus": {
             backgroundColor: emphasize("#ccccff", 0.01),
             transition: "0.5s",
@@ -23,8 +31,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+export interface FixtureComponentProps {
+    fixture: Fixture,
+}
+
 export const FixtureListItemComponent = (props: FixtureComponentProps) => {
-    const classes = useStyles();
+
 
     // Important: this hook ensures we have the latest enriched fixture data for each rendered fixture list item
     const { enrichment } = useFixtureEnrichmentCall(props.fixture.fixture_id);
@@ -51,13 +63,13 @@ export const FixtureListItemComponent = (props: FixtureComponentProps) => {
     const onClickHandler = () => setSelected(props.fixture);
 
     return (
-        <>
+        (<Root>
             <div key={props.fixture?.fixture_id} onClick={() => onClickHandler()} className={classes.container}>
                 {props.fixture && homeTeam && awayTeam && (
                     <FixtureInfoComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam}></FixtureInfoComponent>
                 )}
             </div>
             <FixtureNotificationsComponent fixtureID={props.fixture?.fixture_id} />
-        </>
-    )
+        </Root>)
+    );
 }

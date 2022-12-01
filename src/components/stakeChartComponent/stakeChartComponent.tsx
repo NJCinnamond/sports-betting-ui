@@ -1,10 +1,27 @@
-import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { StakeSummary } from "../../$types/fixtureEnrichment";
 import { BetType } from "../../$types/betType";
-import { ArcElement, Chart, Legend, Tooltip } from 'chart.js';
+import { ArcElement, Chart, Tooltip } from 'chart.js';
 import { Pie } from "react-chartjs-2";
 import { Team } from "../../$types/team";
+
+const PREFIX = 'StakeChartComponent';
+
+const classes = {
+    stakeInsight: `${PREFIX}-stakeInsight`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.stakeInsight}`]: {
+        textAlign: 'center',
+        position: "relative",
+        height: "100%",
+    }
+}));
 
 Chart.register(ArcElement, Tooltip);
 
@@ -12,18 +29,10 @@ export interface StakeChartComponentProps {
     stakes: StakeSummary,
     homeTeam: Team,
     awayTeam: Team
-};
-
-const useStyles = makeStyles((theme) => ({
-    stakeInsight: {
-        textAlign: 'center',
-        position: "relative",
-        height: "100%",
-    },
-}));
+}
 
 export const StakeChartComponent = (props: StakeChartComponentProps) => {
-    const classes = useStyles();
+
 
     const homeLabel = props.homeTeam.long_name.toUpperCase();
     const drawLabel = "DRAW";
@@ -68,8 +77,8 @@ export const StakeChartComponent = (props: StakeChartComponentProps) => {
     }; 
 
     return (
-        <div className={classes.stakeInsight}>
+        <Root className={classes.stakeInsight}>
             <Pie data={data} options={{ maintainAspectRatio: false, responsive: true }}/>
-        </div>
+        </Root>
     );
 }

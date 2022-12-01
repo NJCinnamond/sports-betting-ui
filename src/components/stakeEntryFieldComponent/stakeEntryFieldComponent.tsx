@@ -1,7 +1,35 @@
 import { Box } from "@mui/material";
-import { TextField, makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
+
+const PREFIX = 'StakeEntryFieldComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    input: `${PREFIX}-input`,
+    helperTextStyles: `${PREFIX}-helperTextStyles`
+};
+
+const StyledBox  = styled(Box )((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        display: "flex",
+        width: "100%",
+    },
+
+    [`& .${classes.input}`]: {
+        maxHeight: "3.3em",
+    },
+
+    [`& .${classes.helperTextStyles}`]: {
+        margin: "0",
+    }
+}));
 
 export interface StakeEntryFieldComponentProps {
     stakeAmount: number,
@@ -9,30 +37,11 @@ export interface StakeEntryFieldComponentProps {
     setStakeAmount: (amount: number) => void,
     selectedBetTypeStr: string,
     validity: StakeValidity,
-};
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: "flex",
-        width: "100%",
-    },
-    input: {
-        maxHeight: "3.3em",
-    }
-}));
-
-const useHelperTextStyles = makeStyles(() => ({
-    root: {
-        margin: "0",
-    }
-}));
+}
 
 const validNumber = new RegExp(/^\d*\.?\d*$/);
 
 export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) => {
-    const classes = useStyles();
-    const helperTextStyles = useHelperTextStyles();
-
     const [helperText, setHelperText] = useState<string>();
 
     // Set to true when field is inputted for first time
@@ -53,7 +62,7 @@ export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) =
     };
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             <TextField
                 label="Enter amount"
                 type="decimal"
@@ -70,10 +79,10 @@ export const StakeEntryFieldComponent = (props: StakeEntryFieldComponentProps) =
                 }}
                 FormHelperTextProps={{
                     classes: {
-                        root: helperTextStyles.root
+                        root: classes.helperTextStyles
                     }
                 }}
             />
-        </Box >
+        </StyledBox >
     );
 }

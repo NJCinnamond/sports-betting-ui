@@ -1,26 +1,38 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { Fixture } from "../../$types/fixture";
 import { OpenFixtureButtonComponent } from "../openFixtureButtonComponent/openFixtureButtonComponent";
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const PREFIX = 'OpeningStakeComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    takingTooLong: `${PREFIX}-takingTooLong`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         margin: "0.5em",
         textAlign: 'center',
     },
-    takingTooLong: {
+
+    [`& .${classes.takingTooLong}`]: {
         fontSize: "0.85em",
-    },
+    }
 }));
 
 export interface OpeningStakeComponentProps {
     fixture: Fixture,
-};
+}
 
 export const OpeningStakeComponent = (props: OpeningStakeComponentProps) => {
-    const classes = useStyles();
+
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             Hold tight! This fixture is being opened for betting...
             <div className={classes.takingTooLong}>
                 <p>
@@ -30,6 +42,6 @@ export const OpeningStakeComponent = (props: OpeningStakeComponentProps) => {
                     <OpenFixtureButtonComponent fixture={props.fixture}/>
                 </div>
             </div>
-        </div>
+        </Root>
     );
 }

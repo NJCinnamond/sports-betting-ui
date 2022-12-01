@@ -1,32 +1,44 @@
 import { useEffect, useRef } from "react";
+import { styled } from '@mui/material/styles';
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { makeStyles } from "@material-ui/core";
 import { useFixtureNotifications } from "../../hooks/notifications";
 import { useTypedSelector } from "../../redux/store";
 import { getAwaitingFixtureTransactionName, getFulfillingTransactionName, getOpeningFixtureTransactionName, getStakingTransactionName } from "../../services/notificationService";
 import { TransactionLinkComponent } from "../transactionLinkComponent/transactionLinkComponent";
 
+const PREFIX = 'FixtureNotificationsComponent';
+
+const classes = {
+    parent: `${PREFIX}-parent`,
+    child: `${PREFIX}-child`
+};
+
+const StyledToastContainer = styled(ToastContainer)((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.parent}`]: {
+        textAlign: "center",
+    },
+
+    [`& .${classes.child}`]: {
+        float: "left",
+    }
+}));
+
 export interface FixtureNotificationsComponentProps {
     fixtureID: string,
-};
+}
 
 interface NotifProps {
     message: string,
     txnName: string
 }
 
-const useStyles = makeStyles((theme) => ({
-    parent: {
-        textAlign: "center",
-    },
-    child: {
-        float: "left",
-    }
-}));
-
 const NotifElement = (props: NotifProps) => {
-    const classes = useStyles();
+
     return (
         <div className={classes.parent}>
             <div className={classes.child}>
@@ -151,6 +163,6 @@ export const FixtureNotificationsComponent = (props: FixtureNotificationsCompone
     }, [fixtureViewStates[props.fixtureID]?.fulfilling]);
 
     return (
-        <ToastContainer/>
+        <StyledToastContainer/>
     )
 }

@@ -1,24 +1,36 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { useTypedSelector } from "../../redux/store";
 import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
 
-export type AwaitingStakeComponentProps = {
-    fixtureID: string;
-}
+const PREFIX = 'AwaitingStakeComponent';
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const classes = {
+    container: `${PREFIX}-container`,
+    info: `${PREFIX}-info`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         textAlign: "center",
     },
-    info: {
+
+    [`& .${classes.info}`]: {
         fontSize: "1em",
         marginBottom: "0.6em",
     }
 }));
 
+export type AwaitingStakeComponentProps = {
+    fixtureID: string;
+}
+
 export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
-    const classes = useStyles();
+
 
     const fixtures = useTypedSelector((state) => state.fixtures);
     const [fixtureHasResult, setFixtureHasResult] = useState<boolean>(false);
@@ -28,7 +40,7 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
     })
 
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             <div className={classes.info}>
                 <p>
                     Betting has closed while we await the fixture result.
@@ -40,6 +52,6 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
             <div>
                 <PayoutButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
             </div>
-        </div>
-    )
+        </Root>
+    );
 }

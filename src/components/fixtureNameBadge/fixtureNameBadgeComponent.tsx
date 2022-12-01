@@ -1,41 +1,56 @@
 import { autocompleteClasses, Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+const PREFIX = 'FixtureNameBadgeComponent';
 
-export interface FixtureNameBadgeComponentProps {
-    displayName: string | undefined,
-    crest: string | undefined,
-    home: boolean,
+const classes = {
+    fixtureTeam: `${PREFIX}-fixtureTeam`,
+    displayName: `${PREFIX}-displayName`,
+    crestContainer: `${PREFIX}-crestContainer`,
+    crest: `${PREFIX}-crest`
 };
 
-const useStyles = makeStyles((theme) => ({
-    fixtureTeam: {
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.fixtureTeam}`]: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
     },
-    displayName: {
+
+    [`& .${classes.displayName}`]: {
         padding: "0 2em",
         width: "4em",
         fontWeight: 500,
         fontSize: "1.1em"
     },
-    crestContainer: {
+
+    [`& .${classes.crestContainer}`]: {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         width: "4em",
     },
-    crest: {
+
+    [`& .${classes.crest}`]: {
         width: "2em",
         maxHeight: "3em",
     }
 }));
 
+export interface FixtureNameBadgeComponentProps {
+    displayName: string | undefined,
+    crest: string | undefined,
+    home: boolean,
+}
+
 export const FixtureNameBadgeComponent = (props: FixtureNameBadgeComponentProps) => {
-    const classes = useStyles();
+
 
     return (
-        <div className={classes.fixtureTeam}>
+        <Root className={classes.fixtureTeam}>
             {!props.home && (
                 <div className={classes.crestContainer}>
                     <img className={classes.crest} src={props.crest}></img>
@@ -49,6 +64,6 @@ export const FixtureNameBadgeComponent = (props: FixtureNameBadgeComponentProps)
                     <img className={classes.crest} src={props.crest}></img>
                 </div>
             )}
-        </div>
+        </Root>
     );
 }

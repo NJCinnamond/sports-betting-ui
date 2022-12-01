@@ -1,8 +1,29 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { Team } from "../../$types/team";
 import { useTypedSelector } from "../../redux/store";
 import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
 import { ResultComponent } from "../resultComponent/resultComponent";
+
+const PREFIX = 'FulfillingStakeComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    payout: `${PREFIX}-payout`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
+        textAlign: "center",
+    },
+
+    [`& .${classes.payout}`]: {
+        marginTop: "1em"
+    }
+}));
 
 export interface FulfillingStakeComponentProps {
     fixtureID: string,
@@ -10,23 +31,14 @@ export interface FulfillingStakeComponentProps {
     awayTeam: Team
 }
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        textAlign: "center",
-    },
-    payout: {
-        marginTop: "1em"
-    }
-}));
-
 export const FulfillingStakeComponent = (props: FulfillingStakeComponentProps) => {
-    const classes = useStyles();
+
 
     const fixtures = useTypedSelector((state) => state.fixtures);
     const fixture = fixtures[props.fixtureID];
     
     return (
-        <div className={classes.container}>
+        <Root className={classes.container}>
             {fixture?.result && (
                 <ResultComponent result={fixture.result} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             )}
@@ -39,6 +51,6 @@ export const FulfillingStakeComponent = (props: FulfillingStakeComponentProps) =
                     <PayoutButtonComponent fixtureID={props.fixtureID} disabled={false}/>
                 </div>
             </div>
-        </div>
-    )
+        </Root>
+    );
 }

@@ -1,4 +1,5 @@
 import Table from '@mui/material/Table';
+import { styled } from '@mui/material/styles';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -7,7 +8,22 @@ import TableRow from '@mui/material/TableRow';
 import { FixtureEnrichment } from '../../$types/fixtureEnrichment';
 import { BetType } from '../../$types/betType';
 import { Team } from '../../$types/team';
-import { makeStyles } from '@material-ui/core';
+
+const PREFIX = 'StakeInsightTableComponent';
+
+const classes = {
+    table: `${PREFIX}-table`
+};
+
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.table}`]: {
+        marginTop: "auto",
+    }
+}));
 
 export interface StakeInsightTableComponentProps {
     enrichment: FixtureEnrichment,
@@ -15,14 +31,8 @@ export interface StakeInsightTableComponentProps {
     awayTeam: Team
 }
 
-const useStyles = makeStyles((theme) => ({
-    table: {
-        marginTop: "auto",
-    },
-}));
-
 export const StakeInsightTableComponent = (props: StakeInsightTableComponentProps) => {
-    const classes = useStyles();
+
 
     const createData = (
         betType: BetType,
@@ -47,7 +57,7 @@ export const StakeInsightTableComponent = (props: StakeInsightTableComponentProp
     ];
 
     return (
-        <div className={classes.table}>
+        <Root className={classes.table}>
             <TableContainer>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -77,6 +87,6 @@ export const StakeInsightTableComponent = (props: StakeInsightTableComponentProp
                     </TableBody>
                 </Table>
             </TableContainer>
-        </div>
+        </Root>
     );
 }

@@ -6,7 +6,7 @@ import {
   ArbitrumGoerli,
 } from '@usedapp/core'
 import { Header } from './components/header/headerComponent';
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import { Main } from './components/main/mainComponent';
 import { providers } from 'ethers';
 

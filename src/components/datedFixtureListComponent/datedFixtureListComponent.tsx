@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import FixtureService from "../../services/fixtureService";
 import { dateToUTCString } from "../../utils/dateUtils";
@@ -7,13 +7,19 @@ import { LoadingSpinner } from "../loadingSpinner/loadingSpinner";
 import { Fixture } from "../../$types/fixture";
 import { useTypedSelector } from "../../redux/store";
 
-export interface DatedFixtureListComponentProps {
-    startDate: Date,
-    endDate: Date,
-}
+const PREFIX = 'DatedFixtureListComponent';
 
-const useStyles = makeStyles((theme) => ({
-    title: {
+const classes = {
+    title: `${PREFIX}-title`
+};
+
+// TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
+const Root = styled('div')((
+    {
+        theme
+    }
+) => ({
+    [`& .${classes.title}`]: {
         textAlign: "center",
         padding: "1em 0",
         fontWeight: "bold",
@@ -21,9 +27,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+export interface DatedFixtureListComponentProps {
+    startDate: Date,
+    endDate: Date,
+}
+
 
 export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps) => {
-    const classes = useStyles();
+
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -51,7 +62,7 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
 
     return (
-        <>
+        (<Root>
             {isLoading && (
                 <LoadingSpinner></LoadingSpinner>
             )}
@@ -63,6 +74,6 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
                     </div>
                 ))
             }
-        </>
-    )
+        </Root>)
+    );
 }

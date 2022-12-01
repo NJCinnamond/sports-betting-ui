@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { Fixture } from "../../$types/fixture";
 import { useTypedSelector } from "../../redux/store";
 import { useEffect, useState } from "react";
@@ -14,23 +14,35 @@ import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfilling
 import { FulfilledStakeComponent } from "../fulfilledStakeComponent/fulfilledStakeComponent";
 import { StakeInsightComponent } from "../stakeInsightComponent/stakeInsightComponent";
 
-export interface ParentStakePanelComponentProps {
-    fixture: Fixture,
+const PREFIX = 'ParentStakePanelComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    fixtureTitle: `${PREFIX}-fixtureTitle`
 };
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const StyledBox = styled(Box)((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
     },
-    fixtureTitle: {
+
+    [`& .${classes.fixtureTitle}`]: {
         textAlign: "center",
         fontWeight: "bold",
         fontSize: "1.3em",
         padding: "0 0 0.8em 0"
-    },
+    }
 }));
 
+export interface ParentStakePanelComponentProps {
+    fixture: Fixture,
+}
+
 export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps) => {
-    const classes = useStyles();
+
 
     // Fixture enriched info contains fixture betting state and bet amounts
     const enrichment = useFixtureEnrichment(props.fixture.fixture_id);
@@ -56,7 +68,7 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
     }, [props.fixture, teams]);
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             {isValidTeams && homeTeam && awayTeam && (<>
                 <div className={classes.fixtureTitle}>
                     <span>
@@ -89,6 +101,6 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                 )}
             </>
             )}
-        </Box>
+        </StyledBox>
     );
 }

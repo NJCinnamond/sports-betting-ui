@@ -1,28 +1,40 @@
 import { Box } from "@mui/material";
-import { makeStyles } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
 import { Fixture } from "../../$types/fixture";
 import { OpenFixtureButtonComponent } from "../openFixtureButtonComponent/openFixtureButtonComponent";
 import { useEthers } from "@usedapp/core";
 import { useFixtureOpeningAdvanceTime } from "../../hooks/stake";
 import { useEffect, useState } from "react";
 
-export interface ClosedStakeComponentProps {
-    fixture: Fixture,
+const PREFIX = 'ClosedStakeComponent';
+
+const classes = {
+    container: `${PREFIX}-container`,
+    section: `${PREFIX}-section`
 };
 
-const useStyles = makeStyles((theme) => ({
-    container: {
+const StyledBox  = styled(Box )((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.container}`]: {
         display: "flex",
         flexDirection: "column",
     },
-    section: {
+
+    [`& .${classes.section}`]: {
         margin: "0.5em",
         textAlign: "center"
-    },
+    }
 }));
 
+export interface ClosedStakeComponentProps {
+    fixture: Fixture,
+}
+
 export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
-    const classes = useStyles();
+
 
     const { account } = useEthers();
 
@@ -42,7 +54,7 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
     }, [betAdvanceTime, props.fixture]);
 
     return (
-        <Box className={classes.container}>
+        <StyledBox className={classes.container}>
             {!isWithinOpenWindow && (
                 <div className={classes.section}>
                     This fixture is currently closed.
@@ -63,6 +75,6 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
                     <OpenFixtureButtonComponent fixture={props.fixture}/>
                 </div>
             )}
-        </Box >
+        </StyledBox >
     );
 }

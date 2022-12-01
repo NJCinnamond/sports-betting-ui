@@ -1,21 +1,32 @@
-import { Button, CircularProgress, makeStyles } from "@material-ui/core";
+import { Button, CircularProgress } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import { useFixtureFulfill } from "../../hooks";
 import { useCanMakeOracleRequest } from "../../hooks/link";
 import { useFixtureTransacting } from "../../hooks/view";
 
+const PREFIX = 'PayoutButtonComponent';
+
+const classes = {
+    fulfillBtn: `${PREFIX}-fulfillBtn`
+};
+
+const StyledButton = styled(Button)((
+    {
+        theme
+    }
+) => ({
+    [`&.${classes.fulfillBtn}`]: {
+        maxHeight: "2em",
+    }
+}));
+
 export interface PayoutButtonComponentProps {
     fixtureID: string,
     disabled: boolean
-};
-
-const useStyles = makeStyles((theme) => ({
-    fulfillBtn: {
-        maxHeight: "2em",
-    },
-}));
+}
 
 export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
-    const classes = useStyles();
+
 
     const { fulfillFixture } = useFixtureFulfill(props.fixtureID);
     const handlePayoutAction = () => fulfillFixture(props.fixtureID);
@@ -26,7 +37,7 @@ export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
     const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
 
     return (
-        <Button
+        <StyledButton
             className={classes.fulfillBtn}
             color="primary"
             variant="contained"
@@ -34,6 +45,6 @@ export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
             disabled={isFixtureTransacting || !canMakeOracleRequest || props.disabled}
         >
             {isFixtureTransacting ? <CircularProgress size={26} /> : "PAYOUT"}
-        </Button>
+        </StyledButton>
     );
 }
