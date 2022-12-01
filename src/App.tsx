@@ -13,8 +13,8 @@ import { providers } from 'ethers';
 export const config: Config = {
   readOnlyChainId: ArbitrumGoerli.chainId,
   readOnlyUrls: {
-    [ArbitrumGoerli.chainId]: new providers.AlchemyProvider("arbitrum-goerli", "b0XzEKP50JHFBu21CJUeIuyPfNTdauMj"), //TODO Put this in a .env
-    [Goerli.chainId]: new providers.AlchemyProvider("goerli", "cZaW6FLl5hOIzuPMWJYRgJggWZQe4XC4"),
+    [ArbitrumGoerli.chainId]: new providers.AlchemyProvider("arbitrum-goerli", process.env.REACT_APP_ARB_GOERLI_ALCHEMY_KEY), //TODO Put this in a .env
+    [Goerli.chainId]: new providers.AlchemyProvider("goerli", process.env.REACT_APP_GOERLI_ALCHEMY_KEY),
   },
   notifications: {
     expirationPeriod: 500,
