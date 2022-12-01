@@ -10,7 +10,6 @@ const PREFIX = 'FixtureInfoComponent';
 
 const classes = {
     container: `${PREFIX}-container`,
-    nameBadge: `${PREFIX}-nameBadge`,
     fixtureTimeBox: `${PREFIX}-fixtureTimeBox`
 };
 
@@ -27,10 +26,6 @@ const StyledBox = styled(Box)((
         [theme.breakpoints.down(460)]: {
             fontSize: '3.5vw',
         },
-    },
-
-    [`& .${classes.nameBadge}`]: {
-        width: "6em",
     },
 
     [`& .${classes.fixtureTimeBox}`]: {
@@ -74,13 +69,13 @@ export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
 
     return (
         <StyledBox className={classes.container}>
-            <div className={classes.nameBadge} >
+            <div>
                 <FixtureNameBadgeComponent displayName={props.homeTeam?.short_name} crest={props.homeTeam?.crest_url} home={true}></FixtureNameBadgeComponent>
             </div>
             <Box className={classes.fixtureTimeBox}>
                 {formatKickoffTime(props.fixture?.ko)}
             </Box>
-            <div className={classes.nameBadge} >
+            <div>
                 <FixtureNameBadgeComponent displayName={props.awayTeam?.short_name} crest={props.awayTeam?.crest_url} home={false}></FixtureNameBadgeComponent>
             </div>
         </StyledBox>

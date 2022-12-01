@@ -1,5 +1,5 @@
-import { autocompleteClasses, Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
+
 const PREFIX = 'FixtureNameBadgeComponent';
 
 const classes = {
@@ -47,8 +47,6 @@ export interface FixtureNameBadgeComponentProps {
 }
 
 export const FixtureNameBadgeComponent = (props: FixtureNameBadgeComponentProps) => {
-
-
     return (
         <Root className={classes.fixtureTeam}>
             {!props.home && (
