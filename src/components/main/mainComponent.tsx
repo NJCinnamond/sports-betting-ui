@@ -26,7 +26,7 @@ export const Main = () => {
     return (
         (<Root>
             <div className={classes.title}>
-                Premier League ETH Staking
+                Soccer Stakes
             </div>
             <Body />
         </Root>)
