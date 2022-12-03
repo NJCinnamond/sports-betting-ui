@@ -26,7 +26,7 @@ const classes = {
 
 const StyledBox = styled(Box)((
     {
-        theme: any
+        theme
     }
 ) => ({
     [`&.${classes.rowContainer}`]: {
@@ -41,7 +41,7 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.columnItem}`]: {
-        width: "100%",
+        width: "75%",
         margin: "1.2em auto",
         justifyContent: "center",
         textAlign: 'center',

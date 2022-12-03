@@ -35,8 +35,8 @@ const Root = styled('div')((
     },
 
     [`& .${classes.crest}`]: {
-        width: "2em",
-        maxHeight: "3em",
+        width: "2.5em",
+        maxHeight: "4em",
     }
 }));
 

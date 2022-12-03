@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { createTheme, adaptV4Theme } from "@mui/material";
 import moment from "moment";
 import { Fixture } from "../../$types/fixture";
 import { Team } from "../../$types/team";
@@ -31,10 +30,13 @@ const StyledBox = styled(Box)((
     [`& .${classes.fixtureTimeBox}`]: {
         margin: "0 3em",
         backgroundColor: "grey",
-        padding: "0.6em",
+        padding: "0.8em",
         borderRadius: "5px",
         fontWeight: "bold",
-        color: theme.palette.common.white
+        color: theme.palette.common.white,
+        [theme.breakpoints.down(460)]: {
+            margin: "0 1em",
+        },
     }
 }));
 
@@ -43,18 +45,6 @@ export interface FixtureInfoComponentProps {
     homeTeam: Team | undefined,
     awayTeam: Team | undefined,
 }
-
-const theme = createTheme(adaptV4Theme({
-    breakpoints: {
-        values: {
-            xs: 0,
-            sm: 300,
-            md: 900,
-            lg: 1200,
-            xl: 1536,
-        },
-    },
-}));
 
 export const FixtureInfoComponent = (props: FixtureInfoComponentProps) => {
 

@@ -11,7 +11,8 @@ const PREFIX = 'StakeInsightComponent';
 const classes = {
     stakeInsightRowContainer: `${PREFIX}-stakeInsightRowContainer`,
     stakeInsightColumContainer: `${PREFIX}-stakeInsightColumContainer`,
-    stakeInsightItem: `${PREFIX}-stakeInsightItem`
+    stakeInsightChartItem: `${PREFIX}-stakeInsightChartItem`,
+    stakeInsightTableItem: `${PREFIX}-stakeInsightTableItem`,
 };
 
 const Root = styled(Box)((
@@ -29,10 +30,15 @@ const Root = styled(Box)((
         flexDirection: "column",
     },
 
-    [`& .${classes.stakeInsightItem}`]: {
+    [`& .${classes.stakeInsightChartItem}`]: {
         flexBasis: "40%",
         maxWidth: "40%"
-    }
+    },
+
+    [`& .${classes.stakeInsightTableItem}`]: {
+        flexBasis: "50%",
+        maxWidth: "60%"
+    },
 }));
 
 export interface StakeInsightComponentProps {
@@ -46,10 +52,10 @@ export const StakeInsightComponent = (props: StakeInsightComponentProps) => {
 
     return (
         <Root className={isTabletOrMobile ? classes.stakeInsightColumContainer : classes.stakeInsightRowContainer}>
-            <div className={isTabletOrMobile ? '' : classes.stakeInsightItem}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightChartItem}>
                 <TotalStakeChartComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
-            <div className={isTabletOrMobile ? '' : classes.stakeInsightItem}>
+            <div className={isTabletOrMobile ? '' : classes.stakeInsightTableItem}>
                 <StakeInsightTableComponent enrichment={props.enrichment} homeTeam={props.homeTeam} awayTeam={props.awayTeam}/>
             </div>
         </Root>
