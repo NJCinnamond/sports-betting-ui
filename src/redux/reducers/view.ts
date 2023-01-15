@@ -4,9 +4,17 @@ import { Fixture } from "../../$types/fixture";
 import { TransactionState } from '@usedapp/core';
 
 export type ViewState = {
+    page: Page,
     selected: Fixture | undefined,
     fixtureViewStates: { [key: string]: FixtureViewState }
 };
+
+export enum Page {
+    HOME,
+    HOW_IT_WORKS,
+    FIXTURES,
+    LINK_FUND
+}
 
 // FixtureViewState maintains the UI state for each fixture
 // We store transaction status for different contract interactions such as
@@ -32,6 +40,7 @@ export type SetTransactionStatePayload = {
 }
 
 export const viewInitialState: ViewState = {
+    page: Page.HOME,
     selected: undefined,
     fixtureViewStates: {}
 };
@@ -40,6 +49,9 @@ export const viewReducer = createSlice({
     name: 'view',
     initialState: viewInitialState,
     reducers: {
+        setPage(state, action: PayloadAction<Page>) {
+            state.page = action.payload;
+        },
         setSelected(state, action: PayloadAction<Fixture>) {
             state.selected = action.payload;
         },

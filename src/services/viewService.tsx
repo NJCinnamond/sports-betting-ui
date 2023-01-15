@@ -1,7 +1,7 @@
 import { TransactionState } from "@usedapp/core";
 import { BetType } from "../$types/betType";
 import { Fixture } from "../$types/fixture";
-import { SetSelectedBetTypePayload, SetTransactionStatePayload, viewActions } from "../redux/reducers/view"
+import { Page, SetSelectedBetTypePayload, SetTransactionStatePayload, viewActions } from "../redux/reducers/view"
 import { store } from "../redux/store"
 
 const setSelected = (fixture: Fixture) => store.dispatch(viewActions.setSelected(fixture));
@@ -16,4 +16,6 @@ const setAwaitingTransactionState = (fixtureID: string, state: TransactionState)
 
 const setFulfillingTransactionState = (fixtureID: string, state: TransactionState) => store.dispatch(viewActions.setFulfillingTransactionState({ fixtureID, transactionState: state } as SetTransactionStatePayload));
 
-export { setSelected, setFixtureSelectedBetType, setOpeningTransactionState, setStakingTransactionState, setAwaitingTransactionState, setFulfillingTransactionState }
+const setPage = (page: Page) => store.dispatch(viewActions.setPage(page as Page));
+
+export { setSelected, setFixtureSelectedBetType, setOpeningTransactionState, setStakingTransactionState, setAwaitingTransactionState, setFulfillingTransactionState, setPage }

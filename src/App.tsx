@@ -9,6 +9,7 @@ import { Header } from './components/header/headerComponent';
 import { Container } from '@mui/material';
 import { Main } from './components/main/mainComponent';
 import { providers } from 'ethers';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const config: Config = {
   readOnlyChainId: ArbitrumGoerli.chainId,

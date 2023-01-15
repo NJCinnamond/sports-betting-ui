@@ -8,7 +8,7 @@ import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
 import { DatedFixtureListComponent } from '../datedFixtureListComponent/datedFixtureListComponent';
 import { ParentStakePanelComponent } from '../parentStakePanelComponent/parentStakePanelComponent';
 
-const PREFIX = 'Body';
+const PREFIX = 'FixtureBody';
 
 const classes = {
     box: `${PREFIX}-box`,
@@ -46,7 +46,7 @@ export type BettingTab = {
     name: string
 };
 
-export const Body = () => {
+export const FixtureBodyComponent = () => {
 
     const { chainId, account } = useEthers();
 
@@ -54,8 +54,8 @@ export const Body = () => {
     const view = useTypedSelector((state) => state.view);
 
     // TODO: Parametrize these
-    const startDate = new Date(2022, 9, 20);
-    const endDate = new Date(2022, 11, 14);
+    const startDate = new Date(2023, 0, 1);
+    const endDate = new Date(2023, 3, 1);
 
     const isValidChain: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
     const shouldShowBody = (!account || (account && isValidChain));
