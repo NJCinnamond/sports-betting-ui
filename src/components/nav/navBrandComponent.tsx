@@ -19,6 +19,7 @@ const Root = styled('div')((
         height: "100%",
         fontSize: "1.6em",
         marginRight: "1em",
+        marginTop: "-0.2em",
         cursor: "pointer",
     }
 }));

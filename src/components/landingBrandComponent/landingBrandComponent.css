@@ -1,0 +1,32 @@
+.article {
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: grid;
+    place-items: center;
+}
+
+.header {
+    text-align: center;
+    position: relative;
+    top: 0;
+    bottom: 5;
+    left: 0;
+    right: 0;
+    margin-top: -40em;
+    text-shadow: 0 0 25px black;
+}
+
+.header > h1 {
+    font-size: 70px;
+    color: white;
+}
+
+.picture {
+    object-fit: cover;
+    width: 100%;
+    height: 600px;
+    filter: contrast(1.35) brightness(0.65);
+    border-radius: 25px;
+}

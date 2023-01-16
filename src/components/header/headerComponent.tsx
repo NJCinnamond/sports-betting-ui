@@ -38,9 +38,6 @@ export const Header = () => {
                     </Nav>
                     <Nav>
                         <div className={isTabletOrMobile ? "custom-nav-column-item" : "custom-nav-row-item"}>
-                            <LinkFundBtn disabled={!isConnected}></LinkFundBtn>
-                        </div>
-                        <div className={isTabletOrMobile ? "custom-nav-column-item" : "custom-nav-row-item"}>
                             <Box>
                                 {isConnected ? (
                                     <Button color="primary" variant="contained" onClick={deactivate}>Disconnect</Button>

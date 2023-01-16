@@ -1,16 +1,18 @@
 import { styled } from '@mui/material/styles';
 import { Page } from '../../redux/reducers/view';
+import { useTypedSelector } from '../../redux/store';
 import { setPage } from '../../services/viewService';
 
 const PREFIX = 'NavItemComponent';
 
 const classes = {
-    itemText: `${PREFIX}-itemText`
+    itemText: `${PREFIX}-itemText`,
+    selectedItemText: `${PREFIX}-selectedItemText`,
 };
 
 const Root = styled('div')((
     {
-        theme
+        theme,
     }
 ) => ({
     [`&.${classes.itemText}`]: {
@@ -18,7 +20,14 @@ const Root = styled('div')((
         height: "100%",
         cursor: "pointer",
         marginLeft: "1em",
-    }
+    },
+    [`&.${classes.selectedItemText}`]: {
+        textAlign: 'center',
+        fontWeight: '500',
+        height: "100%",
+        cursor: "pointer",
+        marginLeft: "1em",
+    },
 }));
 
 export interface NavItemComponentProps {
@@ -32,8 +41,12 @@ export const NavItemComponent = (props: NavItemComponentProps) => {
         setPage(props.page);
     }
 
+    const isCurrentPage = useTypedSelector((state) => state.view.page) == props.page;
+
+    const textCSS = isCurrentPage ? classes.selectedItemText : classes.itemText;
+
     return (
-        <Root className={classes.itemText}>
+        <Root className={textCSS}>
             <a onClick={onClick}>
                 {props.text}
             </a>

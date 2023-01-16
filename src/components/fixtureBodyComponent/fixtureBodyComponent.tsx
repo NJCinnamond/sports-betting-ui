@@ -22,6 +22,8 @@ const StyledBox = styled(Box)((
         theme
     }
 ) => ({
+    maxWidth: "800px",
+    margin: "auto",
     [`& .${classes.box}`]: {
         backgroundColor: "white",
         borderRadius: "25px",

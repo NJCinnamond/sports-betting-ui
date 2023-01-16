@@ -33,7 +33,7 @@ function App() {
       config={config}
     >
       <Header />
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Main></Main>
       </Container>
     </DAppProvider>
