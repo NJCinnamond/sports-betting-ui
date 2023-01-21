@@ -1,6 +1,7 @@
 import { Page } from '../../redux/reducers/view';
 import { useTypedSelector } from '../../redux/store';
 import { FixtureBodyComponent } from '../fixtureBodyComponent/fixtureBodyComponent';
+import { GuideBodyComponent } from '../guideBodyComponent/guideBodyComponent';
 import { HomeBodyComponent } from '../homeBodyComponent/homeBodyComponent';
 import { LinkFundBodyComponent } from '../linkFundBodyComponent/linkFundBodyComponent';
 
@@ -18,7 +19,7 @@ export const Main = () => {
                 <FixtureBodyComponent />
             )}
             {selectedPage == Page.HOW_IT_WORKS && (
-                <></>
+                <GuideBodyComponent/>
             )}
             {selectedPage == Page.LINK_FUND && (
                 <LinkFundBodyComponent/>

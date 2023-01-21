@@ -1,8 +1,7 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { LinkFundComponent } from '../linkFundComponent/linkFundComponent';
 
-const PREFIX = 'LinkFundBody';
+const PREFIX = 'GuideBody';
 
 const classes = {
     box: `${PREFIX}-box`,
@@ -18,23 +17,17 @@ const StyledBox = styled(Box)((
         backgroundColor: "white",
         borderRadius: "25px",
         margin: "2vh auto",
-        width: "70%",
-    },
-    [`& .${classes.fundForm}`]: {
-        padding: "1em",
-        width: "50%",
-        margin: "auto"
     },
 }));
 
-export const LinkFundBodyComponent = () => {
+export const GuideBodyComponent = () => {
 
     return (
         <StyledBox>
             <Box className={classes.box}>
-                <div className={classes.fundForm}>
-                    <LinkFundComponent/>
-                </div>
+                <h1>
+                    How does it work?
+                </h1>
             </Box>
         </StyledBox>
     );

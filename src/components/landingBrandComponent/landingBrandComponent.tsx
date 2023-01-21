@@ -8,6 +8,7 @@ const PREFIX = 'LandingBrand';
 
 const classes = {
     box: `${PREFIX}-box`,
+    fixturesNavBtn: `${PREFIX}-fixturesNavBtn`,
 };
 
 const StyledBox = styled(Box)((
@@ -17,6 +18,9 @@ const StyledBox = styled(Box)((
 ) => ({
     [`& .${classes.box}`]: {
         maxHeight: "600px"
+    },
+    [`& .${classes.fixturesNavBtn}`]: {
+        marginTop: "1.5em",
     },
 }));
 
@@ -32,7 +36,9 @@ export const LandingBrandComponent = () => {
                         <h1>
                             Crypto betting made easy
                         </h1>
-                        <FixtureNavigationButtonComponent/>
+                        <div className={classes.fixturesNavBtn}>
+                            <FixtureNavigationButtonComponent/>
+                        </div>
                     </div>
                 </article>
             </div>
