@@ -6,7 +6,6 @@ import { GuideBodyComponent } from '../guideBodyComponent/guideBodyComponent';
 import { HomeBodyComponent } from '../homeBodyComponent/homeBodyComponent';
 import { LinkFundBodyComponent } from '../linkFundBodyComponent/linkFundBodyComponent';
 
-
 export const Main = () => {
 
     const selectedPage = useTypedSelector((state) => state.view.page);

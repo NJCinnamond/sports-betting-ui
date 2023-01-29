@@ -19,7 +19,10 @@ const StyledBox = styled(Box)((
         borderRadius: "25px",
         margin: "2vh 0",
         height: "auto",
-        paddingBottom: "0.5em"
+        paddingBottom: "0.5em",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "rgba(1,1,1,0.1)"
     },
 }));
 

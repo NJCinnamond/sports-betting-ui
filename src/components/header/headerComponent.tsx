@@ -21,7 +21,7 @@ export const Header = () => {
 
     return (
         <>
-            <Navbar expand={!isTabletOrMobile} bg="light" variant="light" sticky="top">
+            <Navbar expand={!isTabletOrMobile} variant="light">
 
                 <Container>
                     <Navbar.Brand as={NavBrandComponent}/>

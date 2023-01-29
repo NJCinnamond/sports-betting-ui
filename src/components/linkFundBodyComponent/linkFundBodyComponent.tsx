@@ -19,6 +19,9 @@ const StyledBox = styled(Box)((
         borderRadius: "25px",
         margin: "2vh auto",
         width: "70%",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "rgba(1,1,1,0.1)"
     },
     [`& .${classes.fundForm}`]: {
         padding: "1em",

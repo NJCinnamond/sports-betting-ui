@@ -27,7 +27,10 @@ const StyledBox = styled(Box)((
     [`& .${classes.box}`]: {
         backgroundColor: "white",
         borderRadius: "25px",
-        margin: "2vh 0"
+        margin: "2vh 0",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "rgba(1,1,1,0.1)"
     },
 
     [`& .${classes.header}`]: {

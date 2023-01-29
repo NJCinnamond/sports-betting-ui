@@ -17,6 +17,9 @@ const StyledBox = styled(Box)((
         backgroundColor: "white",
         borderRadius: "25px",
         margin: "2vh auto",
+        borderStyle: "solid",
+        borderWidth: "1px",
+        borderColor: "rgba(1,1,1,0.1)"
     },
 }));
 
