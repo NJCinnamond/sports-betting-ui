@@ -1,20 +1,22 @@
 import { Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { Button, CircularProgress } from "@mui/material";
+import { Button } from "@mui/material";
 import { StakeDirection, StakeValidity } from "../openStakeComponent/openStakeComponent";
 import { HiSwitchVertical } from 'react-icons/hi';
-import { useFixtureStake, useFixtureUnstake } from "../../hooks";
 import { useEffect, useState } from "react";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useFixtureTransacting } from "../../hooks/view";
-import { useFixtureBettingEndTime } from "../../hooks/stake";
+import { useDAIAllowance, useFixtureBettingEndTime } from "../../hooks/stake";
+import { StakeButtonComponent } from "../stakeButtonComponent/stakeButtonComponent";
+import { DaiApprovalButtonComponent } from "../daiApprovalButtonComponent/daiApprovalButtonComponent";
+import { parseBigNumber } from "../../services/sportsContractService";
 
 const PREFIX = 'StakeFormComponent';
 
 const classes = {
     container: `${PREFIX}-container`,
-    stakeBtn: `${PREFIX}-stakeBtn`,
+    actionBtn: `${PREFIX}-actionBtn`,
     dirBtn: `${PREFIX}-dirBtn`
 };
 
@@ -27,16 +29,12 @@ const Root = styled('div')((
     [`& .${classes.container}`]: {
         display: "flex",
         marginTop: "0.4em",
-        height: "2.8em",
-    },
-
-    [`& .${classes.stakeBtn}`]: {
-        flexBasis: "70%",
+        height: "3em",
     },
 
     [`& .${classes.dirBtn}`]: {
         margin: "0 0.3em",
-        flexBasis: "30%",
+        flexBasis: "20%",
     }
 }));
 
@@ -50,25 +48,17 @@ export interface StakeFormComponentProps {
 }
 
 export const StakeFormComponent = (props: StakeFormComponentProps) => {
-
-
-    const { fixtureStakeState, stake } = useFixtureStake(props.fixture?.fixture_id);
-    const { unstake } = useFixtureUnstake(props.fixture?.fixture_id);
-
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
 
-    const handleStakeAction = (dir: StakeDirection) => {
-        if (dir == StakeDirection.STAKE) {
-            stake(props.fixture.fixture_id, props.betType, props.stakeAmount);
-        } else {
-            unstake(props.fixture.fixture_id, props.betType, props.stakeAmount);
-        }
-    };
+    // Get DAI that contract is allowed to spend on user's behalf
+    const daiAllowance = useDAIAllowance();
+    const hasStakeAmountApproved = daiAllowance > props.stakeAmount;
+    //const hasStakeAmountApproved = false;
 
+    // Calculate if we are within betting window
     const { betEndTime } = useFixtureBettingEndTime(props.fixture.fixture_id);
-
-    const [timeUp, setTimeUp] = useState<boolean>();
+    const [timeUp, setTimeUp] = useState<boolean>(true);
     useEffect(() => {
         if (betEndTime) {
             const timeIsUp = new Date() > betEndTime;
@@ -78,18 +68,26 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         }
     }, [betEndTime]);
 
+    // Determine if stake actions should be disabled
+    const stakeActionDisabled: boolean = !props.validity.isValid || isFixtureTransacting || timeUp;
+
     return (
         (<Root>
             <Box className={classes.container}>
-                <Button
-                    className={classes.stakeBtn}
-                    color="primary"
-                    variant="contained"
-                    onClick={() => handleStakeAction(props.direction)}
-                    disabled={!props.validity.isValid || isFixtureTransacting || timeUp}
-                >
-                    {isFixtureTransacting ? <CircularProgress size={26} /> : props.direction == StakeDirection.STAKE ? "STAKE" : "UNSTAKE"}
-                </Button>
+                {!hasStakeAmountApproved && props.direction == StakeDirection.STAKE && (
+                    <DaiApprovalButtonComponent
+                        disabled={stakeActionDisabled}
+                    />
+                )}
+                {(hasStakeAmountApproved || (!hasStakeAmountApproved && props.direction == StakeDirection.UNSTAKE)) && (
+                    <StakeButtonComponent
+                        fixture={props.fixture}
+                        betType={props.betType}
+                        stakeAmount={props.stakeAmount}
+                        direction={props.direction}
+                        disabled={stakeActionDisabled}
+                    />
+                )}
                 <Button className={classes.dirBtn} color="primary" variant="contained" onClick={() => props.toggleStakeDirection()} disabled={isFixtureTransacting}>
                     <HiSwitchVertical />
                 </Button>

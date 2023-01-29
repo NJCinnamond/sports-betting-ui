@@ -20,7 +20,7 @@ const Root = styled('div')((
         fontSize: "1em",
         marginTop: "-0.2em",
         '& > * + *': {
-            marginTop: "0.6em",
+            marginTop: "0.4em",
         },
     },
 
@@ -38,8 +38,6 @@ export type BetTimeUpComponentProps = {
 }
 
 export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
-
-
     const { account } = useEthers();
 
     const { awaitFixture } = useFixtureAwaiting(props.fixtureID);

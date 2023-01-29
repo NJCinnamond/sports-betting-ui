@@ -41,7 +41,7 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.columnItem}`]: {
-        width: "75%",
+        width: "95%",
         margin: "1.2em auto",
         justifyContent: "center",
         textAlign: 'center',
@@ -53,7 +53,7 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.stakeForm}`]: {
-        flexBasis: "30%",
+        flexBasis: "40%",
         margin: "0 auto",
         justifyContent: 'space-around'
     },

@@ -19,16 +19,12 @@ export const Header = () => {
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' });
 
-    const onSelect = (payload: any) => {
-        console.log(payload);
-    }
-
     return (
         <>
-            <Navbar expand={!isTabletOrMobile} bg="light" variant="light" sticky="top" onSelect={onSelect}>
+            <Navbar expand={!isTabletOrMobile} bg="light" variant="light" sticky="top">
 
                 <Container>
-                    <Navbar.Brand onClick={onSelect} as={NavBrandComponent}/>
+                    <Navbar.Brand as={NavBrandComponent}/>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">

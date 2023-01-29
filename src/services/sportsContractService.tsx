@@ -12,7 +12,7 @@ export interface UserPayout {
     amount: number;
 }
 
-const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
+export const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
 
 // Currently response is in some array format with hex numbers
 const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {

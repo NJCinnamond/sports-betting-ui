@@ -69,7 +69,6 @@ export const FixtureListItemComponent = (props: FixtureComponentProps) => {
                     <FixtureInfoComponent fixture={props.fixture} homeTeam={homeTeam} awayTeam={awayTeam}></FixtureInfoComponent>
                 )}
             </div>
-            <FixtureNotificationsComponent fixtureID={props.fixture?.fixture_id} />
         </Root>)
     );
 }
