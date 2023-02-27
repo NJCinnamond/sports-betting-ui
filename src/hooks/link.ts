@@ -1,22 +1,25 @@
-import { ArbitrumGoerli, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { ArbitrumGoerli, Goerli, useCall, useContractFunction } from "@usedapp/core";
 import { useSportsBettingContract } from "./contract";
 import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
 import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { handleUserLinkTransferred } from "../services/sportsContractService";
+import { useAccount, useNetwork } from "wagmi";
 
 export const approveLinkTransactionName = "Approve LINK transfer";
 export const transferLinkTransactionName = "Transfer LINK";
 
 const useLinkContract = () => {
-    const { chainId } = useEthers();
+    const { chain } = useNetwork();
+
+    console.log("CHAIN ID IN USELINK: ", chain?.id);
 
     // TODO: Parametrize token address
     let tokenAddress;
-    if (chainId == Goerli.chainId) {
+    if (chain?.id == Goerli.chainId) {
         tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
-    } else if (chainId == ArbitrumGoerli.chainId) {
+    } else if (chain?.id == ArbitrumGoerli.chainId) {
         tokenAddress = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28";
     } else {
         tokenAddress = '';
@@ -82,13 +85,13 @@ export const useLinkWithdraw = () => {
 export const useLinkTransferred = (
 ) => {
     const sportsBetting = useSportsBettingContract();
-    const { account } = useEthers();
+    const { address } = useAccount();
     const { value: linkResponse, error } =
         useCall(
-            sportsBetting && account && {
+            sportsBetting && address && {
                 contract: sportsBetting,
                 method: 'userToLink',
-                args: [account],
+                args: [address],
             }
         ) ?? {};
     if (error) {

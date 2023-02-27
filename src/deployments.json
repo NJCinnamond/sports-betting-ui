@@ -5,7 +5,7 @@
       "chainId": "5",
       "contracts": {
         "SportsBetting": {
-          "address": "0x36A958633f35e8263ED138B73292a5D8e6ff1Fd8",
+          "address": "0x19Ce63bcb1c7f88735c65AFC1920cB31BcceC6B5",
           "abi": [
             {
               "inputs": [
@@ -37,11 +37,6 @@
                 {
                   "internalType": "uint256",
                   "name": "_fee",
-                  "type": "uint256"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "_commissionRate",
                   "type": "uint256"
                 }
               ],
@@ -96,25 +91,6 @@
               "anonymous": false,
               "inputs": [
                 {
-                  "indexed": false,
-                  "internalType": "string",
-                  "name": "fixtureID",
-                  "type": "string"
-                },
-                {
-                  "indexed": false,
-                  "internalType": "string",
-                  "name": "reason",
-                  "type": "string"
-                }
-              ],
-              "name": "BetPayoutFulfillmentError",
-              "type": "event"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
                   "indexed": true,
                   "internalType": "address",
                   "name": "better",
@@ -134,7 +110,7 @@
                 },
                 {
                   "indexed": false,
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "betType",
                   "type": "uint8"
                 }
@@ -165,7 +141,7 @@
                 },
                 {
                   "indexed": false,
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "betType",
                   "type": "uint8"
                 }
@@ -287,6 +263,25 @@
                 {
                   "indexed": false,
                   "internalType": "string",
+                  "name": "error",
+                  "type": "string"
+                }
+              ],
+              "name": "RequestFixtureResultError",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": true,
+                  "internalType": "bytes32",
+                  "name": "requestId",
+                  "type": "bytes32"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "string",
                   "name": "fixtureID",
                   "type": "string"
                 },
@@ -339,29 +334,52 @@
               "type": "event"
             },
             {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                },
-                {
-                  "internalType": "enum SportsBettingLib.BetType",
-                  "name": "",
-                  "type": "uint8"
-                },
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "name": "activeBetters",
+              "inputs": [],
+              "name": "BET_ADVANCE_TIME",
               "outputs": [
                 {
-                  "internalType": "bool",
+                  "internalType": "uint256",
                   "name": "",
-                  "type": "bool"
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "BET_CUTOFF_TIME",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "COMMISSION_RATE",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "ENTRANCE_FEE",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
                 }
               ],
               "stateMutability": "view",
@@ -375,7 +393,7 @@
                   "type": "string"
                 },
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "",
                   "type": "uint8"
                 },
@@ -410,32 +428,6 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "betAdvanceTime",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [],
-              "name": "betCutOffTime",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "uint256",
@@ -446,7 +438,7 @@
               "name": "betTypes",
               "outputs": [
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "",
                   "type": "uint8"
                 }
@@ -519,13 +511,19 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "commissionRate",
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "name": "commissionPaid",
               "outputs": [
                 {
-                  "internalType": "uint256",
+                  "internalType": "bool",
                   "name": "",
-                  "type": "uint256"
+                  "type": "bool"
                 }
               ],
               "stateMutability": "view",
@@ -539,32 +537,6 @@
                   "internalType": "address",
                   "name": "",
                   "type": "address"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [],
-              "name": "entranceFee",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [],
-              "name": "fixtureResult",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
                 }
               ],
               "stateMutability": "view",
@@ -587,19 +559,6 @@
                 }
               ],
               "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "fixtureID",
-                  "type": "string"
-                }
-              ],
-              "name": "fulfillBetForFixture",
-              "outputs": [],
-              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
@@ -647,58 +606,13 @@
               "inputs": [
                 {
                   "internalType": "string",
-                  "name": "",
+                  "name": "fixtureID",
                   "type": "string"
-                },
-                {
-                  "internalType": "enum SportsBettingLib.BetType",
-                  "name": "",
-                  "type": "uint8"
-                },
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
                 }
               ],
-              "name": "historicalBetters",
-              "outputs": [
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                },
-                {
-                  "internalType": "enum SportsBettingLib.BetType",
-                  "name": "",
-                  "type": "uint8"
-                },
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "name": "historicalBettersIndex",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
+              "name": "handleCommissionPayout",
+              "outputs": [],
+              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
@@ -755,12 +669,12 @@
               "inputs": [
                 {
                   "internalType": "bytes32",
-                  "name": "_requestId",
+                  "name": "requestId",
                   "type": "bytes32"
                 },
                 {
                   "internalType": "uint256",
-                  "name": "_ko",
+                  "name": "ko",
                   "type": "uint256"
                 }
               ],
@@ -773,12 +687,12 @@
               "inputs": [
                 {
                   "internalType": "bytes32",
-                  "name": "_requestId",
+                  "name": "requestId",
                   "type": "bytes32"
                 },
                 {
                   "internalType": "uint256",
-                  "name": "_result",
+                  "name": "result",
                   "type": "uint256"
                 }
               ],
@@ -890,6 +804,25 @@
               "type": "function"
             },
             {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                }
+              ],
+              "name": "results",
+              "outputs": [
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
+                  "name": "",
+                  "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [],
               "name": "sportsOracleURI",
               "outputs": [
@@ -910,7 +843,7 @@
                   "type": "string"
                 },
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "betType",
                   "type": "uint8"
                 },
@@ -923,6 +856,30 @@
               "name": "stake",
               "outputs": [],
               "stateMutability": "nonpayable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                },
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
+                  "name": "",
+                  "type": "uint8"
+                }
+              ],
+              "name": "totalAmounts",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             },
             {
@@ -946,7 +903,7 @@
                   "type": "string"
                 },
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "betType",
                   "type": "uint8"
                 },
@@ -983,6 +940,30 @@
             {
               "inputs": [
                 {
+                  "internalType": "string",
+                  "name": "",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
+                }
+              ],
+              "name": "userWasPaid",
+              "outputs": [
+                {
+                  "internalType": "bool",
+                  "name": "",
+                  "type": "bool"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
                   "internalType": "uint256",
                   "name": "amount",
                   "type": "uint256"
@@ -992,26 +973,49 @@
               "outputs": [],
               "stateMutability": "nonpayable",
               "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "fixtureID",
+                  "type": "string"
+                }
+              ],
+              "name": "withdrawPayout",
+              "outputs": [],
+              "stateMutability": "nonpayable",
+              "type": "function"
             }
           ]
         },
         "SportsBettingLib": {
-          "address": "0x39341B78a5eEF806eE0Acc28Cca8Bd4f5b09A286",
+          "address": "0xeac7428A8FBE8339B76505bBA4968e4B9Dc6A43B",
           "abi": [
             {
               "inputs": [
                 {
                   "internalType": "uint256",
-                  "name": "_result",
+                  "name": "stakerObligation",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "stakerAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "commissionRate",
                   "type": "uint256"
                 }
               ],
-              "name": "getFixtureResultFromAPIResponse",
+              "name": "calculateCommission",
               "outputs": [
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "uint256",
                   "name": "",
-                  "type": "SportsBettingLib.BetType"
+                  "type": "uint256"
                 }
               ],
               "stateMutability": "pure",
@@ -1020,17 +1024,65 @@
             {
               "inputs": [
                 {
-                  "internalType": "enum SportsBettingLib.BetType",
+                  "internalType": "uint256",
+                  "name": "stakerAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "winningAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalAmount",
+                  "type": "uint256"
+                }
+              ],
+              "name": "calculateStakerObligation",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "pure",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "result",
+                  "type": "uint256"
+                }
+              ],
+              "name": "getFixtureResultFromAPIResponse",
+              "outputs": [
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
+                  "name": "",
+                  "type": "SportsBettingLib.FixtureResult"
+                }
+              ],
+              "stateMutability": "pure",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
                   "name": "winningOutcome",
-                  "type": "SportsBettingLib.BetType"
+                  "type": "SportsBettingLib.FixtureResult"
                 }
               ],
               "name": "getLosingFixtureOutcomes",
               "outputs": [
                 {
-                  "internalType": "enum SportsBettingLib.BetType[]",
+                  "internalType": "enum SportsBettingLib.FixtureResult[]",
                   "name": "",
-                  "type": "SportsBettingLib.BetType[]"
+                  "type": "SportsBettingLib.FixtureResult[]"
                 }
               ],
               "stateMutability": "pure",

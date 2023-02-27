@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { useEthers } from "@usedapp/core";
+import { useAccount } from "wagmi";
 import { useFixtureAwaiting } from "../../hooks/fixtureState";
 
 const PREFIX = 'BetTimeUpComponent';
@@ -38,7 +38,7 @@ export type BetTimeUpComponentProps = {
 }
 
 export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
-    const { account } = useEthers();
+    const { address } = useAccount();
 
     const { awaitFixture } = useFixtureAwaiting(props.fixtureID);
     const handleAwaitFixture = () => {
@@ -50,7 +50,7 @@ export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
             <div>
                 Betting has finished.
             </div>
-            {account && (
+            {address && (
                 <>
                     <div className={classes.awaitContainerItem}>
                         Click below to close staking and await result.

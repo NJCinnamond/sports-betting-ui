@@ -43,6 +43,7 @@ export const LinkFundComponent = () => {
     const [linkTransferred, setLinkTransferred] = useState<number>(0);
     const { linkResponse } = useLinkTransferred();
     useEffect(() => {
+        console.log("LINK response: ", linkResponse);
         const link = handleUserLinkTransferred(linkResponse);
         setLinkTransferred(link.userLinkTransferred);
     }, [linkResponse]);

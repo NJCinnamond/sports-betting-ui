@@ -2,9 +2,9 @@ import { Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { Fixture } from "../../$types/fixture";
 import { OpenFixtureButtonComponent } from "../openFixtureButtonComponent/openFixtureButtonComponent";
-import { useEthers } from "@usedapp/core";
 import { useFixtureOpeningAdvanceTime } from "../../hooks/stake";
 import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
 const PREFIX = 'ClosedStakeComponent';
 
@@ -34,9 +34,7 @@ export interface ClosedStakeComponentProps {
 }
 
 export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
-
-
-    const { account } = useEthers();
+    const { address } = useAccount();
 
     const [isWithinOpenWindow, setIsWithinOpenWindow] = useState<boolean>(false);
     const { betAdvanceTime } = useFixtureOpeningAdvanceTime();
@@ -60,12 +58,12 @@ export const ClosedStakeComponent = (props: ClosedStakeComponentProps) => {
                     This fixture is currently closed.
                 </div>
             )}
-            {isWithinOpenWindow && !account && (
+            {isWithinOpenWindow && !address && (
                 <div className={classes.section}>
                     This fixture is currently closed. To request to Open it, please connect your wallet.
                 </div>
             )}
-            {isWithinOpenWindow && account && (
+            {isWithinOpenWindow && address && (
                 <div className={classes.section}>
                     This fixture is currently closed. Click below to request to Open it.
                 </div>

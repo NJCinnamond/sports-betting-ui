@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
+import { useAccount, useNetwork } from 'wagmi';
 import { config } from '../../App';
 import { useTypedSelector } from '../../redux/store';
 import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
@@ -53,7 +53,8 @@ export type BettingTab = {
 
 export const FixtureBodyComponent = () => {
 
-    const { chainId, account } = useEthers();
+    const { chain } = useNetwork();
+    const { address } = useAccount();
 
     // Redux store for selected fixture view
     const view = useTypedSelector((state) => state.view);
@@ -62,8 +63,8 @@ export const FixtureBodyComponent = () => {
     const startDate = new Date(2023, 0, 1);
     const endDate = new Date(2023, 3, 1);
 
-    const isValidChain: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
-    const shouldShowBody = (!account || (account && isValidChain));
+    const isValidChain: boolean = chain?.id != null && config.readOnlyUrls != null && config?.readOnlyUrls[chain.id] != null;
+    const shouldShowBody = (!address || (address && isValidChain));
 
     useEffect(() => {
         fetchFixtures();
