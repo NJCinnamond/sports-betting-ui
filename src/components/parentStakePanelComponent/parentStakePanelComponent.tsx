@@ -10,9 +10,9 @@ import { ClosedStakeComponent } from "../closedStakeComponent/closedStakeCompone
 import { OpeningStakeComponent } from "../openingStakeComponent/openingStakeComponent";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
 import { AwaitingStakeComponent } from "../awaitingStakeComponent/awaitingStakeComponent";
-import { FulfillingStakeComponent } from "../fulfillingStakeComponent/fulfillingStakeComponent";
-import { FulfilledStakeComponent } from "../fulfilledStakeComponent/fulfilledStakeComponent";
 import { StakeInsightComponent } from "../stakeInsightComponent/stakeInsightComponent";
+import { PayableStakeComponent } from "../payableStakeComponent/payableStakeComponent";
+import { CancelledStakeComponent } from "../cancelledStakeComponent/cancelledStakeComponent";
 
 const PREFIX = 'ParentStakePanelComponent';
 
@@ -93,11 +93,11 @@ export const ParentStakePanelComponent = (props: ParentStakePanelComponentProps)
                 {fixtureState == FixtureBettingState.AWAITING && (
                     <AwaitingStakeComponent fixtureID={props.fixture.fixture_id} />
                 )}
-                {fixtureState == FixtureBettingState.FULFILLING && (
-                    <FulfillingStakeComponent fixtureID={props.fixture.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>
+                {fixtureState == FixtureBettingState.PAYABLE && (
+                    <PayableStakeComponent fixtureID={props.fixture.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>
                 )}
-                {fixtureState == FixtureBettingState.FULFILLED && (
-                    <FulfilledStakeComponent fixtureID={props.fixture?.fixture_id} homeTeam={homeTeam} awayTeam={awayTeam}/>
+                {fixtureState == FixtureBettingState.CANCELLED && (
+                    <CancelledStakeComponent fixtureID={props.fixture?.fixture_id}/>
                 )}
             </>
             )}

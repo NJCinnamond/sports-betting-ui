@@ -1,2 +1,2 @@
 export { useFixtureStake, useFixtureUnstake } from './stake';
-export { useFixtureOpen, useFixtureFulfill } from './fixtureState';
+export { useFixtureOpen } from './fixtureState';

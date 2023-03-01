@@ -96,15 +96,11 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
         setStakeDirection(dir);
     }
     
-    /*// TODO: COMPONENTIZE
-    const { requestFixtureKickoff } = useFixtureRequestKickoff(props.fixture.fixture_id);
+    // TODO: COMPONENTIZE
+    const { requestFixtureKickoff } = useFixtureRequestKickoff();
     const handleRequestFixtureKickoff = () => {
         requestFixtureKickoff(props.fixture.fixture_id);
     };
-
-    <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
-                GET KO TIME
-            </Button>*/
 
     return (
         <StyledBox className={classes.container}>
@@ -123,6 +119,9 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
+            <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
+                GET KO TIME
+            </Button>
         </StyledBox >
     );
 }

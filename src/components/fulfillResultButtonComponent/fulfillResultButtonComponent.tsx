@@ -1,6 +1,7 @@
 import { Button, CircularProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { useFixtureWithdrawPayout } from "../../hooks/stake";
+import { useFixtureRequestResult } from "../../hooks/fixtureState";
+import { useCanMakeOracleRequest } from "../../hooks/link";
 import { useFixtureTransacting } from "../../hooks/view";
 
 const PREFIX = 'PayoutButtonComponent';
@@ -19,16 +20,18 @@ const StyledButton = styled(Button)((
     }
 }));
 
-export interface PayoutButtonComponentProps {
+export interface FulfillResultComponentProps {
     fixtureID: string,
-    label: string,
     disabled: boolean
 }
 
-export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
+export const FulfillResultButtonComponent = (props: FulfillResultComponentProps) => {
 
-    const { withdrawPayout } = useFixtureWithdrawPayout(props.fixtureID);
-    const handlePayoutAction = () => withdrawPayout(props.fixtureID);
+
+    const { requestFixtureResult } = useFixtureRequestResult();
+    const handleFulfill = () => requestFixtureResult(props.fixtureID);
+
+    const { canMakeOracleRequest } = useCanMakeOracleRequest();
 
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
@@ -38,10 +41,10 @@ export const PayoutButtonComponent = (props: PayoutButtonComponentProps) => {
             className={classes.fulfillBtn}
             color="primary"
             variant="contained"
-            onClick={handlePayoutAction}
-            disabled={isFixtureTransacting || props.disabled}
+            onClick={handleFulfill}
+            disabled={isFixtureTransacting || !canMakeOracleRequest || props.disabled}
         >
-            {isFixtureTransacting ? <CircularProgress size={26} /> : <span>{props.label}</span>}
+            {isFixtureTransacting ? <CircularProgress size={26} /> : "FULFILL"}
         </StyledButton>
     );
 }

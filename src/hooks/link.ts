@@ -2,17 +2,18 @@ import { ArbitrumGoerli, Goerli, useCall, useContractFunction } from "@usedapp/c
 import { useSportsBettingContract } from "./contract";
 import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
-import { utils } from "ethers";
+import { Signer, utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { handleUserLinkTransferred } from "../services/sportsContractService";
-import { useAccount, useNetwork } from "wagmi";
+import { useAccount, useNetwork, useSigner } from "wagmi";
 
 export const approveLinkTransactionName = "Approve LINK transfer";
 export const transferLinkTransactionName = "Transfer LINK";
 
 const useLinkContract = () => {
     const { chain } = useNetwork();
-
+    const { data: signer, isError, isLoading } = useSigner();
+    
     console.log("CHAIN ID IN USELINK: ", chain?.id);
 
     // TODO: Parametrize token address
@@ -27,7 +28,7 @@ const useLinkContract = () => {
 
     const erc20ABI = ERC20.abi;
     const erc20Interface = new utils.Interface(erc20ABI);
-    return new Contract(tokenAddress, erc20Interface);
+    return new Contract(tokenAddress, erc20Interface, signer as Signer);
 }
 
 export const useLinkTransfer = () => {

@@ -22,6 +22,7 @@ export default class TeamService {
             case BetType.AWAY:
                 return awayTeam.short_name + " WIN";
         };
+        return "";
     }
 }
 

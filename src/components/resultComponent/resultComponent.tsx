@@ -16,7 +16,7 @@ const Root = styled('div')((
 ) => ({
     [`&.${classes.container}`]: {
         textAlign: "center",
-        margin: "1em",
+        margin: ".5em",
         fontSize: "1.2em",
         fontWeight: "bold"
     }

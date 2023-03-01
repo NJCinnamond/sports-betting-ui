@@ -15,19 +15,6 @@ export const useFixtureOpen = (fixtureID: string) => {
     return { fixtureOpenState, openFixture };
 };
 
-export const useFixtureRequestKickoff = (fixtureID: string) => {
-    const sportsBetting = useSportsBettingContract();
-
-    const { state: fixtureRequestKickoffState, send: fixtureRequestKickoffSend } = useContractFunction(sportsBetting, 'requestFixtureKickoffTime', {
-        transactionName: 'requestKickoffTime', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
-        bufferGasLimitPercentage: 6000000
-    });
-
-    const requestFixtureKickoff = (fixtureID: string) => fixtureRequestKickoffSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
-
-    return { fixtureRequestKickoffState, requestFixtureKickoff };
-};
-
 export const useFixtureAwaiting = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
@@ -41,15 +28,28 @@ export const useFixtureAwaiting = (fixtureID: string) => {
     return { fixtureAwaitState, awaitFixture };
 };
 
-export const useFixtureFulfill = (fixtureID: string) => {
+export const useFixtureRequestKickoff = () => {
     const sportsBetting = useSportsBettingContract();
 
-    const { state: fixtureFulfillState, send: fixtureFulfillSend } = useContractFunction(sportsBetting, 'fulfillBetForFixture', {
-        transactionName: getFulfillingTransactionName(fixtureID),
-        gasLimitBufferPercentage: 10,
+    const { state: fixtureRequestKickoffState, send: fixtureRequestKickoffSend } = useContractFunction(sportsBetting, 'requestFixtureKickoffTime', {
+        transactionName: 'requestKickoffTime', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        bufferGasLimitPercentage: 6000000
     });
 
-    const fulfillFixture = (fixtureID: string) => fixtureFulfillSend(fixtureID);
+    const requestFixtureKickoff = (fixtureID: string) => fixtureRequestKickoffSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
 
-    return { fixtureFulfillState, fulfillFixture };
+    return { fixtureRequestKickoffState, requestFixtureKickoff };
+};
+
+export const useFixtureRequestResult = () => {
+    const sportsBetting = useSportsBettingContract();
+
+    const { state: fixtureRequestResultState, send: fixtureRequestResultSend } = useContractFunction(sportsBetting, 'requestFixtureResult', {
+        transactionName: 'requestFixtureResult', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        bufferGasLimitPercentage: 6000000
+    });
+
+    const requestFixtureResult = (fixtureID: string) => fixtureRequestResultSend(fixtureID, { gasLimit: 500000 }); // TODO: What should this manual gas limit be?
+
+    return { fixtureRequestResultState, requestFixtureResult };
 };

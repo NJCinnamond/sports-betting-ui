@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
 import { useTypedSelector } from "../../redux/store";
-import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
+import { FulfillResultButtonComponent } from '../fulfillResultButtonComponent/fulfillResultButtonComponent';
 
 const PREFIX = 'AwaitingStakeComponent';
 
@@ -16,6 +16,7 @@ const Root = styled('div')((
     }
 ) => ({
     [`&.${classes.container}`]: {
+        marginTop: "1em",
         textAlign: "center",
     },
 
@@ -46,11 +47,11 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
                     Betting has closed while we await the fixture result.
                 </p>
                 <p>
-                    When we detect the fixture result is available, you will be able to click the button below to initiate payout to winners.
+                    When we detect the fixture result is available, you will be able to click the button below to fulfill the fixture result.
                 </p> 
             </div>
             <div>
-                <PayoutButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
+                <FulfillResultButtonComponent fixtureID={props.fixtureID} disabled={!fixtureHasResult}/>
             </div>
         </Root>
     );

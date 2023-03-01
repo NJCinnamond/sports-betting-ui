@@ -6,8 +6,8 @@ import { useMediaQuery } from "react-responsive";
 import { Page } from "../../redux/reducers/view";
 import { NavBrandComponent } from "../nav/navBrandComponent";
 import { NavItemComponent } from "../nav/navItemComponent";
-import { ConnectButton } from "web3uikit";
-import { Web3Button, Web3NetworkSwitch } from "@web3modal/react";
+import { Web3Button } from "@web3modal/react";
+import { useEthers } from '@usedapp/core';
 
 export const Header = () => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' });
@@ -26,6 +26,7 @@ export const Header = () => {
                 <Nav>
                     <div className={isTabletOrMobile ? "custom-nav-column-item" : "custom-nav-row-item"}>
                         <Web3Button/>
+                        
                     </div>
                 </Nav>
                 </Navbar.Collapse>

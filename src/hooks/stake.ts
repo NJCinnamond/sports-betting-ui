@@ -7,6 +7,7 @@ import { useTypedSelector } from "../redux/store";
 import { Contract } from "@ethersproject/contracts";
 import { parseBigNumber } from "../services/sportsContractService";
 import { useAccount, useNetwork } from "wagmi";
+import { FixtureResult } from "../$types/fixtureResult";
 
 const { MaxUint256  } = require("@ethersproject/constants");
 
@@ -110,6 +111,21 @@ export const useFixtureUnstake = (fixtureID: string) => {
     return { fixtureUnstakeState, unstake };
 };
 
+export const useFixtureWithdrawPayout = (fixtureID: string) => {
+    const sportsBetting = useSportsBettingContract();
+
+    const { state: fixturePayoutState, send: fixturePayoutSend } = useContractFunction(sportsBetting, 'withdrawPayout', {
+        transactionName: getStakingTransactionName(fixtureID),
+        gasLimitBufferPercentage: 10,
+    });
+
+    const withdrawPayout = (fixtureID: string) => {
+        fixturePayoutSend(fixtureID);
+    };
+
+    return { fixturePayoutState, withdrawPayout };
+};
+
 export const useFixturePayout = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
     const { address } = useAccount();
@@ -149,7 +165,7 @@ export const useFixtureBettingEndTime = (fixtureID: string) => {
     const difference = fixture.ko - value;
     const betEndTime = new Date(difference * 1000); // Multiplied by 1000 so arg is in ms
     return { betEndTime };
-}
+};
 
 export const useFixtureOpeningAdvanceTime = () => {
     const sportsBetting = useSportsBettingContract();
@@ -165,4 +181,36 @@ export const useFixtureOpeningAdvanceTime = () => {
     }
     const betAdvanceTime = new Date(value * 1000); // Multiplied by 1000 so arg is in ms
     return { betAdvanceTime };
+};
+
+export const useUserWasPaidForFixture = (fixtureID: string) => {
+    const sportsBetting = useSportsBettingContract();
+    const { address } = useAccount();
+    const { value, error } =
+        useCall({
+                contract: sportsBetting,
+                method: 'userWasPaid',
+                args: [fixtureID, address],
+        }) ?? {};
+    if (error) {
+        console.error(error.message);
+        return {};
+    }
+    const userWasPaid = value && value[0];
+    return { userWasPaid };
+}
+
+export const useUserIsEligibleForFixturePayout = (fixtureID: string, result: FixtureResult) => {
+    const { userWasPaid } = useUserWasPaidForFixture(fixtureID);
+    // Get user stakes on fixture-result combo with enrichment
+    const enrichment = useTypedSelector((state) => state.fixturesEnrichment[fixtureID]);
+    const stake = enrichment.user[result as any as BetType]
+    return !userWasPaid && stake > 0;
+}
+
+export const useUserIsEligibleForFixtureRefund = (fixtureID: string) => {
+    const { userWasPaid } = useUserWasPaidForFixture(fixtureID);
+    const enrichment = useTypedSelector((state) => state.fixturesEnrichment[fixtureID]);
+    const hasStake = Object.values(enrichment.user).filter(x => x > 0).length;
+    return !userWasPaid && hasStake;
 }

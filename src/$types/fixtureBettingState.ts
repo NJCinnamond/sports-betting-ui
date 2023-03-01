@@ -3,6 +3,6 @@ export enum FixtureBettingState {
     OPENING,
     OPEN,
     AWAITING,
-    FULFILLING,
-    FULFILLED
+    PAYABLE,
+    CANCELLED
 }
