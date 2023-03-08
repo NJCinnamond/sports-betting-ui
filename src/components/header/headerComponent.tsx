@@ -19,7 +19,7 @@ export const Header = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="me-auto">
-                    <Nav.Link as={()=>{return(<NavItemComponent text={"How It Works"} page={Page.HOW_IT_WORKS}/>)}}/>
+                    <Nav.Link as={()=>{return(<NavItemComponent text={"Getting Started"} page={Page.GETTING_STARTED}/>)}}/>
                     <Nav.Link as={()=>{return(<NavItemComponent text={"Fixtures"} page={Page.FIXTURES}/>)}}/>
                     <Nav.Link as={()=>{return(<NavItemComponent text={"Fund LINK"} page={Page.LINK_FUND}/>)}}/>
                 </Nav>

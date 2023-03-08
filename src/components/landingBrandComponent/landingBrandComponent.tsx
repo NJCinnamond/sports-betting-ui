@@ -1,5 +1,6 @@
 import { Box, styled } from '@mui/material';
-import { FixtureNavigationButtonComponent } from '../fixtureNavigationButtonComponent/fixtureNavigationButtonComponent';
+import { Page } from '../../redux/reducers/view';
+import { NavigationButtonComponent } from '../navigationButtonComponent/navigationButtonComponent';
 import "./landingBrandComponent.css";
 
 const background = '/stadium.jpg';
@@ -37,7 +38,11 @@ export const LandingBrandComponent = () => {
                             Crypto betting made easy
                         </h1>
                         <div className={classes.fixturesNavBtn}>
-                            <FixtureNavigationButtonComponent/>
+                            <NavigationButtonComponent
+                                page={Page.FIXTURES}
+                                label="VIEW FIXTURES"
+                                size="large"
+                            />
                         </div>
                     </div>
                 </article>

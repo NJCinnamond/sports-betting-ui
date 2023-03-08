@@ -1,5 +1,5 @@
-import { Box, styled } from '@mui/material';
-import { FixtureNavigationButtonComponent } from '../fixtureNavigationButtonComponent/fixtureNavigationButtonComponent';
+import { Page } from '../../redux/reducers/view';
+import { NavigationButtonComponent } from '../navigationButtonComponent/navigationButtonComponent';
 import "./landingSectionComponent.css";
 
 const PREFIX = 'LandingSection';
@@ -24,10 +24,14 @@ export const LandingSectionComponent = () => {
             <div className="text-area">
                 <h2 className="section-header">Quick bets. Quick payouts.</h2>
                 <span>
-                    Stake on fixture results in seconds and your payout will be sent directly to your wallet immediately after the final whistle.
+                    Stake on fixture results in seconds and your winnings will be available to claim almost instantly after the final whistle
                 </span>
                 <div className="fixture-nav">
-                    <FixtureNavigationButtonComponent/>
+                    <NavigationButtonComponent
+                        page={Page.FIXTURES}
+                        label="VIEW FIXTURES"
+                        size="medium"
+                    />
                 </div>
             </div>
             <img className={classes.rightElem} src="/arteta.jpg"></img>

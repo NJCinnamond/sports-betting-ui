@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { HowItWorksComponent } from '../howItWorksComponent/howItWorksComponent';
 import { LandingBrandComponent } from '../landingBrandComponent/landingBrandComponent';
 import { LandingSectionComponent } from '../landingSectionComponent/landingSectionComponent';
 
@@ -32,6 +33,7 @@ export const HomeBodyComponent = () => {
         <StyledBox>
             <Box className={classes.box}>
                 <LandingBrandComponent/>
+                <HowItWorksComponent/>
                 <LandingSectionComponent/>
             </Box>
             

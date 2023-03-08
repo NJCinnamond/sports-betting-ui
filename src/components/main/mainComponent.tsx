@@ -27,7 +27,7 @@ export const Main = () => {
             {selectedPage == Page.FIXTURES && (
                 <FixtureBodyComponent />
             )}
-            {selectedPage == Page.HOW_IT_WORKS && (
+            {selectedPage == Page.GETTING_STARTED && (
                 <GuideBodyComponent/>
             )}
             {selectedPage == Page.LINK_FUND && (

@@ -11,7 +11,7 @@ export type ViewState = {
 
 export enum Page {
     HOME,
-    HOW_IT_WORKS,
+    GETTING_STARTED,
     FIXTURES,
     LINK_FUND
 }

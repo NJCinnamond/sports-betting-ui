@@ -34,9 +34,6 @@ export interface CancelledStakeComponentProps {
 }
 
 export const CancelledStakeComponent = (props: CancelledStakeComponentProps) => {
-    const fixtures = useTypedSelector((state) => state.fixtures);
-    const fixture = fixtures[props.fixtureID];
-
     const { userWasPaid } = useUserWasPaidForFixture(props.fixtureID);
 
     // TODO: Calculate if user is eligible based user stakes
