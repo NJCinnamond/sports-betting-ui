@@ -1,6 +1,6 @@
 import { useContractFunction } from "@usedapp/core";
 import { useSportsBettingContract } from "../hooks/contract";
-import { getOpeningFixtureTransactionName, getFulfillingTransactionName, getAwaitingFixtureTransactionName } from "../services/notificationService";
+import { getOpeningFixtureTransactionName, getAwaitingFixtureTransactionName } from "../services/notificationService";
 
 export const useFixtureOpen = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();

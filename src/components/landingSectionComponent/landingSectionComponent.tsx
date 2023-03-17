@@ -18,7 +18,7 @@ export const LandingSectionComponent = () => {
             <div className="text-area">
                 <h2 className="section-header">Betting has never been simpler</h2>
                 <span>
-                    Sweeper is the easiest place to stake and win cryptocurrency on Premier League fixtures.
+                    FanRise is the easiest place to stake and win cryptocurrency on Premier League fixtures.
                 </span>
             </div>
             <div className="text-area">

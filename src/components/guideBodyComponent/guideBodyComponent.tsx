@@ -1,11 +1,14 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { GuideBodyCollapsablePanelComponent } from './guideBodyCollapsableComponent';
+import { GuideBodyStakingComponent } from './guideBodyContents/guideBodyStakingComponent';
+import { GuideOpeningFixtureComponent } from './guideBodyContents/guideOpeningFixtureComponent';
 
-const PREFIX = 'GuideBody';
+const PREFIX = 'GuideBodyComponent';
 
 const classes = {
     box: `${PREFIX}-box`,
-    fundForm: `${PREFIX}-fundForm`,
+    title: `${PREFIX}-title`,
 };
 
 const StyledBox = styled(Box)((
@@ -21,16 +24,54 @@ const StyledBox = styled(Box)((
         borderWidth: "1px",
         borderColor: "rgba(1,1,1,0.1)"
     },
+
+    [`& .${classes.title}`]: {
+        margin: "0.5em",
+    },
 }));
+
+const guides = [
+    {
+        title: "How to stake on fixtures",
+        contents: <GuideBodyStakingComponent/>
+    },
+    {
+        title: "How claim payouts or refunds",
+        contents: <div>Hello</div>
+    },
+    {
+        title: "How are payouts calculated?",
+        contents: <div>Hello</div>
+    },
+    {
+        title: "How to get DAI",
+        contents: <div>Hello</div>
+    },
+    {
+        title: "How to open fixtures and retrieve fixture results",
+        contents: <GuideOpeningFixtureComponent/>
+    }
+]
 
 export const GuideBodyComponent = () => {
 
     return (
         <StyledBox>
             <Box className={classes.box}>
-                <h1>
-                    How does it work?
-                </h1>
+                <>
+                    <h2 className={classes.title}>
+                        Getting Started
+                    </h2>
+                    {guides.map((guideElem) => {
+                        return(
+                            <GuideBodyCollapsablePanelComponent
+                                key={guideElem["title"]}
+                                title={guideElem["title"]}
+                                contents={guideElem["contents"]}
+                            />
+                        )
+                    })}
+                </>
             </Box>
         </StyledBox>
     );

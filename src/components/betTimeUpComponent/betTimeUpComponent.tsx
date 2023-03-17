@@ -1,6 +1,6 @@
 import { Button, CircularProgress } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { useAccount } from "wagmi";
+import { useEthers } from "@usedapp/core";
 import { useFixtureAwaiting } from "../../hooks/fixtureState";
 import { useFixtureTransacting } from "../../hooks/view";
 
@@ -39,7 +39,7 @@ export type BetTimeUpComponentProps = {
 }
 
 export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
-    const { address } = useAccount();
+    const { account } = useEthers();
 
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixtureID);
@@ -54,7 +54,7 @@ export const BetTimeUpComponent = (props: BetTimeUpComponentProps) => {
             <div>
                 Betting has finished.
             </div>
-            {address && (
+            {account && (
                 <>
                     <div className={classes.awaitContainerItem}>
                         Click below to close staking and await result.

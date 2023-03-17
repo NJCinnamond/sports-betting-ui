@@ -8,9 +8,11 @@ import { NavBrandComponent } from "../nav/navBrandComponent";
 import { NavItemComponent } from "../nav/navItemComponent";
 import { Web3Button } from "@web3modal/react";
 import { useEthers } from '@usedapp/core';
+import { ConnectButton } from '../wallet/connectButtonComponent/connectButtonComponent';
 
 export const Header = () => {
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' });
+    const { account, activateBrowserWallet } = useEthers();
 
     return (
         <Navbar expand={!isTabletOrMobile} variant="light">
@@ -25,8 +27,7 @@ export const Header = () => {
                 </Nav>
                 <Nav>
                     <div className={isTabletOrMobile ? "custom-nav-column-item" : "custom-nav-row-item"}>
-                        <Web3Button/>
-                        
+                        <ConnectButton/>
                     </div>
                 </Nav>
                 </Navbar.Collapse>

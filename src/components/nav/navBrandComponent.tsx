@@ -32,7 +32,7 @@ export const NavBrandComponent = () => {
     return (
         <Root className={classes.brandText}>
             <a onClick={onClick}>
-                Sweeper
+                FanRise
             </a>
         </Root>
     );

@@ -10,7 +10,7 @@ import TeamService from "../../services/teamService";
 import { useSelectedBetType } from "../../hooks/view";
 import { FixtureEnrichment } from "../../$types/fixtureEnrichment";
 import { OpenBetInsightComponent } from "../openBetInsightComponent.tsx/openBetInsightComponent";
-import { useAccount } from "wagmi";
+import { useEthers } from "@usedapp/core";
 
 const PREFIX = 'UserStakePanelComponent';
 
@@ -80,7 +80,7 @@ export interface UserStakePanelComponentProps {
 }
 
 export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => {
-    const { address } = useAccount();
+    const { account } = useEthers();
 
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 650px)' });
 
@@ -97,7 +97,7 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
 
     return (
         <StyledBox className={isTabletOrMobile ? classes.columnContainer : classes.rowContainer}>
-            {address && (
+            {account && (
                 <>
                     <div className={isTabletOrMobile ? classes.columnItem :  classes.selector}>
                     <BetTypeSelectorComponent fixtureID={props.fixture?.fixture_id} homeTeam={props.homeTeam} awayTeam={props.awayTeam} />
@@ -107,7 +107,7 @@ export const UserStakePanelComponent = (props: UserStakePanelComponentProps) => 
                     </div>
                 </>
             )}
-            {!address && (
+            {!account && (
                 <div className={isTabletOrMobile ? classes.columnItem :  classes.disconnectedText}>
                     Connect your wallet to begin staking!
                 </div>

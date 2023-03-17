@@ -1,26 +1,24 @@
-import { ArbitrumGoerli, Goerli, useCall, useContractFunction } from "@usedapp/core";
+import { ArbitrumGoerli, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { useSportsBettingContract } from "./contract";
 import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
-import { Signer, utils } from "ethers";
+import { utils } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { handleUserLinkTransferred } from "../services/sportsContractService";
-import { useAccount, useNetwork, useSigner } from "wagmi";
 
 export const approveLinkTransactionName = "Approve LINK transfer";
 export const transferLinkTransactionName = "Transfer LINK";
 
 const useLinkContract = () => {
-    const { chain } = useNetwork();
-    const { data: signer, isError, isLoading } = useSigner();
+    const { chainId } = useEthers();
     
-    console.log("CHAIN ID IN USELINK: ", chain?.id);
+    console.log("CHAIN ID IN USELINK: ", chainId);
 
     // TODO: Parametrize token address
     let tokenAddress;
-    if (chain?.id == Goerli.chainId) {
+    if (chainId == Goerli.chainId) {
         tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
-    } else if (chain?.id == ArbitrumGoerli.chainId) {
+    } else if (chainId == ArbitrumGoerli.chainId) {
         tokenAddress = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28";
     } else {
         tokenAddress = '';
@@ -28,7 +26,7 @@ const useLinkContract = () => {
 
     const erc20ABI = ERC20.abi;
     const erc20Interface = new utils.Interface(erc20ABI);
-    return new Contract(tokenAddress, erc20Interface, signer as Signer);
+    return new Contract(tokenAddress, erc20Interface);
 }
 
 export const useLinkTransfer = () => {
@@ -86,13 +84,13 @@ export const useLinkWithdraw = () => {
 export const useLinkTransferred = (
 ) => {
     const sportsBetting = useSportsBettingContract();
-    const { address } = useAccount();
+    const { account } = useEthers();
     const { value: linkResponse, error } =
         useCall(
-            sportsBetting && address && {
+            sportsBetting && account && {
                 contract: sportsBetting,
                 method: 'userToLink',
-                args: [address],
+                args: [account],
             }
         ) ?? {};
     if (error) {

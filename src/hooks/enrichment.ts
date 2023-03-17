@@ -1,5 +1,4 @@
-import { useCall } from "@usedapp/core";
-import { useAccount } from "wagmi";
+import { useCall, useEthers } from "@usedapp/core";
 import { FixtureEnrichment } from "../$types/fixtureEnrichment";
 import { useTypedSelector } from "../redux/store";
 import { useSportsBettingContract } from "./contract";
@@ -18,13 +17,13 @@ export const useFixtureEnrichmentCall = (
 ) => {
     const sportsBetting = useSportsBettingContract();
 
-    const { address } = useAccount();
+    const { account } = useEthers();
 
     let addressParameter: string;
-    if (address === undefined) {
+    if (account === undefined) {
         addressParameter = AddressZero;
     } else {
-        addressParameter = address;
+        addressParameter = account;
     }
     const { value: enrichment, error } =
         useCall(

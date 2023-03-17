@@ -1,4 +1,4 @@
-import { ArbitrumGoerli, ERC20, Goerli, useCall, useContractFunction } from "@usedapp/core";
+import { ArbitrumGoerli, ERC20, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { BetType } from "../$types/betType";
 import { useSportsBettingContract } from "../hooks/contract";
 import { utils } from "ethers";
@@ -6,17 +6,16 @@ import { getStakingTransactionName } from "../services/notificationService";
 import { useTypedSelector } from "../redux/store";
 import { Contract } from "@ethersproject/contracts";
 import { parseBigNumber } from "../services/sportsContractService";
-import { useAccount, useNetwork } from "wagmi";
 import { FixtureResult } from "../$types/fixtureResult";
 
 const { MaxUint256  } = require("@ethersproject/constants");
 
 export const useDAIContract = () => {
-    const { chain } = useNetwork();
+    const { chainId } = useEthers();
     
     // TODO: Parametrize token address
     let tokenAddress;
-    if (chain?.id == Goerli.chainId) {
+    if (chainId == Goerli.chainId) {
         tokenAddress = "0x97cb342cf2f6ecf48c1285fb8668f5a4237bf862";
     } else {
         tokenAddress = '';
@@ -47,12 +46,12 @@ export const useDAIAllowance = () => {
     const sportsBetting = useSportsBettingContract();
     const dai = useDAIContract();
 
-    const { address } = useAccount();
+    const { account } = useEthers();
     const { value, error } =
         useCall({
                 contract: dai,
                 method: 'allowance',
-                args: [address, sportsBetting.address],
+                args: [account, sportsBetting.address],
         }) ?? {};
     if (error) {
         console.error(error.message);
@@ -64,12 +63,12 @@ export const useDAIAllowance = () => {
 
 export const useDAIBalance = () => {
     const dai = useDAIContract();
-    const { address } = useAccount();
+    const { account } = useEthers();
     const { value, error } =
         useCall({
                 contract: dai,
                 method: 'balanceOf',
-                args: [address],
+                args: [account],
         }) ?? {};
     if (error) {
         console.error(error.message);
@@ -128,13 +127,13 @@ export const useFixtureWithdrawPayout = (fixtureID: string) => {
 
 export const useFixturePayout = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
-    const { address } = useAccount();
+    const { account } = useEthers();
     const { value, error } =
         useCall(
-            address && {
+            account && {
                 contract: sportsBetting,
                 method: 'payouts',
-                args: [fixtureID, address],
+                args: [fixtureID, account],
             }
         ) ?? {};
     if (error) {
@@ -185,12 +184,12 @@ export const useFixtureOpeningAdvanceTime = () => {
 
 export const useUserWasPaidForFixture = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
-    const { address } = useAccount();
+    const { account } = useEthers();
     const { value, error } =
         useCall({
                 contract: sportsBetting,
                 method: 'userWasPaid',
-                args: [fixtureID, address],
+                args: [fixtureID, account],
         }) ?? {};
     if (error) {
         console.error(error.message);
