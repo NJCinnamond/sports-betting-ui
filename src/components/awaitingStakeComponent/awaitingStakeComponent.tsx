@@ -37,6 +37,8 @@ export const AwaitingStakeComponent = (props: AwaitingStakeComponentProps) => {
     const [fixtureHasResult, setFixtureHasResult] = useState<boolean>(false);
     useEffect(() => {
         const hasResult = fixtures[props.fixtureID] != null && fixtures[props.fixtureID].result != null;
+        console.log(fixtures[props.fixtureID]);
+        console.log("Has result: ", hasResult);
         setFixtureHasResult(hasResult);
     })
 

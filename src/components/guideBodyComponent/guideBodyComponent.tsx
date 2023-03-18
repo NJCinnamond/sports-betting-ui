@@ -1,14 +1,18 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { GuideBodyCollapsablePanelComponent } from './guideBodyCollapsableComponent';
+import { GuideBodyPayoutComponent } from './guideBodyContents/guideBodyPayoutComponent';
 import { GuideBodyStakingComponent } from './guideBodyContents/guideBodyStakingComponent';
+import { GuideDAIComponent } from './guideBodyContents/guideDAIComponent';
 import { GuideOpeningFixtureComponent } from './guideBodyContents/guideOpeningFixtureComponent';
+import { GuidePayoutCalculationComponent } from './guideBodyContents/guidePayoutCalculationComponent';
 
 const PREFIX = 'GuideBodyComponent';
 
 const classes = {
     box: `${PREFIX}-box`,
     title: `${PREFIX}-title`,
+    content: `${PREFIX}-content`,
 };
 
 const StyledBox = styled(Box)((
@@ -25,8 +29,12 @@ const StyledBox = styled(Box)((
         borderColor: "rgba(1,1,1,0.1)"
     },
 
+    [`& .${classes.content}`]: {
+        margin: "1em",
+    },
+
     [`& .${classes.title}`]: {
-        margin: "0.5em",
+        margin: ".5em 0",
     },
 }));
 
@@ -37,15 +45,15 @@ const guides = [
     },
     {
         title: "How claim payouts or refunds",
-        contents: <div>Hello</div>
+        contents: <GuideBodyPayoutComponent/>
     },
     {
         title: "How are payouts calculated?",
-        contents: <div>Hello</div>
+        contents: <GuidePayoutCalculationComponent/>
     },
     {
         title: "How to get DAI",
-        contents: <div>Hello</div>
+        contents: <GuideDAIComponent/>
     },
     {
         title: "How to open fixtures and retrieve fixture results",
@@ -58,10 +66,13 @@ export const GuideBodyComponent = () => {
     return (
         <StyledBox>
             <Box className={classes.box}>
-                <>
+                <div className={classes.content}>
                     <h2 className={classes.title}>
                         Getting Started
                     </h2>
+                    <h5>
+                        The following FAQ guides are provided below to help you use FanRise.
+                    </h5>
                     {guides.map((guideElem) => {
                         return(
                             <GuideBodyCollapsablePanelComponent
@@ -71,7 +82,7 @@ export const GuideBodyComponent = () => {
                             />
                         )
                     })}
-                </>
+                </div>
             </Box>
         </StyledBox>
     );

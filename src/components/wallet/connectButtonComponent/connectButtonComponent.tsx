@@ -20,7 +20,7 @@ export const ConnectButton = () => {
                 variant="outlined" 
                 size="large" 
                 onClick={handleOpen}
-                sx={ { borderRadius: 6, backgroundColor: "#fafbfc" } }
+                sx={ { borderRadius: 6, backgroundColor: "#fafbfc", textTransform: "lowercase" } }
             >
                 {!account && (<span>Connect</span>)}
                 {account && (<span>{formatAddr(account)}</span>)}

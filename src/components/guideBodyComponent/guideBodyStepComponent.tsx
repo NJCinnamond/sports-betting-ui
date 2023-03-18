@@ -23,14 +23,17 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.leftElem}`]: {
-        flexGrow: "50%",
-        maxWidth: "550px",
-        padding: "0 .5em",
+        flex: "0 0 50%",
+        [`& img`]: {
+            width: "100%",
+            maxWidth: "800px",
+            textAlign: "center"
+        }
     },
 
     [`& .${classes.rightElem}`]: {
         flexGrow: "50%",
-        padding: "0 .5em",
+        padding: "0 1em",
         verticalAlign: "center"
     },
 }));
@@ -41,10 +44,14 @@ export interface GuideBodyStepComponentProps {
 }
 
 export const GuideBodyStepComponent = (props: GuideBodyStepComponentProps) => {
-    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 850px)' });
+    const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1050px)' });
     return (
         <StyledBox className={isTabletOrMobile ? classes.columnBox : classes.box}>
-            <img className={classes.leftElem} src={props.image}></img>
+            {props.image && (
+                <div className={classes.leftElem}>
+                    <img src={props.image}></img>
+                </div>
+            )}
             <div className={classes.rightElem}>
                 <span>
                     {props.text}

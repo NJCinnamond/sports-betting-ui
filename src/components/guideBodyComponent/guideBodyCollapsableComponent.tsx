@@ -22,7 +22,7 @@ const Panel = styled('div')(() => ({
     },
 
     [`& .${classes.panelHeading}`]: {
-        padding: "10px 20px",
+        padding: "1em 0",
         display: "flex",
         alginItems: "center",
         justifyContent: "space-between",
@@ -31,12 +31,11 @@ const Panel = styled('div')(() => ({
     },
 
     [`& .${classes.panelContent}`]: {
-        padding: "0 20px",
         overflow: "hidden",
     },
 
     [`& .${classes.panelContentInner}`]: {
-        padding: "20px 0",
+        padding: ".5em 0",
     },
 }));
 
@@ -46,7 +45,7 @@ export interface GuideBodyCollapsablePanelComponentProps {
 }
 
 export const GuideBodyCollapsablePanelComponent = (props: GuideBodyCollapsablePanelComponentProps) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [ref, bounds] = useMeasure();
 
   const toggleWrapperAnimatedStyle = useSpring({ transform: isCollapsed ? 'rotate(0deg)' : 'rotate(180deg)'});
