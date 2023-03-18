@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import useMeasure from 'react-use-measure'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleDown } from '@fortawesome/free-solid-svg-icons';
-import finalPropsSelectorFactory from 'react-redux/es/connect/selectorFactory';
 
 const PREFIX = 'GuideBody';
 
