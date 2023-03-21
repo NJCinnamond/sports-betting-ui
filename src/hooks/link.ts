@@ -11,8 +11,6 @@ export const transferLinkTransactionName = "Transfer LINK";
 
 const useLinkContract = () => {
     const { chainId } = useEthers();
-    
-    console.log("CHAIN ID IN USELINK: ", chainId);
 
     // TODO: Parametrize token address
     let tokenAddress;
