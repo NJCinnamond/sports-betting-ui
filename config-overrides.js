@@ -19,7 +19,7 @@ module.exports = function override(config) {
             Buffer: ['buffer', 'Buffer']
         }),
         new NodePolyfillPlugin({
-            excludeAliases: ['console'],
+            excludeAliases: ['console-browserify'],
         }),
     ])
     return config;
