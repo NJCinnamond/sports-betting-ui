@@ -92,7 +92,6 @@ export const useLinkTransferred = (
             }
         ) ?? {};
     if (error) {
-        console.error(error.message);
         return {};
     }
     return { linkResponse };

@@ -54,7 +54,6 @@ export const useDAIAllowance = () => {
                 args: [account, sportsBetting.address],
         }) ?? {};
     if (error) {
-        console.error(error.message);
         return 0;
     }
     const daiAllowance = value != undefined ? parseBigNumber(value?.[0]) : 0;
@@ -71,7 +70,6 @@ export const useDAIBalance = () => {
                 args: [account],
         }) ?? {};
     if (error) {
-        console.error(error.message);
         return 0;
     }
     const daiBalance = value != undefined ? parseBigNumber(value?.[0]) : 0;
@@ -137,7 +135,6 @@ export const useFixturePayout = (fixtureID: string) => {
             }
         ) ?? {};
     if (error) {
-        console.error(error.message);
         return {};
     }
     return { value };
@@ -153,7 +150,6 @@ export const useFixtureBettingEndTime = (fixtureID: string) => {
                 args: [],
         }) ?? {};
     if (error) {
-        console.error(error.message);
         return {};
     }
     const fixture = fixtures[fixtureID];
@@ -175,7 +171,6 @@ export const useFixtureOpeningAdvanceTime = () => {
                 args: [],
         }) ?? {};
     if (error) {
-        console.error(error.message);
         return {};
     }
     const betAdvanceTime = new Date(value * 1000); // Multiplied by 1000 so arg is in ms
@@ -192,7 +187,6 @@ export const useUserWasPaidForFixture = (fixtureID: string) => {
                 args: [fixtureID, account],
         }) ?? {};
     if (error) {
-        console.error(error.message);
         return {};
     }
     const userWasPaid = value && value[0];
