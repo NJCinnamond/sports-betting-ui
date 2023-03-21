@@ -17,8 +17,8 @@ const Root = styled('div')((
         textAlign: 'center',
         position: "relative",
         height: "100%",
-        fontSize: "1.6em",
-        marginRight: "1em",
+        fontSize: "1.4em",
+        marginRight: "0.5em",
         cursor: "pointer",
     }
 }));

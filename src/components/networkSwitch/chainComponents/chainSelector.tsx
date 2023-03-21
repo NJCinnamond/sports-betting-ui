@@ -9,8 +9,7 @@ const classes = {
 
 const ChainSelector = styled('div')(() => ({
     [`& .${classes.label}`]: {
-        fontSize: "1.1em",
-        marginTop: "0.5em"
+        fontSize: "1.1em"
     },
 }));
 

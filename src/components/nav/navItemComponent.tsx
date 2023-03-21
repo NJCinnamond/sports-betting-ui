@@ -20,7 +20,7 @@ const Root = styled('div')((
         height: "100%",
         cursor: "pointer",
         marginLeft: "1.7em",
-        fontSize: "1.2em",
+        fontSize: "1.1em",
     },
     [`&.${classes.selectedItemText}`]: {
         textAlign: 'center',
@@ -28,7 +28,7 @@ const Root = styled('div')((
         height: "100%",
         cursor: "pointer",
         marginLeft: "1.7em",
-        fontSize: "1.2em",
+        fontSize: "1.1em",
     },
 }));
 
