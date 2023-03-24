@@ -1,13 +1,10 @@
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
-import { Team } from "../../$types/team";
 import { useFixturePayout, useUserIsEligibleForFixtureRefund, useUserWasPaidForFixture } from '../../hooks/stake';
-import { useTypedSelector } from "../../redux/store";
 import { handleUserPayout } from '../../services/sportsContractService';
 import { PayoutButtonComponent } from "../payoutButtonComponent/payoutButtonComponent";
-import { ResultComponent } from "../resultComponent/resultComponent";
 
-const PREFIX = 'PayableStakeComponent';
+const PREFIX = 'CancelledStakeComponent';
 
 const classes = {
     container: `${PREFIX}-container`,
@@ -50,6 +47,9 @@ export const CancelledStakeComponent = (props: CancelledStakeComponentProps) => 
             setPayoutAmount('');
         }
     }, [value]);
+
+    const allowRefundAction: boolean = !userWasPaid && userIsEligible;
+    const userWasRefunded: boolean = userWasPaid && payoutAmount;
     
     return (
         <Root className={classes.container}>
@@ -58,7 +58,7 @@ export const CancelledStakeComponent = (props: CancelledStakeComponentProps) => 
                     This fixture was cancelled or rescheduled.
                 </p>
             </div>
-            {!userWasPaid && userIsEligible && (
+            {allowRefundAction && (
                 <div>
                     <p>
                         To receive a refund for your stakes, click below.
@@ -72,7 +72,7 @@ export const CancelledStakeComponent = (props: CancelledStakeComponentProps) => 
                     </div>
                 </div>
             )}
-            {userWasPaid && (
+            {userWasRefunded && (
                 <div>
                     You were refunded {payoutAmount} DAI for this fixture.
                 </div>

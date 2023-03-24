@@ -205,5 +205,5 @@ export const useUserIsEligibleForFixtureRefund = (fixtureID: string) => {
     const { userWasPaid } = useUserWasPaidForFixture(fixtureID);
     const enrichment = useTypedSelector((state) => state.fixturesEnrichment[fixtureID]);
     const hasStake = Object.values(enrichment.user).filter(x => x > 0).length;
-    return !userWasPaid && hasStake;
+    return Boolean(!userWasPaid && hasStake);
 }
