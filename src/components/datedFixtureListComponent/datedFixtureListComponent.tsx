@@ -34,8 +34,6 @@ export interface DatedFixtureListComponentProps {
 
 
 export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps) => {
-
-
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fixtureService = new FixtureService();

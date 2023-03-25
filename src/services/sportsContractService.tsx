@@ -13,6 +13,7 @@ export interface UserPayout {
 }
 
 export const parseBigNumber = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 18;
+export const parseSixDecimal = (bigNumber: any) => parseInt(bigNumber._hex) / 10 ** 6;
 
 // Currently response is in some array format with hex numbers
 const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
@@ -30,9 +31,9 @@ const handleEnrichmentAndDispatch = (fixtureID: string, response: any) => {
 
 const parseStakeSummaryFromEnrichmentPayload = (stakes: StakeSummaryPayload) => {
     let stakeSummary = {} as StakeSummary;
-    stakeSummary[BetType.HOME] = parseBigNumber(stakes[0]);
-    stakeSummary[BetType.DRAW] = parseBigNumber(stakes[1]);
-    stakeSummary[BetType.AWAY] = parseBigNumber(stakes[2]);
+    stakeSummary[BetType.HOME] = parseSixDecimal(stakes[0]);
+    stakeSummary[BetType.DRAW] = parseSixDecimal(stakes[1]);
+    stakeSummary[BetType.AWAY] = parseSixDecimal(stakes[2]);
     return stakeSummary;
 };
 
@@ -49,7 +50,7 @@ const handleUserLinkTransferred = (response: any) => {
 const handleUserPayout = (response: any) => {
     if (response) {
         const userPayout: UserPayout = {
-            amount: parseBigNumber(response?.[0]),
+            amount: parseSixDecimal(response?.[0]),
         };
         return userPayout;
     };

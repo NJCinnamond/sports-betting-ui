@@ -76,7 +76,7 @@ export const PayableStakeComponent = (props: PayableStakeComponentProps) => {
             )}
             {userWasPaid && (
                 <div>
-                    Congratulations! You were paid {payoutAmount} DAI
+                    Congratulations! You were paid {payoutAmount} USDC
                 </div>
             )}
         </Root>

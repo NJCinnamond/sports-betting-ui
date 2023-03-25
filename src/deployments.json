@@ -5,7 +5,7 @@
       "chainId": "5",
       "contracts": {
         "SportsBetting": {
-          "address": "0x19Ce63bcb1c7f88735c65AFC1920cB31BcceC6B5",
+          "address": "0xCC71442AC4fA6aed95F3d7af97d599FC0A23e91a",
           "abi": [
             {
               "inputs": [
@@ -21,7 +21,7 @@
                 },
                 {
                   "internalType": "address",
-                  "name": "_dai",
+                  "name": "_stablecoin",
                   "type": "address"
                 },
                 {
@@ -42,6 +42,95 @@
               ],
               "stateMutability": "nonpayable",
               "type": "constructor"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "action",
+                  "type": "string"
+                },
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "current",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "required",
+                  "type": "uint8"
+                }
+              ],
+              "name": "InvalidBettingStateForAction",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "current",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "potential",
+                  "type": "uint8"
+                }
+              ],
+              "name": "InvalidBettingStateTransition",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "fixtureID",
+                  "type": "string"
+                },
+                {
+                  "internalType": "enum SportsBetting.BettingState",
+                  "name": "state",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
+                  "name": "result",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "string",
+                  "name": "reason",
+                  "type": "string"
+                }
+              ],
+              "name": "InvalidPayoutAction",
+              "type": "error"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "string",
+                  "name": "fixtureID",
+                  "type": "string"
+                },
+                {
+                  "internalType": "enum SportsBettingLib.FixtureResult",
+                  "name": "betType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "amount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "string",
+                  "name": "reason",
+                  "type": "string"
+                }
+              ],
+              "name": "InvalidStakeAction",
+              "type": "error"
             },
             {
               "anonymous": false,
@@ -97,7 +186,7 @@
                   "type": "address"
                 },
                 {
-                  "indexed": false,
+                  "indexed": true,
                   "internalType": "string",
                   "name": "fixtureID",
                   "type": "string"
@@ -128,7 +217,7 @@
                   "type": "address"
                 },
                 {
-                  "indexed": false,
+                  "indexed": true,
                   "internalType": "string",
                   "name": "fixtureID",
                   "type": "string"
@@ -430,25 +519,6 @@
             {
               "inputs": [
                 {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "name": "betTypes",
-              "outputs": [
-                {
-                  "internalType": "enum SportsBettingLib.FixtureResult",
-                  "name": "",
-                  "type": "uint8"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
                   "internalType": "string",
                   "name": "",
                   "type": "string"
@@ -530,19 +600,6 @@
               "type": "function"
             },
             {
-              "inputs": [],
-              "name": "daiAddress",
-              "outputs": [
-                {
-                  "internalType": "address",
-                  "name": "",
-                  "type": "address"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
               "inputs": [
                 {
                   "internalType": "string",
@@ -600,19 +657,6 @@
                 }
               ],
               "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "fixtureID",
-                  "type": "string"
-                }
-              ],
-              "name": "handleCommissionPayout",
-              "outputs": [],
-              "stateMutability": "nonpayable",
               "type": "function"
             },
             {
@@ -722,46 +766,8 @@
                   "type": "string"
                 }
               ],
-              "name": "requestFixtureKickoffTimeParameter",
-              "outputs": [
-                {
-                  "internalType": "bytes32",
-                  "name": "",
-                  "type": "bytes32"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "fixtureID",
-                  "type": "string"
-                }
-              ],
               "name": "requestFixtureResult",
               "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "fixtureID",
-                  "type": "string"
-                }
-              ],
-              "name": "requestFixtureResultParameter",
-              "outputs": [
-                {
-                  "internalType": "bytes32",
-                  "name": "",
-                  "type": "bytes32"
-                }
-              ],
               "stateMutability": "nonpayable",
               "type": "function"
             },
@@ -830,6 +836,19 @@
                   "internalType": "string",
                   "name": "",
                   "type": "string"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "stablecoinAddress",
+              "outputs": [
+                {
+                  "internalType": "address",
+                  "name": "",
+                  "type": "address"
                 }
               ],
               "stateMutability": "view",
@@ -990,7 +1009,7 @@
           ]
         },
         "SportsBettingLib": {
-          "address": "0xeac7428A8FBE8339B76505bBA4968e4B9Dc6A43B",
+          "address": "0x33Bdd60fb0709f4DDF47F73ede6F52472996e75b",
           "abi": [
             {
               "inputs": [

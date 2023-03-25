@@ -8,7 +8,7 @@ import { StakeEntryFieldComponent } from "../stakeEntryFieldComponent/stakeEntry
 import { StakeFormComponent } from "../stakeFormComponent/stakeFormComponent";
 import { useFixtureRequestKickoff } from "../../hooks/fixtureState";
 import { useFixtureEnrichment } from "../../hooks/enrichment";
-import { useDAIBalance } from "../../hooks/stake";
+import { useUSDCBalance } from "../../hooks/stake";
 
 const PREFIX = 'OpenStakeComponent';
 
@@ -64,8 +64,8 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
     const enrichment = useFixtureEnrichment(props.fixture.fixture_id);
     const existingStakeAmount = enrichment?.user[props.selectedBetType];
 
-    // Need balance of DAI to ensure user holds DAI > stakeAmount
-    const daiBalance = useDAIBalance();
+    // Need balance of USDC to ensure user holds USDC > stakeAmount
+    const usdcBalance = useUSDCBalance();
 
     // stakeValidity 
     const [stakeValidity, setStakeValidity] = useState<StakeValidity>(defaultValid);
@@ -80,8 +80,8 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 isValid: false,
                 errorStr: "Cannot unstake more than existing stake."
             });
-        } else if (daiBalance < stakeAmount && stakeDirection == StakeDirection.STAKE) {
-            let errString = `Your wallet has only ${daiBalance} DAI`;
+        } else if (usdcBalance < stakeAmount && stakeDirection == StakeDirection.STAKE) {
+            let errString = usdcBalance == 0 ? 'Your wallet has no USDC' : `Your wallet has only ${usdcBalance} USDC`;
             setStakeValidity({
                 isValid: false,
                 errorStr: errString,

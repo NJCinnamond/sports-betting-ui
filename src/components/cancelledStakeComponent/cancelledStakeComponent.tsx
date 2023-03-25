@@ -74,7 +74,7 @@ export const CancelledStakeComponent = (props: CancelledStakeComponentProps) => 
             )}
             {userWasRefunded && (
                 <div>
-                    You were refunded {payoutAmount} DAI for this fixture.
+                    You were refunded {payoutAmount} USDC for this fixture.
                 </div>
             )}
         </Root>

@@ -31,10 +31,9 @@ export const config: Config = {
     metamask: new MetamaskConnector(),
     coinbase: new CoinbaseWalletConnector(),
   },
-}
+};
 
 function App() {
-  
   return (
     <DAppProvider
       config={config}

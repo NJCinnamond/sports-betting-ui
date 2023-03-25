@@ -21,10 +21,10 @@ export interface GuideBodyStepsComponentProps {
 
 export const GuideBodyStepsComponent = (props: GuideBodyStepsComponentProps) => (
     <StyledBox className={classes.box}>
-        {props.steps.map((step: any) => {
+        {props.steps.map((step: any, index: number) => {
             return(
                 <GuideBodyStepComponent
-                    key={step["text"]}
+                    key={index}
                     text={step["text"]}
                     image={step["image"]}
                 />

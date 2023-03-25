@@ -1,22 +1,24 @@
-import { ArbitrumGoerli, ERC20, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { Arbitrum, ERC20, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { BetType } from "../$types/betType";
 import { useSportsBettingContract } from "../hooks/contract";
 import { utils } from "ethers";
 import { getStakingTransactionName } from "../services/notificationService";
 import { useTypedSelector } from "../redux/store";
 import { Contract } from "@ethersproject/contracts";
-import { parseBigNumber } from "../services/sportsContractService";
+import { parseSixDecimal } from "../services/sportsContractService";
 import { FixtureResult } from "../$types/fixtureResult";
 
 const { MaxUint256  } = require("@ethersproject/constants");
 
-export const useDAIContract = () => {
+export const useUSDCContract = () => {
     const { chainId } = useEthers();
     
     // TODO: Parametrize token address
     let tokenAddress;
     if (chainId == Goerli.chainId) {
-        tokenAddress = "0x97cb342cf2f6ecf48c1285fb8668f5a4237bf862";
+        tokenAddress = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F"; // USDC on Goerli
+    } else if (chainId == Arbitrum.chainId) {
+        tokenAddress = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"; // USDC on Arbitrum
     } else {
         tokenAddress = '';
     }
@@ -26,14 +28,14 @@ export const useDAIContract = () => {
     return new Contract(tokenAddress, erc20Interface);
 };
 
-export const useDAIApproval = () => {
+export const useUSDCApproval = () => {
     const sportsBetting = useSportsBettingContract();
-    const dai = useDAIContract();
+    const usdc = useUSDCContract();
 
     // approve
     const { send: approveSend, state: approveState } =
-        useContractFunction(dai, "approve", {
-            transactionName: "Approve DAI transfer",
+        useContractFunction(usdc, "approve", {
+            transactionName: "Approve USDC transfer",
         })
     const approve = () => {
         return approveSend(sportsBetting.address, MaxUint256)
@@ -42,38 +44,38 @@ export const useDAIApproval = () => {
     return { approveState, approve };
 }
 
-export const useDAIAllowance = () => {
+export const useUSDCAllowance = () => {
     const sportsBetting = useSportsBettingContract();
-    const dai = useDAIContract();
+    const usdc = useUSDCContract();
 
     const { account } = useEthers();
     const { value, error } =
         useCall({
-                contract: dai,
+                contract: usdc,
                 method: 'allowance',
                 args: [account, sportsBetting.address],
         }) ?? {};
     if (error) {
         return 0;
     }
-    const daiAllowance = value != undefined ? parseBigNumber(value?.[0]) : 0;
-    return daiAllowance;
+    const allowance = value != undefined ? parseSixDecimal(value?.[0]) : 0;
+    return allowance;
 }
 
-export const useDAIBalance = () => {
-    const dai = useDAIContract();
+export const useUSDCBalance = () => {
+    const usdc = useUSDCContract();
     const { account } = useEthers();
     const { value, error } =
         useCall({
-                contract: dai,
+                contract: usdc,
                 method: 'balanceOf',
                 args: [account],
         }) ?? {};
     if (error) {
         return 0;
     }
-    const daiBalance = value != undefined ? parseBigNumber(value?.[0]) : 0;
-    return daiBalance;
+    const balance = value != undefined ? parseSixDecimal(value?.[0]) : 0;
+    return balance;
 }
 
 export const useFixtureStake = (fixtureID: string) => {
@@ -85,7 +87,7 @@ export const useFixtureStake = (fixtureID: string) => {
     });
 
     const stake = (fixtureID: string, betType: BetType, amount: number) => {
-        const amountInWei = utils.parseEther(amount.toString());
+        const amountInWei = utils.parseUnits(amount.toString(), 6);
         fixtureStakeSend(fixtureID, betType, amountInWei);
     };
 
@@ -101,7 +103,7 @@ export const useFixtureUnstake = (fixtureID: string) => {
     });
 
     const unstake = (fixtureID: string, betType: BetType, amount: number) => {
-        const amountInWei = utils.parseEther(amount.toString());
+        const amountInWei = utils.parseUnits(amount.toString(), 6);
         fixtureUnstakeSend(fixtureID, betType, amountInWei);
     };
 

@@ -1,6 +1,6 @@
 import { useContractFunction } from "@usedapp/core";
 import { useSportsBettingContract } from "../hooks/contract";
-import { getOpeningFixtureTransactionName, getAwaitingFixtureTransactionName } from "../services/notificationService";
+import { getOpeningFixtureTransactionName, getAwaitingFixtureTransactionName, getFulfillingTransactionName } from "../services/notificationService";
 
 export const useFixtureOpen = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
@@ -41,11 +41,11 @@ export const useFixtureRequestKickoff = () => {
     return { fixtureRequestKickoffState, requestFixtureKickoff };
 };
 
-export const useFixtureRequestResult = () => {
+export const useFixtureRequestResult = (fixtureID: string) => {
     const sportsBetting = useSportsBettingContract();
 
     const { state: fixtureRequestResultState, send: fixtureRequestResultSend } = useContractFunction(sportsBetting, 'requestFixtureResult', {
-        transactionName: 'requestFixtureResult', // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
+        transactionName: getFulfillingTransactionName(fixtureID), // TODO: MAKE THIS A TYPED OBJ SO NOTIFS CAN REFER TO IT?
         bufferGasLimitPercentage: 6000000
     });
 

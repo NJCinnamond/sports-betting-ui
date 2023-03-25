@@ -48,8 +48,8 @@ export const StakeButtonComponent = (props: StakeButtonComponentProps) => {
         }
     };
 
-    const stakeActionString = props.direction == StakeDirection.STAKE ? "STAKE DAI" : "UNSTAKE DAI";
-    const stakeActioningString = props.direction == StakeDirection.STAKE ? "STAKING DAI" : "UNSTAKING DAI";
+    const stakeActionString = props.direction == StakeDirection.STAKE ? "STAKE USDC" : "UNSTAKE USDC";
+    const stakeActioningString = props.direction == StakeDirection.STAKE ? "STAKING USDC" : "UNSTAKING USDC";
 
     return (
         <Button
@@ -57,9 +57,9 @@ export const StakeButtonComponent = (props: StakeButtonComponentProps) => {
             color="primary"
             variant="contained"
             onClick={() => handleStakeAction(props.direction)}
-            disabled={props.disabled}
+            disabled={props.disabled || isFixtureTransacting}
         >
-            {isFixtureTransacting ? 
+            {fixtureStakeState.status == 'Mining' ? 
                 <>
                     <CircularProgress size={26} />
                     <span className='stake-btn-text'>{stakeActioningString}</span>

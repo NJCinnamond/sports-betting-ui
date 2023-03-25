@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { GuideBodyCollapsablePanelComponent } from './guideBodyCollapsableComponent';
 import { GuideBodyPayoutComponent } from './guideBodyContents/guideBodyPayoutComponent';
 import { GuideBodyStakingComponent } from './guideBodyContents/guideBodyStakingComponent';
-import { GuideDAIComponent } from './guideBodyContents/guideDAIComponent';
+import { GuideERC20Component } from './guideBodyContents/guideERC20Component';
 import { GuideOpeningFixtureComponent } from './guideBodyContents/guideOpeningFixtureComponent';
 import { GuidePayoutCalculationComponent } from './guideBodyContents/guidePayoutCalculationComponent';
 
@@ -52,8 +52,8 @@ const guides = [
         contents: <GuidePayoutCalculationComponent/>
     },
     {
-        title: "How to get DAI",
-        contents: <GuideDAIComponent/>
+        title: "How to get USDC",
+        contents: <GuideERC20Component/>
     },
     {
         title: "How to open fixtures and retrieve fixture results",

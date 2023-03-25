@@ -11,10 +11,10 @@ const steps = [
             <p>
                 {"2. In the staking panel, click the outcome you want to stake on and enter the stake amount"}</p>
             <p>
-                {"You may need to approve the contract to transfer your DAI."}
+                {"You may need to approve the contract to transfer your USDC."}
             </p>
             <p>
-                {"If you don't have DAI, see this page's section on getting DAI."}
+                {"If you don't have USDC, see this page's section on getting USDC."}
             </p>
             <p>
                 {"If the fixture isn't open, see How to open fixtures below."}
@@ -23,7 +23,7 @@ const steps = [
     },
     {
         image: "/clickstake.gif",
-        text: "3. Ensure your entered DAI value is correct and click stake",
+        text: "3. Ensure your entered USDC value is correct and click stake",
     },
     {
         image: "/stakecomplete.png",

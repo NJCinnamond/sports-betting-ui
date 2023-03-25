@@ -1,4 +1,4 @@
-import { ArbitrumGoerli, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { Arbitrum, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { useSportsBettingContract } from "./contract";
 import ERC20 from "../LinkTokenInterface.json";
 import { useEffect, useState } from "react";
@@ -16,8 +16,8 @@ const useLinkContract = () => {
     let tokenAddress;
     if (chainId == Goerli.chainId) {
         tokenAddress = "0x326C977E6efc84E512bB9C30f76E30c160eD06FB";
-    } else if (chainId == ArbitrumGoerli.chainId) {
-        tokenAddress = "0xd14838A68E8AFBAdE5efb411d5871ea0011AFd28";
+    } else if (chainId == Arbitrum.chainId) {
+        tokenAddress = "0xf97f4df75117a78c1a5a0dbb814af92458539fb4";
     } else {
         tokenAddress = '';
     }

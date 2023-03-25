@@ -26,9 +26,7 @@ export interface FulfillResultComponentProps {
 }
 
 export const FulfillResultButtonComponent = (props: FulfillResultComponentProps) => {
-
-
-    const { requestFixtureResult } = useFixtureRequestResult();
+    const { requestFixtureResult } = useFixtureRequestResult(props.fixtureID);
     const handleFulfill = () => requestFixtureResult(props.fixtureID);
 
     const { canMakeOracleRequest } = useCanMakeOracleRequest();

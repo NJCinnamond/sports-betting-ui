@@ -7,10 +7,9 @@ import { useEffect, useState } from "react";
 import { BetType } from "../../$types/betType";
 import { Fixture } from "../../$types/fixture";
 import { useFixtureTransacting } from "../../hooks/view";
-import { useDAIAllowance, useFixtureBettingEndTime } from "../../hooks/stake";
+import { useUSDCAllowance, useFixtureBettingEndTime } from "../../hooks/stake";
 import { StakeButtonComponent } from "../stakeButtonComponent/stakeButtonComponent";
-import { DaiApprovalButtonComponent } from "../daiApprovalButtonComponent/daiApprovalButtonComponent";
-import { parseBigNumber } from "../../services/sportsContractService";
+import { USDCApprovalButtonComponent } from "../usdcApprovalButtonComponent/usdcApprovalButtonComponent";
 
 const PREFIX = 'StakeFormComponent';
 
@@ -51,9 +50,9 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
     // Hook into whether a user transaction on this fixture is mining. Disable staking if yes.
     const { isFixtureTransacting } = useFixtureTransacting(props.fixture?.fixture_id);
 
-    // Get DAI that contract is allowed to spend on user's behalf
-    const daiAllowance = useDAIAllowance();
-    const hasStakeAmountApproved = daiAllowance > props.stakeAmount;
+    // Get USDC amount that contract is allowed to spend on user's behalf
+    const allowance = useUSDCAllowance();
+    const hasStakeAmountApproved = allowance > props.stakeAmount;
     //const hasStakeAmountApproved = false;
 
     // Calculate if we are within betting window
@@ -75,7 +74,7 @@ export const StakeFormComponent = (props: StakeFormComponentProps) => {
         (<Root>
             <Box className={classes.container}>
                 {!hasStakeAmountApproved && props.direction == StakeDirection.STAKE && (
-                    <DaiApprovalButtonComponent
+                    <USDCApprovalButtonComponent
                         disabled={stakeActionDisabled}
                     />
                 )}

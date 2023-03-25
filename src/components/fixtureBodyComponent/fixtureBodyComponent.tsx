@@ -60,7 +60,7 @@ export const FixtureBodyComponent = () => {
 
     // TODO: Parametrize these
     const startDate = new Date(2023, 0, 1);
-    const endDate = new Date(2023, 3, 1);
+    const endDate = new Date(2023, 4, 1);
 
     const isValidChain: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
     const shouldShowBody = (!account || (account && isValidChain));

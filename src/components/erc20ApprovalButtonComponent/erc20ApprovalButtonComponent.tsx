@@ -1,6 +1,5 @@
 import { Button, CircularProgress } from "@mui/material";
 import { TransactionStatus } from "@usedapp/core";
-import { useDAIApproval } from "../../hooks/stake";
 import './erc20ApprovalButtonComponent.css';
 
 export interface ERC20ApprovalButtonComponentProps {
