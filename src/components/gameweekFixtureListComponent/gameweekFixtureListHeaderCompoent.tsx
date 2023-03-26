@@ -18,7 +18,7 @@ export const GameweekFixtureListHeaderComponent = (props: GameweekFixtureListHea
         <div>
             <Button onClick={onPreviousClick} disabled={props.gameweek == min}>{"<"}</Button>
             <span>Gameweek {props.gameweek}</span>
-            <Button onClick={onNextClick} disabled={props.gameweek == 30}>{">"}</Button>
+            <Button onClick={onNextClick} disabled={props.gameweek == max}>{">"}</Button>
         </div>
     )
 }

@@ -4,8 +4,7 @@ import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
 import { config } from '../../App';
 import { useTypedSelector } from '../../redux/store';
-import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
-import { DatedFixtureListComponent } from '../datedFixtureListComponent/datedFixtureListComponent';
+import { fetchTeams } from '../../services/sportsOracleService';
 import { GameweekFixtureListComponent } from '../gameweekFixtureListComponent/gameweekFixtureListComponent';
 import { ParentStakePanelComponent } from '../parentStakePanelComponent/parentStakePanelComponent';
 
@@ -44,7 +43,7 @@ const StyledBox = styled(Box)((
     },
 
     [`& .${classes.stakePanelContainer}`]: {
-        padding: "1em",
+        padding: "0.8em",
     }
 }));
 

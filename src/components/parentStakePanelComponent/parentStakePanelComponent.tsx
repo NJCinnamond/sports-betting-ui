@@ -33,7 +33,7 @@ const StyledBox = styled(Box)((
         textAlign: "center",
         fontWeight: "bold",
         fontSize: "1.3em",
-        padding: "0 0 0.8em 0"
+        padding: "0 0 0.5em 0"
     }
 }));
 

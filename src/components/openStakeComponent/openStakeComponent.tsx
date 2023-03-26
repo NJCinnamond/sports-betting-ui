@@ -102,6 +102,8 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
         requestFixtureKickoff(props.fixture.fixture_id);
     };
 
+    const showKickoffRequestBtn = false;
+
     return (
         <StyledBox className={classes.container}>
             <StakeEntryFieldComponent
@@ -119,9 +121,11 @@ export const OpenStakeComponent = (props: OpenStakeComponentProps) => {
                 toggleStakeDirection={() => toggleStakeDirection()}
                 validity={stakeValidity}
             />
-            <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
-                GET KO TIME
-            </Button>
+            {showKickoffRequestBtn && (
+                <Button className={classes.openKOBtn} color="primary" variant="contained" onClick={() => handleRequestFixtureKickoff()}>
+                    GET KO TIME
+                </Button>
+            )}
         </StyledBox >
     );
 }

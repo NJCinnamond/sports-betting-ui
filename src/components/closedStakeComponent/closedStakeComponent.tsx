@@ -26,7 +26,7 @@ const StyledBox  = styled(Box )((
     },
 
     [`& .${classes.section}`]: {
-        margin: "0.5em",
+        marginTop: "0.5em",
         textAlign: "center"
     },
 
