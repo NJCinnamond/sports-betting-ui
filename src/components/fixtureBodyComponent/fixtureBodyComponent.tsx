@@ -63,7 +63,6 @@ export const FixtureBodyComponent = () => {
     const shouldShowBody = (!account || (account && isValidChain));
 
     useEffect(() => {
-        fetchFixtures();
         fetchTeams();
     }, []);
 
@@ -86,8 +85,7 @@ export const FixtureBodyComponent = () => {
             )}
             <Box className={classes.box}>
                 {shouldShowBody && (
-                    //<DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>
-                    <GameweekFixtureListComponent gameweek={29}/>
+                    <GameweekFixtureListComponent/>
                 )}
                 {!shouldShowBody && (
                     <div className={classes.invalidChainBox}>

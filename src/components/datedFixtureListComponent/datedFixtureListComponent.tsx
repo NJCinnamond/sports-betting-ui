@@ -1,11 +1,6 @@
 import { styled } from '@mui/material/styles';
-import { useEffect, useState } from "react";
-import FixtureService from "../../services/fixtureService";
 import { dateToUTCString } from "../../utils/dateUtils";
 import { FixtureListComponent } from "../fixtureListComponent/fixtureListComponent";
-import { LoadingSpinner } from "../loadingSpinner/loadingSpinner";
-import { Fixture } from "../../$types/fixture";
-import { useTypedSelector } from "../../redux/store";
 import { FixturesByDate } from '../../redux/reducers/fixtures';
 
 const PREFIX = 'DatedFixtureListComponent';
@@ -31,7 +26,6 @@ const Root = styled('div')((
 export interface DatedFixtureListComponentProps {
     fixturesByDate: FixturesByDate | undefined
 }
-
 
 export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps) => {
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
