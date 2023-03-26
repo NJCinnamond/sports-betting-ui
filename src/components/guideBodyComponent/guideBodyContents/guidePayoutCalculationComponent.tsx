@@ -17,15 +17,12 @@ const steps = [
             <p>
                 <span>From the perspective of User 2, the staking panel will look like this.</span>
             </p>
-            <p>
-                <span>Suppose each User has bet 2 USDC. User 1 bet 2 USDC on Chelsea to win, whereas User 2 and User 3 each bet 2 USDC on a Draw.</span>
-            </p>
         </>,
     },
     {
         text: <>
             <p>
-                <span>2. Now suppose that the match resulted in a Draw and hence both User 2 and User 3 were winners for this fixture. How much do they win?</span>
+                <span>Now suppose that the match resulted in a Draw and hence both User 2 and User 3 were winners for this fixture. How much do they win?</span>
             </p>
             <p>
                 <span>The answer is that they each receive a share of the total amount bet on this fixture for all outcomes (Home win, Draw, Away win). In this case, the total amount bet is 2 + 2 + 2 = 6 USDC.</span>

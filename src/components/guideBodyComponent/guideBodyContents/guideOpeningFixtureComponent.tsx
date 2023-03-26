@@ -2,7 +2,7 @@ import { GuideBodyStepsComponent } from "../guideBodyStepsComponent"
 
 const steps = [
     {
-        text: "This section assumes you have funded the contract with LINK from your address. See this page's section on funding LINK if you have not done so."
+        text: "This section assumes you have funded the contract with LINK from your address. Use the Fund Link page to send LINK to the contract if you have not done so already."
     },
     {
         image: "/closedfixture.png",
@@ -17,7 +17,7 @@ const steps = [
         text: "3. When the fixture opens, you will be able to begin transferring stakes!",
     },
     {
-        text: "When a fixture reaches full-time, you will be able to request that the result is retrieved by the contract",
+        text: "When a fixture reaches full-time, you will be able to request that the result is retrieved by the contract. This step must be completed before users can withdraw winnings.",
     },
     {
         image: "/fulfillbutton.png",

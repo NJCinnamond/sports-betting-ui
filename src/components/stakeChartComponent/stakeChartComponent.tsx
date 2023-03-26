@@ -19,7 +19,9 @@ const Root = styled('div')((
     [`&.${classes.stakeInsight}`]: {
         textAlign: 'center',
         position: "relative",
-        height: "100%",
+        height: "95%",
+        margin: "auto",
+        paddingTop: "1em"
     }
 }));
 
