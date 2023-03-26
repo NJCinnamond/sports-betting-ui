@@ -1,12 +1,13 @@
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from "react";
-import { BetCountdownClockComponent } from "../betCountdownClockComponent/betCountdownClockComponent";
+import { BetCountdownClockElementComponent } from '../BetCountdownClockElementComponent/BetCountdownClockElementComponent';
 
 const PREFIX = 'BetCountdownComponent';
 
 const classes = {
     container: `${PREFIX}-container`,
-    caption: `${PREFIX}-caption`
+    caption: `${PREFIX}-caption`,
+    timerComponents: `${PREFIX}-timerComponents`,
 };
 
 const Root = styled('div')((
@@ -24,6 +25,12 @@ const Root = styled('div')((
 
     [`& .${classes.caption}`]: {
         marginTop: "0.8em",
+    },
+
+    [`& .${classes.timerComponents}`]: {
+        display: "flex",
+        textAlign: "center",
+        justifyContent: "space-between",
     }
 }));
 
@@ -36,11 +43,10 @@ export interface TimeComponent {
 
 export type BetCountdownComponentProps = {
     endDate: Date;
+    label?: string;
 }
 
 export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
-
-
     const timerComponents: TimeComponent[] = [];
 
     const calculateTimeLeft = () => {        
@@ -63,13 +69,16 @@ export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
     const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
 
     useEffect(() => {
+        setTimeLeft(calculateTimeLeft());
+    }, [props.endDate]);
+
+    useEffect(() => {
         const timer = setTimeout(() => {
             setTimeLeft(calculateTimeLeft());
         }, 1000);
         
         return () => clearTimeout(timer);
     });
-
 
     Object.keys(timeLeft).forEach((interval) => {
         const unit = timeLeft[interval] == 1 ? interval : interval + 's';
@@ -84,9 +93,13 @@ export const BetCountdownComponent = (props: BetCountdownComponentProps) => {
     return (
         <Root className={classes.container}>
             <div>
-                <BetCountdownClockComponent timerComponents={timerComponents}/>
+                <div className={classes.timerComponents}>
+                    {timerComponents.map(timerComponent => {
+                        return <BetCountdownClockElementComponent value={timerComponent.value} unit={timerComponent.unit} key={timerComponent.unit}/>
+                    })}
+                </div>
                 <div className={classes.caption}>
-                    left until betting closes
+                    {props.label}
                 </div>
             </div>
         </Root>

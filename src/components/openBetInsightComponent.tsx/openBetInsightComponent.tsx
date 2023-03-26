@@ -48,7 +48,7 @@ export const OpenBetInsightComponent = (props: OpenBetInsightComponentProps) => 
                     <BetTimeUpComponent fixtureID={props.fixtureID}/>
                 ) :
                 (
-                    <BetCountdownComponent endDate={betEndTime}/>
+                    <BetCountdownComponent endDate={betEndTime} label="left until betting closes"/>
                 )
             }
         </Root>

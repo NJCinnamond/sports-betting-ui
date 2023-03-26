@@ -7,14 +7,18 @@ export interface GameweekFixtureListHeaderComponent {
 
 export const GameweekFixtureListHeaderComponent = (props: GameweekFixtureListHeaderComponent) => {
 
+    // Parameterize these
+    const min = 29;
+    const max = 30;
+
     const onPreviousClick = () => props.setGameweek(props.gameweek - 1);
     const onNextClick = () => props.setGameweek(props.gameweek + 1);
 
     return (
         <div>
-            <Button onClick={onPreviousClick} disabled={props.gameweek == 1}>{"<"}</Button>
+            <Button onClick={onPreviousClick} disabled={props.gameweek == min}>{"<"}</Button>
             <span>Gameweek {props.gameweek}</span>
-            <Button onClick={onNextClick} disabled={props.gameweek == 38}>{">"}</Button>
+            <Button onClick={onNextClick} disabled={props.gameweek == 30}>{">"}</Button>
         </div>
     )
 }

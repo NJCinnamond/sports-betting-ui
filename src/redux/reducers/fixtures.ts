@@ -29,8 +29,6 @@ export const gameweekReducer = createSlice({
     initialState: gameweekInitialState,
     reducers: {
         new(state, action: PayloadAction<{ fixture: Fixture, date_str: string }>) {
-            console.log(action.payload.fixture);
-
             if (state[action.payload.fixture.gameweek] == undefined) {
                 state[action.payload.fixture.gameweek] = {};
             }

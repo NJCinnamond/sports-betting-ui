@@ -60,7 +60,10 @@ export const FixtureListItemComponent = (props: FixtureComponentProps) => {
     }, [props.fixture, teams]);
 
     // Handles clicking list item to set selected fixture
-    const onClickHandler = () => setSelected(props.fixture);
+    const onClickHandler = () => {
+        setSelected(props.fixture);
+        window.scrollTo(0, 0);
+    };
 
     return (
         (<Root>

@@ -11,7 +11,8 @@ import { GameweekFixtureListHeaderComponent } from './gameweekFixtureListHeaderC
 const PREFIX = 'GameweekFixtureListComponent';
 
 const classes = {
-    title: `${PREFIX}-title`
+    title: `${PREFIX}-title`,
+    helperText: `${PREFIX}-helperText`
 };
 
 // TODO jss-to-styled codemod: The Fragment root was replaced by div. Change the tag if needed.
@@ -25,6 +26,12 @@ const Root = styled('div')((
         paddingTop: "1em",
         fontWeight: "bold",
         fontSize: "1.15em",
+        marginLeft: "auto"
+    },
+    [`& .${classes.helperText}`]: {
+        textAlign: "center",
+        margin: "1em 0",
+        fontSize: "1.1em",
         marginLeft: "auto"
     }
 }));
@@ -43,22 +50,20 @@ export const GameweekFixtureListComponent = () => {
 
     const [filteredFixturesByGameweek, setFilteredFixturesByGameweek] = useState<FixturesByDate>();
 
-    // TODO: Create gameweek change component, calls setGameweek here which renders new fixture list
-
     // When gameweek view changes, fetch fixtures for that gameweek
     useEffect(() => {
-        fetchFixturesForGameweek(gameweek);
+        if (fixturesByGameweek[gameweek] == undefined) {
+            fetchFixturesForGameweek(gameweek);
+        }
     }, [gameweek]);
 
     // Call oracle service to fetch fixtures and store in FixtureStore
     useEffect(() => {
-        if (fixtures && Object.keys(fixtures).length && fixturesByGameweek && Object.keys(fixturesByGameweek).length) {
+        if (fixtures && Object.keys(fixtures).length && fixturesByGameweek) {
             setIsLoading(true);
             const newFixturesIDsByGameweek = fixtureService.getFixtureIDsForGameweek(fixturesByGameweek, gameweek);
-            if (newFixturesIDsByGameweek) {
-                setFilteredFixturesByGameweek(newFixturesIDsByGameweek);
-                setIsLoading(false);
-            }
+            setFilteredFixturesByGameweek(newFixturesIDsByGameweek);
+            setIsLoading(false);
         }
     }, [fixtures, fixturesByGameweek, gameweek]);
 
@@ -73,6 +78,9 @@ export const GameweekFixtureListComponent = () => {
             )}
             {!isLoading && (
                 <DatedFixtureListComponent fixturesByDate={filteredFixturesByGameweek}/>
+            )}
+            {!isLoading && (filteredFixturesByGameweek == undefined || !Object.keys(filteredFixturesByGameweek).length) && (
+                <div className={classes.helperText}>No fixtures to show.</div>
             )}
         </Root>)
     );
