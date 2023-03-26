@@ -18,7 +18,7 @@ const Text = styled('div')((
 ) => ({
     [`&.${classes.text}`]: {
         textAlign: 'center',
-        top: "30%",
+        top: "45%",
         position: "relative",
         fontSize: "1.1em"
     }
@@ -51,7 +51,7 @@ export const TotalStakeChartComponent = (props: TotalStakeChartComponentProps) =
             {!stakesPresent && (
                 <Text className={classes.text}>
                     <p>
-                        No bets placed!
+                        Be the first to stake on this fixture!
                     </p>
                 </Text>
             )}
