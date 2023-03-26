@@ -5,12 +5,14 @@ export type FixturesState = {
     [key: string]: Fixture
 };
 
-export type FixturesByDateState = {
-    [key: string]: string[],
+export type GameweekState = {
+    [key: number]: FixturesByDate,
 };
 
+export type FixturesByDate = { [key: string]: string[] };
+
 export const fixturesInitialState: FixturesState = {};
-export const fixturesByDateInitialState: FixturesByDateState = {};
+export const gameweekInitialState: GameweekState = {};
 
 export const fixturesReducer = createSlice({
     name: 'fixtures',
@@ -22,21 +24,27 @@ export const fixturesReducer = createSlice({
     },
 });
 
-export const fixturesByDateReducer = createSlice({
-    name: 'fixturesByDate',
-    initialState: fixturesByDateInitialState,
+export const gameweekReducer = createSlice({
+    name: 'gameweek',
+    initialState: gameweekInitialState,
     reducers: {
-        new(state, action: PayloadAction<{ date: string, fixture_id: string }>) {
-            if (state[action.payload.date]) {
-                if (!state[action.payload.date].includes(action.payload.fixture_id)) {
-                    state[action.payload.date] = state[action.payload.date].concat(action.payload.fixture_id);
-                }
+        new(state, action: PayloadAction<{ fixture: Fixture, date_str: string }>) {
+            console.log(action.payload.fixture);
+
+            if (state[action.payload.fixture.gameweek] == undefined) {
+                state[action.payload.fixture.gameweek] = {};
+            }
+
+            if (state[action.payload.fixture.gameweek][action.payload.date_str] == undefined) {
+                state[action.payload.fixture.gameweek][action.payload.date_str] = [action.payload.fixture.fixture_id];
             } else {
-                state[action.payload.date] = [action.payload.fixture_id];
+                if (!state[action.payload.fixture.gameweek][action.payload.date_str].includes(action.payload.fixture.fixture_id)) { 
+                    state[action.payload.fixture.gameweek][action.payload.date_str] = state[action.payload.fixture.gameweek][action.payload.date_str].concat(action.payload.fixture.fixture_id);
+                }
             };
         },
     },
 });
 
 export const fixturesActions = fixturesReducer.actions;
-export const fixturesByDateActions = fixturesByDateReducer.actions;
+export const gameweekActions = gameweekReducer.actions;

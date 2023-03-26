@@ -6,6 +6,7 @@ import { config } from '../../App';
 import { useTypedSelector } from '../../redux/store';
 import { fetchFixtures, fetchTeams } from '../../services/sportsOracleService';
 import { DatedFixtureListComponent } from '../datedFixtureListComponent/datedFixtureListComponent';
+import { GameweekFixtureListComponent } from '../gameweekFixtureListComponent/gameweekFixtureListComponent';
 import { ParentStakePanelComponent } from '../parentStakePanelComponent/parentStakePanelComponent';
 
 const PREFIX = 'FixtureBody';
@@ -58,10 +59,6 @@ export const FixtureBodyComponent = () => {
     // Redux store for selected fixture view
     const view = useTypedSelector((state) => state.view);
 
-    // TODO: Parametrize these
-    const startDate = new Date(2023, 0, 1);
-    const endDate = new Date(2023, 4, 1);
-
     const isValidChain: boolean = chainId != null && config.readOnlyUrls != null && config?.readOnlyUrls[chainId] != null;
     const shouldShowBody = (!account || (account && isValidChain));
 
@@ -89,7 +86,8 @@ export const FixtureBodyComponent = () => {
             )}
             <Box className={classes.box}>
                 {shouldShowBody && (
-                    <DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>
+                    //<DatedFixtureListComponent startDate={startDate} endDate={endDate}></DatedFixtureListComponent>
+                    <GameweekFixtureListComponent gameweek={29}/>
                 )}
                 {!shouldShowBody && (
                     <div className={classes.invalidChainBox}>

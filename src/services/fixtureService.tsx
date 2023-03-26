@@ -1,6 +1,6 @@
 import { Fixture } from '../$types/fixture';
 import { store } from '../redux/store';
-import { fixturesActions, fixturesByDateActions, FixturesByDateState, FixturesState } from '../redux/reducers/fixtures';
+import { fixturesActions, FixturesState, gameweekActions, GameweekState } from '../redux/reducers/fixtures';
 
 export default class FixtureService {
 
@@ -9,36 +9,14 @@ export default class FixtureService {
             // Extract day string
             let fixtureDate = this.formatDate(new Date(Date.parse(fixture.ko_time)));
             const newFixture = fixture as Fixture;
-
             store.dispatch(fixturesActions.new(newFixture));
-            store.dispatch(fixturesByDateActions.new({ date: fixtureDate, fixture_id: newFixture.fixture_id }));
+            store.dispatch(gameweekActions.new({fixture: newFixture, date_str: fixtureDate}));
         });
     };
 
     getFixturesFromFixturesIDs = (fixturesByIDs: FixturesState, fixtureIDs: string[]) => fixtureIDs.map((id: string) => fixturesByIDs[id]);
 
-    getFixturesFromFixturesByDateState = (fixturesByIDs: FixturesState, fixtureIDsByDate: FixturesByDateState) => {
-        const fixturesByDate: { [key: string]: Fixture[] } = {};
-        for (const [key, value] of Object.entries(fixtureIDsByDate)) {
-            fixturesByDate[key] = this.getFixturesFromFixturesIDs(fixturesByIDs, value);
-        };
-        return fixturesByDate;
-    }
-
-    getFixtureIDsInDateRange = (fixturesByDate: FixturesByDateState, _startDate: Date, _endDate: Date) => {
-        let startDate = new Date(_startDate);
-        let endDate = new Date(_endDate);
-
-        let fixturesInDateRange: FixturesByDateState = {};
-        while (startDate < endDate) {
-            let dateString = this.formatDate(startDate);
-            if (Object.keys(fixturesByDate).includes(dateString)) {
-                fixturesInDateRange[dateString] = fixturesByDate[dateString];
-            };
-            startDate = new Date(startDate.setDate(startDate.getDate() + 1));
-        };
-        return fixturesInDateRange;
-    }
+    getFixtureIDsForGameweek = (gameweekState: GameweekState, gameweek: number) => gameweekState[gameweek];
 
     formatDate = (date: Date): string => {
         // Get year, month, and day part from the date
