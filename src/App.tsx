@@ -1,9 +1,7 @@
 import {
-  Goerli,
-  Arbitrum,
+  Sepolia,
   Config,
   DAppProvider,
-  ArbitrumGoerli,
   CoinbaseWalletConnector,
   MetamaskConnector,
 } from '@usedapp/core'
@@ -14,18 +12,16 @@ import { providers } from 'ethers';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const config: Config = {
-  readOnlyChainId: Goerli.chainId,
+  readOnlyChainId: Sepolia.chainId,
   readOnlyUrls: {
-    [ArbitrumGoerli.chainId]: new providers.AlchemyProvider("arbitrum-goerli", process.env.REACT_APP_ARB_GOERLI_ALCHEMY_KEY), //TODO Put this in a .env
-    [Goerli.chainId]: new providers.AlchemyProvider("goerli", process.env.REACT_APP_GOERLI_ALCHEMY_KEY),
+    [Sepolia.chainId]: new providers.InfuraProvider("sepolia", process.env.REACT_APP_INFURA_API_KEY),
   },
   notifications: {
     expirationPeriod: 500,
     checkInterval: 1000,
   },
   networks: [
-    ArbitrumGoerli,
-    Goerli
+    Sepolia
   ],
   connectors: {
     metamask: new MetamaskConnector(),

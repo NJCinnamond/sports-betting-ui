@@ -88,7 +88,7 @@ export const FixtureBodyComponent = () => {
                 )}
                 {!shouldShowBody && (
                     <div className={classes.invalidChainBox}>
-                        Please use Arbitrum or Arbitrum Goerli test net.
+                        Please use Arbitrum or Arbitrum Sepolia test net.
                     </div>
                 )}
             </Box>

@@ -1,14 +1,12 @@
-import { emphasize, MenuItem, Select, styled } from "@mui/material";
-import { ArbitrumGoerli, Goerli, useEthers } from "@usedapp/core";
-import { ArbitrumGoerliSelector } from "./chainComponents/arbitrumGoerliSelector";
+import { MenuItem, Select, styled } from "@mui/material";
+import { Sepolia, useEthers } from "@usedapp/core";
 import { ChainSelectorComponent } from "./chainComponents/chainSelector";
-import { GoerliSelector } from "./chainComponents/goerliSelector";
+import { SepoliaSelector } from "./chainComponents/sepoliaSelector";
 
-const chains = [Goerli.chainId, ArbitrumGoerli.chainId];
+const chains = [Sepolia.chainId];
 
 const chainComponentMap = new Map<number, JSX.Element>([
-    [Goerli.chainId, <GoerliSelector/>],
-    [ArbitrumGoerli.chainId, <ArbitrumGoerliSelector/>],
+    [Sepolia.chainId, <SepoliaSelector/>],
     [-1, <ChainSelectorComponent label="Unsupported" img=""/>]
 ]);
 

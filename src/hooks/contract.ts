@@ -9,7 +9,7 @@ const useSportsBettingContract = () => {
     const { chainId } = useEthers();
     const deployments: Deployment = Deployments;
 
-    let chainIdString = ChainId.ArbitrumGoerli.toString();
+    let chainIdString = ChainId.Sepolia.toString();
 
     if (chainId !== undefined) {
         chainIdString = chainId.toString();
