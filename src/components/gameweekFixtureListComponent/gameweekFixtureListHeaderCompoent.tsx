@@ -8,8 +8,8 @@ export interface GameweekFixtureListHeaderComponent {
 export const GameweekFixtureListHeaderComponent = (props: GameweekFixtureListHeaderComponent) => {
 
     // Parameterize these
-    const min = 29;
-    const max = 30;
+    const min = 25;
+    const max = 25;
 
     const onPreviousClick = () => props.setGameweek(props.gameweek - 1);
     const onNextClick = () => props.setGameweek(props.gameweek + 1);

@@ -45,7 +45,7 @@ export const GameweekFixtureListComponent = () => {
     const fixtures = useTypedSelector((state) => state.fixtures);
     const fixturesByGameweek = useTypedSelector((state) => state.gameweek);
 
-    const defaultGameweek = 29; // TODO: Source this from somewhere
+    const defaultGameweek = 25; // TODO: Source this from somewhere
     const [gameweek, setGameweek] = useState<number>(defaultGameweek);
 
     const [filteredFixturesByGameweek, setFilteredFixturesByGameweek] = useState<FixturesByDate>();
