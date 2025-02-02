@@ -6,7 +6,7 @@ const apiURL = 'https://1vyuff64d9.execute-api.us-east-1.amazonaws.com/dev/';
 const fixturePath = 'premier-league/fixtures/';
 const teamsPath = 'premier-league/teams/';
 
-const fixturesPathForGameweek = (gameweek: number) => apiURL + fixturePath + "gameweek/" + gameweek.toString();
+const fixturesPathForGameweek = (gameweek: number) => apiURL + fixturePath + "gameweek/" + gameweek.toString() +'/';
 
 const fixtureService: FixtureService = new FixtureService();
 const teamService: TeamService = new TeamService();

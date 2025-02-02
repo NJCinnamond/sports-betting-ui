@@ -1,4 +1,4 @@
-import { Arbitrum, ERC20, Goerli, useCall, useContractFunction, useEthers } from "@usedapp/core";
+import { Arbitrum, ERC20, Goerli, Sepolia, useCall, useContractFunction, useEthers } from "@usedapp/core";
 import { BetType } from "../$types/betType";
 import { useSportsBettingContract } from "../hooks/contract";
 import { utils } from "ethers";
@@ -19,6 +19,8 @@ export const useUSDCContract = () => {
         tokenAddress = "0x07865c6E87B9F70255377e024ace6630C1Eaa37F"; // USDC on Goerli
     } else if (chainId == Arbitrum.chainId) {
         tokenAddress = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"; // USDC on Arbitrum
+    } else if (chainId == Sepolia.chainId) {
+        tokenAddress = "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238"; // USDC on Sepolia
     } else {
         tokenAddress = '';
     }

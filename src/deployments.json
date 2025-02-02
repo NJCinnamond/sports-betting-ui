@@ -1118,7 +1118,7 @@
       "chainId": "111551115",
       "contracts": {
         "SportsBetting": {
-          "address": "0x631259F5B0fE193fa19937D79dFD8C737e1fdD47",
+          "address": "0x02BEEAca267e6d18029e29E5C7Bec426D057d6ee",
           "abi": [
             {
               "inputs": [

@@ -67,6 +67,8 @@ export const GameweekFixtureListComponent = () => {
         }
     }, [fixtures, fixturesByGameweek, gameweek]);
 
+    console.log("Fixtures : ", filteredFixturesByGameweek)
+
     return (
         (<Root>
             <div className={classes.title}>

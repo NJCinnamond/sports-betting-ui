@@ -31,7 +31,7 @@ export const DatedFixtureListComponent = (props: DatedFixtureListComponentProps)
     const formatDate = (date: string) => dateToUTCString(new Date(Date.parse(date)));
     return (
         (<Root>
-            {props.fixturesByDate && Object.entries(props.fixturesByDate)
+            {props.fixturesByDate && Object.entries(props.fixturesByDate).sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
                 .map(([date, fixtures]) => (
                     <div key={date}>
                         <div className={classes.title}>{formatDate(date)}</div>
